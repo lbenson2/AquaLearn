@@ -12,7 +12,8 @@ namespace AquaLearn.Client.Controllers
     {
         public IActionResult Index()
         {
-            return View();
+            var i = new ExhibitViewModel();
+            return View(i);
         }
 
         public IActionResult Privacy()

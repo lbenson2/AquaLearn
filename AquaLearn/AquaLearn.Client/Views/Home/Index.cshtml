@@ -1,4 +1,6 @@
-﻿@{
+﻿@model AquaLearn.Client.Models.ExhibitViewModel
+@using AquaLearn.Domain.Models;
+@{
     ViewData["Title"] = "Home Page";
 }
 
@@ -13,13 +15,26 @@
     </div>
 </div>
 
+@{ 
+    // init
+    var Exhibit = new Exhibit();
+    Model.Vector3Current = new float[] { 0, 0, 0 };
+    for(var i = 0; i < Exhibit.Vector3Current.Length; i++)
+    {
+        Model.Vector3Current[i] = Exhibit.Vector3Current[i];
+    }
+  }
+
 <script>
     draw();
     function draw() {
         var myGameArea = document.getElementById("myCanvas");
+        var x = @Model.Vector3Current[0];
+        var y = @Model.Vector3Current[1];
+        var z = @Model.Vector3Current[2];
         if (myGameArea.getContext) {
             var ctx = myGameArea.getContext('2d');
-            ctx.fillRect(25, 25, 100, 100);
+            ctx.fillRect(x, y, 50, 50);
         }
     }
 </script>
