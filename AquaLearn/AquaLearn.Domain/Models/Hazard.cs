@@ -4,7 +4,7 @@ using System.Text;
 
 namespace AquaLearn.Domain.Models
 {
-    public class Plant
+    public class Hazard
     {
         public string Name { get; set; }
         public WaterType WaterType { get; set; }
