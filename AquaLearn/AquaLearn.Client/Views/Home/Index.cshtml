@@ -6,3 +6,20 @@
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
+
+<div class="row">
+    <div class="col">
+        <canvas id="myCanvas" width="720" height="480" style="border:1px solid #000000;"></canvas>
+    </div>
+</div>
+
+<script>
+    draw();
+    function draw() {
+        var myGameArea = document.getElementById("myCanvas");
+        if (myGameArea.getContext) {
+            var ctx = myGameArea.getContext('2d');
+            ctx.fillRect(25, 25, 100, 100);
+        }
+    }
+</script>
