@@ -4,9 +4,10 @@ using System.Text;
 
 namespace AquaLearn.Domain.Models
 {
-    public class Plant
+    public class Trash
     {
         public string Name { get; set; }
+        public bool Schooling { get; set; }
         public WaterType WaterType { get; set; }
         public string Description { get; set; }
     }
