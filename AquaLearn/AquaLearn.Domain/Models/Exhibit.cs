@@ -24,6 +24,7 @@ namespace AquaLearn.Domain.Models
             rnd = new Random();
 
             PopulateFishes();
+            PopulatePlants();
         }
 
         public void PopulateFishes()
@@ -37,6 +38,17 @@ namespace AquaLearn.Domain.Models
             }
         }
 
+        public void PopulatePlants()
+        {
+            Plants = new List<Plant>();
+
+            // TODO: Add specific plants
+            for (int i = 0; i < rnd.Next(3, 15); i++)
+            {
+                Plants.Add(new Plant());
+            }
+        }
+
         public float[] Moving()
         {
             return Vector3Current;
@@ -44,6 +56,20 @@ namespace AquaLearn.Domain.Models
 
         public float[] PlaceStill()
         {
+            // TODO: get canvas width to be cap
+            float x = rnd.Next(0, 720);
+            // TODO: get 10% of the canvas height to be cap
+            int canvasHeight = 480;
+            int placementArea = (int)(canvasHeight * 0.9f);
+            float y = rnd.Next(placementArea, canvasHeight);
+            // Determine which layer the fish will swim on
+            float z = rnd.Next(-15, -1);
+
+            // Set the x, y, z values
+            Vector3Current[0] = x;
+            Vector3Current[1] = y;
+            Vector3Current[2] = z;
+
             return Vector3Current;
         }
 
