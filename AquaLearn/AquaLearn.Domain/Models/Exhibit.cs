@@ -14,13 +14,11 @@ namespace AquaLearn.Domain.Models
         public List<Trash> Trash { get; set; }
         public List<Hazard> Hazard { get; set; }
         public float[] Vector3Current { get; set; }
-        public float[] Vector3Destination { get; set; }
         private Random rnd { get; }
 
         public Exhibit()
         {
             Vector3Current = new float[] { 0, 0, 0 };
-            Vector3Destination = new float[] { 0, 0, 0 };
             rnd = new Random();
 
             PopulateFishes();
@@ -51,6 +49,11 @@ namespace AquaLearn.Domain.Models
 
         public float[] Moving()
         {
+            foreach (var fish in Fishes)
+            {
+                fish.Swim();
+            }
+
             return Vector3Current;
         }
 
