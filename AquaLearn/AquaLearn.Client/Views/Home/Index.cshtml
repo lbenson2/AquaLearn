@@ -23,26 +23,37 @@
     </div>
 </div>
 
-@{ 
-    // C# to JS
-    var Exhibit = new Exhibit();
-    Model.Vector3Current = new float[] { 0, 0, 0 };
-    for(var i = 0; i < Exhibit.Vector3Current.Length; i++)
-    {
-        Model.Vector3Current[i] = Exhibit.Vector3Current[i];
-    }
-  }
+
 
 <script>
-    draw();
+    @{
+        // C# to JS
+        var Exhibit = new Exhibit();
+        Model.Fishes = Exhibit.Fishes;
+        Model.Vector3Current = new float[] { 0, 0, 0 };
+        @:var ctx = draw();
+
+        for (var i = 0; i < Model.Fishes.Count; i++)
+        {
+            Model.Vector3Current = Exhibit.PlaceMoving();
+            for (var a = 0; a < Exhibit.Vector3Current.Length; a++)
+            {
+
+                Model.Vector3Current[a] = Exhibit.Vector3Current[a];
+            }
+            @:drawSquares(@Model.Vector3Current[0], @Model.Vector3Current[1], @Model.Vector3Current[2]);
+        }
+    }
+
     function draw() {
         var myGameArea = document.getElementById("myCanvas");
-        var x = @Model.Vector3Current[0];
-        var y = @Model.Vector3Current[1];
-        var z = @Model.Vector3Current[2];
         if (myGameArea.getContext) {
-            var ctx = myGameArea.getContext('2d');
-            ctx.fillRect(x, y, 50, 50);
+            ctx = myGameArea.getContext('2d');
         }
+        return ctx;
+    }
+
+    function drawSquares(x, y, z) {
+        ctx.fillRect(x, y, 50, 50);
     }
 </script>
