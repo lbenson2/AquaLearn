@@ -105,6 +105,7 @@ namespace AquaLearn.Domain.Models
             // Determine which layer the fish will swim on
             float z = rnd.Next(-15, -1);
 
+            Vector3Current = new float[] { 0, 0, 0 };
             // Set the x, y, z values
             Vector3Current[0] = x;
             Vector3Current[1] = y;
