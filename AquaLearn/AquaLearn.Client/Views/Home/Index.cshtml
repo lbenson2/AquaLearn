@@ -31,33 +31,21 @@
         var Exhibit = new Exhibit();
         Model.Fishes = Exhibit.Fishes;
         Model.Vector3Current = new float[] { 0, 0, 0 };
-        @:var ctx = draw();
+        @:var last = new Date();
+        @:var myGameArea = draw();
+        @:var ctx = getContext();
 
-        for (var i = 0; i < Model.Fishes.Count; i++)
-        {
-            Model.Vector3Current = Exhibit.PlaceMoving();
-            for (var a = 0; a < Exhibit.Vector3Current.Length; a++)
-            {
-
-                Model.Vector3Current[a] = Exhibit.Vector3Current[a];
-            }
-            @:drawSquares(@Model.Vector3Current[0], @Model.Vector3Current[1], @Model.Vector3Current[2]);
-        }
-
-        for (var i = 0; i < Model.Fishes.Count; i++)
-        {
-            Model.Vector3Current = Exhibit.PlaceStill();
-            for (var a = 0; a < Exhibit.Vector3Current.Length; a++)
-            {
-
-                Model.Vector3Current[a] = Exhibit.Vector3Current[a];
-            }
-            @:drawRectangles(@Model.Vector3Current[0], @Model.Vector3Current[1], @Model.Vector3Current[2]);
-        }
+        // FPS set to ~60fps
+        @:setInterval(function () { update(); }, 17);
+        
     }
 
     function draw() {
         var myGameArea = document.getElementById("myCanvas");
+        return myGameArea;
+    }
+
+    function getContext() {
         if (myGameArea.getContext) {
             ctx = myGameArea.getContext('2d');
         }
@@ -70,5 +58,52 @@
 
     function drawRectangles(x, y, z) {
         ctx.fillRect(x, y, 50, 100);
+    }
+
+    function clear() {
+        ctx.clearRect(0, 0, 720, 480);
+    }
+
+    function place()
+    {
+        @{ 
+            for (var i = 0; i < Model.Fishes.Count; i++)
+            {
+                if (Model.Vector3Current == null)
+                {
+                    Model.Vector3Current = Exhibit.PlaceMoving(i);
+                }
+                else
+                {
+                    Model.Vector3Current = Exhibit.Moving(i);
+                }
+
+                for (var a = 0; a < Exhibit.Vector3Current.Length; a++)
+                {
+                    Model.Vector3Current[a] = Exhibit.Vector3Current[a];
+                }
+                @:drawSquares(@Model.Vector3Current[0], @Model.Vector3Current[1], @Model.Vector3Current[2]);
+            }
+
+            for (var i = 0; i < Model.Fishes.Count; i++)
+            {
+                if (Model.Vector3Current == null)
+                {
+                    Model.Vector3Current = Exhibit.PlaceStill();
+                }
+
+                for (var a = 0; a < Exhibit.Vector3Current.Length; a++)
+                {
+                    Model.Vector3Current[a] = Exhibit.Vector3Current[a];
+                }
+                @:drawRectangles(@Model.Vector3Current[0], @Model.Vector3Current[1], @Model.Vector3Current[2]);
+            }
+        }
+    }
+
+    function update() {
+        console.log("Update");
+        clear();
+        place();
     }
 </script>

@@ -18,7 +18,7 @@ namespace AquaLearn.Domain.Models
 
         public Exhibit()
         {
-            Vector3Current = new float[] { 0, 0, 0 };
+            //Vector3Current = new float[] { 0, 0, 0 };
             rnd = new Random();
 
             PopulateFishes();
@@ -47,17 +47,14 @@ namespace AquaLearn.Domain.Models
             }
         }
 
-        public float[] Moving()
+        public float[] Moving(int i)
         {
-            foreach (var fish in Fishes)
-            {
-                fish.Swim();
-            }
+            Fishes[i].Swim();
 
-            return Vector3Current;
+            return Fishes[i].Vector3Current;
         }
 
-        public float[] PlaceStill()
+        public float[] PlaceStill(int i)
         {
             // TODO: get canvas width to be cap
             float x = rnd.Next(0, 720);
@@ -73,24 +70,12 @@ namespace AquaLearn.Domain.Models
             Vector3Current[1] = y;
             Vector3Current[2] = z;
 
-            return Vector3Current;
+            return Plants[i].Vector3Current;
         }
 
-        public float[] PlaceMoving()
+        public float[] PlaceMoving(int i)
         {
-            // TODO: get canvas width to be cap
-            float x = rnd.Next(0, 720);
-            // TODO: get canvas height to be cap
-            float y = rnd.Next(0, 480);
-            // Determine which layer the fish will swim on
-            float z = rnd.Next(-15, -1);
-
-            // Set the x, y, z values
-            Vector3Current[0] = x;
-            Vector3Current[1] = y;
-            Vector3Current[2] = z;
-
-            return Vector3Current;
+            return Fishes[i].Vector3Current;
         }
     }
 }
