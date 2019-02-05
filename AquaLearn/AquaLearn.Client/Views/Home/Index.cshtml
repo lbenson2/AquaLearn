@@ -12,14 +12,9 @@
 
 </body>
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
-
 <div class="row">
-    <div class="col">
-        <canvas id="myCanvas" width="720" height="480" style="border:1px solid #000000;"></canvas>
+    <div class="col" style="display:flex; justify-content:center;">
+        <canvas id="myCanvas" style="border:1px solid #000000; width:720px; height:480px"></canvas>
     </div>
 </div>
 
@@ -41,7 +36,7 @@
 
                 Model.Vector3Current[a] = Exhibit.Vector3Current[a];
             }
-            @:drawSquares(@Model.Vector3Current[0], @Model.Vector3Current[1], @Model.Vector3Current[2]);
+            @*@:drawSquares(@Model.Vector3Current[0], @Model.Vector3Current[1], @Model.Vector3Current[2]);*@
         }
 
         for (var i = 0; i < Model.Fishes.Count; i++)
@@ -52,7 +47,7 @@
 
                 Model.Vector3Current[a] = Exhibit.Vector3Current[a];
             }
-            @:drawRectangles(@Model.Vector3Current[0], @Model.Vector3Current[1], @Model.Vector3Current[2]);
+            @*@:drawRectangles(@Model.Vector3Current[0], @Model.Vector3Current[1], @Model.Vector3Current[2]);*@
         }
     }
 
@@ -71,4 +66,20 @@
     function drawRectangles(x, y, z) {
         ctx.fillRect(x, y, 50, 100);
     }
+
+
+  function resize(canvas) {
+    var scale = { x: 1, y: 1 };
+    scale.x = (window.innerWidth - 72) / canvas.width;
+    scale.y = (window.innerHeight - 96) / canvas.height;
+
+    if (scale.x < 1 || scale.y < 1) {
+      scale = '1, 1';
+    } else if (scale.x < scale.y) {
+      scale = scale.x + ', ' + scale.x;
+    } else {
+      scale = scale.y + ', ' + scale.y;
+    }
+  }
+
 </script>
