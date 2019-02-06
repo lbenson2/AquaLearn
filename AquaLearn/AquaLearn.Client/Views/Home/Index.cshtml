@@ -4,6 +4,14 @@
     ViewData["Title"] = "Home Page";
 }
 
+<body style="background-size: cover; background-image: url(https://cdn5.vectorstock.com/i/1000x1000/42/04/cartoon-shark-pirate-swimming-in-the-ocean-vector-6594204.jpg)">
+    <div class="text-center">
+        <h1 class="display-4">Welcome to Aqua Learn!</h1>
+        <p>Create and account or login to learn about me and my crew! Explore or natural habitats and learn how to help keep our home clean!</p>
+    </div>
+
+</body>
+
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
@@ -15,26 +23,52 @@
     </div>
 </div>
 
-@{ 
-    // C# to JS
-    var Exhibit = new Exhibit();
-    Model.Vector3Current = new float[] { 0, 0, 0 };
-    for(var i = 0; i < Exhibit.Vector3Current.Length; i++)
-    {
-        Model.Vector3Current[i] = Exhibit.Vector3Current[i];
-    }
-  }
+
 
 <script>
-    draw();
+    @{
+        // C# to JS
+        var Exhibit = new Exhibit();
+        Model.Fishes = Exhibit.Fishes;
+        Model.Vector3Current = new float[] { 0, 0, 0 };
+        @:var ctx = draw();
+
+        for (var i = 0; i < Model.Fishes.Count; i++)
+        {
+            Model.Vector3Current = Exhibit.PlaceMoving();
+            for (var a = 0; a < Exhibit.Vector3Current.Length; a++)
+            {
+
+                Model.Vector3Current[a] = Exhibit.Vector3Current[a];
+            }
+            @:drawSquares(@Model.Vector3Current[0], @Model.Vector3Current[1], @Model.Vector3Current[2]);
+        }
+
+        for (var i = 0; i < Model.Fishes.Count; i++)
+        {
+            Model.Vector3Current = Exhibit.PlaceStill();
+            for (var a = 0; a < Exhibit.Vector3Current.Length; a++)
+            {
+
+                Model.Vector3Current[a] = Exhibit.Vector3Current[a];
+            }
+            @:drawRectangles(@Model.Vector3Current[0], @Model.Vector3Current[1], @Model.Vector3Current[2]);
+        }
+    }
+
     function draw() {
         var myGameArea = document.getElementById("myCanvas");
-        var x = @Model.Vector3Current[0];
-        var y = @Model.Vector3Current[1];
-        var z = @Model.Vector3Current[2];
         if (myGameArea.getContext) {
-            var ctx = myGameArea.getContext('2d');
-            ctx.fillRect(x, y, 50, 50);
+            ctx = myGameArea.getContext('2d');
         }
+        return ctx;
+    }
+
+    function drawSquares(x, y, z) {
+        ctx.fillRect(x, y, 50, 50);
+    }
+
+    function drawRectangles(x, y, z) {
+        ctx.fillRect(x, y, 50, 100);
     }
 </script>
