@@ -7,21 +7,17 @@ namespace AquaLearn.Domain.Models
 {
     public class Exhibit
     {
-        public int ExhibitID { get; set; }
+        public int ExhibitId { get; set; }
         public string Name { get; set; }
         public WaterType WaterType { get; set; }
         public List<Fish> Fishes { get; set; }
         public List<Plant> Plants { get; set; }
         public List<Trash> Trash { get; set; }
         public List<Hazard> Hazard { get; set; }
-        public float[] Vector3Current { get; set; }
-        public float[] Vector3Destination { get; set; }
         private Random rnd { get; }
 
         public Exhibit()
         {
-            Vector3Current = new float[] { 0, 0, 0 };
-            Vector3Destination = new float[] { 0, 0, 0 };
             rnd = new Random();
 
             PopulateFishes();
@@ -50,45 +46,21 @@ namespace AquaLearn.Domain.Models
             }
         }
 
-        public float[] Moving()
+        public float[] Moving(int i)
         {
-            return Vector3Current;
+            Fishes[i].Swim();
+
+            return Fishes[i].Vector3Current;
         }
 
-        public float[] PlaceStill()
+        public float[] PlaceStill(int i)
         {
-            // TODO: get canvas width to be cap
-            float x = rnd.Next(0, 720);
-            // TODO: get 10% of the canvas height to be cap
-            int canvasHeight = 480;
-            int placementArea = (int)(canvasHeight * 0.9f);
-            float y = rnd.Next(placementArea, canvasHeight);
-            // Determine which layer the fish will swim on
-            float z = rnd.Next(-15, -1);
-
-            // Set the x, y, z values
-            Vector3Current[0] = x;
-            Vector3Current[1] = y;
-            Vector3Current[2] = z;
-
-            return Vector3Current;
+            return Plants[i].Vector3Current;
         }
 
-        public float[] PlaceMoving()
+        public float[] PlaceMoving(int i)
         {
-            // TODO: get canvas width to be cap
-            float x = rnd.Next(0, 720);
-            // TODO: get canvas height to be cap
-            float y = rnd.Next(0, 480);
-            // Determine which layer the fish will swim on
-            float z = rnd.Next(-15, -1);
-
-            // Set the x, y, z values
-            Vector3Current[0] = x;
-            Vector3Current[1] = y;
-            Vector3Current[2] = z;
-
-            return Vector3Current;
+            return Fishes[i].Vector3Current;
         }
     }
 }

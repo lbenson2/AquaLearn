@@ -6,7 +6,7 @@ namespace AquaLearn.Domain.Models
 {
     public class WaterType
     {
-        public int WaterTypeID { get; set; }
+        public int WaterTypeId { get; set; }
         public string Name { get; set; }
     }
 }
