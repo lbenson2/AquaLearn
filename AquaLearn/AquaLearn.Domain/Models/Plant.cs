@@ -17,7 +17,6 @@ namespace AquaLearn.Domain.Models
         {
             rnd = new Random();
             Init();
-            Vector3Current = new float[] { 0, 0, 0 };
         }
 
         private void Init()

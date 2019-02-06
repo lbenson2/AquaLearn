@@ -26,6 +26,8 @@
         var Exhibit = new Exhibit();
         Model.Fishes = Exhibit.Fishes;
         Model.Plants = Exhibit.Plants;
+        bool fishPlaced = false;
+        bool plantsPlaced = false;
         Model.Vector3Current = new float[] { 0, 0, 0 };
         @:var last = new Date();
         @:var myGameArea = draw();
@@ -64,9 +66,10 @@
         @{ 
             for (int i = 0; i < Model.Fishes.Count; i++)
             {
-                if (Model.Vector3Current == null)
+                if (fishPlaced == false)
                 {
                     Model.Vector3Current = Exhibit.PlaceMoving(i);
+                    fishPlaced = true;
                 }
                 else
                 {
@@ -82,9 +85,11 @@
 
             for (int i = 0; i < Model.Plants.Count; i++)
             {
-                if (Model.Vector3Current == null)
+                if (plantsPlaced == false)
                 {
                     Model.Vector3Current = Exhibit.PlaceStill(i);
+                    @:console.log("placed");
+                    plantsPlaced = true;
                 }
 
                 for (int b = 0; b < Exhibit.Plants[i].Vector3Current.Length; b++)
