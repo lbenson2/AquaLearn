@@ -6,6 +6,7 @@ namespace AquaLearn.Domain.Models
 {
     public class Fish
     {
+        public int FishId { get; set; }
         public string Name { get; set; }
         public bool Schooling { get; set; }
         public WaterType WaterType { get; set; }

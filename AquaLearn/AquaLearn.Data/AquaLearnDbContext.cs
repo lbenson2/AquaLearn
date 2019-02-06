@@ -18,7 +18,7 @@ namespace AquaLearn.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder builder)
         {
-            builder.UseSqlServer("server=ajdotnet2019.database.windows.net;database=AquaLearnDB;user id=sqladmin;password=Florida2019;");
+            builder.UseSqlServer("data source=ajdotnet2019.database.windows.net;database=AquaLearnDB;user id=sqladmin;password=Florida2019;");
         }
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -28,7 +28,7 @@ namespace AquaLearn.Data
             builder.Entity<Plant>().HasKey(e => e.PlantId);
             builder.Entity<Trash>().HasKey(e => e.TrashId);
             builder.Entity<Exhibit>().HasKey(e => e.ExhibitId);
-            builder.Entity<Fish>().HasKey(e => e.HazardId);
+            builder.Entity<Hazard>().HasKey(e => e.HazardId);
 
         }
 
