@@ -12,14 +12,9 @@
 
 </body>
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
-
 <div class="row">
-    <div class="col">
-        <canvas id="myCanvas" width="720" height="480" style="border:1px solid #000000;"></canvas>
+    <div class="col" style="display:flex; justify-content:center;">
+        <canvas id="myCanvas" width="1080" height="480" style="border:1px solid #000000;"></canvas>
     </div>
 </div>
 
@@ -30,34 +25,24 @@
         // C# to JS
         var Exhibit = new Exhibit();
         Model.Fishes = Exhibit.Fishes;
+        Model.Plants = Exhibit.Plants;
+        bool fishPlaced = false;
+        bool plantsPlaced = false;
         Model.Vector3Current = new float[] { 0, 0, 0 };
-        @:var ctx = draw();
+        @:var last = new Date();
+        @:var myGameArea = draw();
+        @:var ctx = getContext();
 
-        for (var i = 0; i < Model.Fishes.Count; i++)
-        {
-            Model.Vector3Current = Exhibit.PlaceMoving();
-            for (var a = 0; a < Exhibit.Vector3Current.Length; a++)
-            {
-
-                Model.Vector3Current[a] = Exhibit.Vector3Current[a];
-            }
-            @:drawSquares(@Model.Vector3Current[0], @Model.Vector3Current[1], @Model.Vector3Current[2]);
-        }
-
-        for (var i = 0; i < Model.Fishes.Count; i++)
-        {
-            Model.Vector3Current = Exhibit.PlaceStill();
-            for (var a = 0; a < Exhibit.Vector3Current.Length; a++)
-            {
-
-                Model.Vector3Current[a] = Exhibit.Vector3Current[a];
-            }
-            @:drawRectangles(@Model.Vector3Current[0], @Model.Vector3Current[1], @Model.Vector3Current[2]);
-        }
+        // FPS set to ~60fps
+        @:place();
     }
 
     function draw() {
         var myGameArea = document.getElementById("myCanvas");
+        return myGameArea;
+    }
+
+    function getContext() {
         if (myGameArea.getContext) {
             ctx = myGameArea.getContext('2d');
         }
@@ -69,6 +54,57 @@
     }
 
     function drawRectangles(x, y, z) {
-        ctx.fillRect(x, y, 50, 100);
+        ctx.fillRect(x, y, 50, 50);
+    }
+
+    function clear() {
+        ctx.clearRect(0, 0, 720, 480);
+    }
+
+    function place()
+    {
+        @{ 
+            for (int i = 0; i < Model.Fishes.Count; i++)
+            {
+                if (fishPlaced == false)
+                {
+                    Model.Vector3Current = Exhibit.PlaceMoving(i);
+                    fishPlaced = true;
+                }
+                else
+                {
+                    Model.Vector3Current = Exhibit.Moving(i);
+                }
+
+                for (int a = 0; a < Exhibit.Fishes[i].Vector3Current.Length; a++)
+                {
+                    Model.Vector3Current[a] = Exhibit.Fishes[i].Vector3Current[a];
+                }
+                @:drawSquares(@Model.Vector3Current[0], @Model.Vector3Current[1], @Model.Vector3Current[2]);
+            }
+
+            for (int i = 0; i < Model.Plants.Count; i++)
+            {
+                if (plantsPlaced == false)
+                {
+                    Model.Vector3Current = Exhibit.PlaceStill(i);
+                    @:console.log("placed");
+                    plantsPlaced = true;
+                }
+
+                for (int b = 0; b < Exhibit.Plants[i].Vector3Current.Length; b++)
+                {
+                    Model.Vector3Current[b] = Exhibit.Plants[i].Vector3Current[b];
+                }
+                @:console.log(@Model.Vector3Current[0], @Model.Vector3Current[1], @Model.Vector3Current[2]);
+                @:drawRectangles(@Model.Vector3Current[0], @Model.Vector3Current[1], @Model.Vector3Current[2]);
+            }
+        }
+    }
+
+    function update() {
+        console.log("Update");
+        clear();
+        place();
     }
 </script>
