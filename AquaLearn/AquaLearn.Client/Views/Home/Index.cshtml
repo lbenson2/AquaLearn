@@ -12,14 +12,9 @@
 
 </body>
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
-
 <div class="row">
-    <div class="col">
-        <canvas id="myCanvas" width="720" height="480" style="border:1px solid #000000;"></canvas>
+    <div class="col" style="display:flex; justify-content:center;">
+        <canvas id="myCanvas" width="1080" height="480" style="border:1px solid #000000;"></canvas>
     </div>
 </div>
 
@@ -69,6 +64,6 @@
     }
 
     function drawRectangles(x, y, z) {
-        ctx.fillRect(x, y, 50, 100);
+        ctx.fillRect(x, y, 50, 50);
     }
 </script>
