@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Windows.Input;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AquaLearn.Domain.Models
 {
@@ -14,6 +16,12 @@ namespace AquaLearn.Domain.Models
         public List<Plant> Plants { get; set; }
         public List<Trash> Trash { get; set; }
         public List<Hazard> Hazard { get; set; }
+        [NotMapped]
+        public float[] Vector3Current { get; set; }
+
+        [NotMapped]
+        public float[] Vector3Destination { get; set; }
+
         private Random rnd { get; }
 
         public Exhibit()
