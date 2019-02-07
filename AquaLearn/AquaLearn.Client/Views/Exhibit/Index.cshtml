@@ -1,10 +1,14 @@
 ﻿
 @{
-    ViewData["Title"] = "Index";
+  ViewData["Title"] = "Index";
 }
 
 <h1>Habitat</h1>
 
-<body>
-    <canvas id="myCanvas" width="480" height="480" style="border:1px solid #000000;"></canvas>
-</body>
+<div class="dropdown">
+  <button onclick="myFunction()" class="dropbtn">Choose Habitat</button>
+  <div id="myDropdown" class="dropdown-content">
+    <a href="exhibit/_DeepOcean">1</a>
+    <a href="exhibit/_CoralReef">2</a>
+  </div>
+</div>
