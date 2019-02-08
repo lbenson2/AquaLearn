@@ -87,7 +87,7 @@
 
         for (var i = 0; i < Model.Fishes.Count; i++)
         {
-            Model.Vector3Current = Exhibit.PlaceMoving();
+            Model.Vector3Current = Exhibit.PlaceMoving(i);
             for (var a = 0; a < Exhibit.Vector3Current.Length; a++)
             {
 
@@ -98,7 +98,7 @@
 
         for (var i = 0; i < Model.Fishes.Count; i++)
         {
-            Model.Vector3Current = Exhibit.PlaceStill();
+            Model.Vector3Current = Exhibit.PlaceStill(i);
             for (var a = 0; a < Exhibit.Vector3Current.Length; a++)
             {
 
