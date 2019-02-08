@@ -14,7 +14,7 @@ namespace AquaLearn.Tests.Tests
             sut = new Exhibit()
             {
                 Name = "",
-                WaterType=new WaterType()
+                WaterType=new WaterType(),
                 Fishes=new List<Fish>()
             };
 
