@@ -13,10 +13,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Tests\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\AquaLearn.Data\AquaLearn.Data.csproj" />
     <ProjectReference Include="..\AquaLearn.Domain\AquaLearn.Domain.csproj" />
   </ItemGroup>
