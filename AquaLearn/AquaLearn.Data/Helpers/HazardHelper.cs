@@ -9,36 +9,36 @@ using dom = AquaLearn.Domain.Models;
 
 namespace AquaLearn.Data.Helpers
 {
-    public class FishHelper
+    public class HazardHelper
     {
         private AquaLearnDbContext _db = new AquaLearnDbContext();
 
-        private MapperConfiguration fishMap = new MapperConfiguration(mc =>
+        private MapperConfiguration hazardMap = new MapperConfiguration(mc =>
         {
             //mc.Mappers.Add(DomainHelper.addressMapper.GetMappers().FirstOrDefault());
             //mc.Mappers.Add(DomainHelper.countryMapper.GetMappers().FirstOrDefault());
             //mc.Mappers.Add(DomainHelper.nameMapper.GetMappers().FirstOrDefault());
 
-            mc.CreateMap<Fish, dom.Fish>()
-              .ForMember(m => m.FishId, u => u.MapFrom(s => s.FishId))
+            mc.CreateMap<Hazard, dom.Hazard>()
+              .ForMember(m => m.HazardId, u => u.MapFrom(s => s.HazardId))
               .ForAllOtherMembers(m => m.Ignore());
         });
 
-        public List<dom.Fish> GetFishes()
+        public List<dom.Hazard> GetHazards()
         {
-            var fishList = new List<dom.Fish>();
-            var mapper = fishMap.CreateMapper();
+            var hazardList = new List<dom.Hazard>();
+            var mapper = hazardMap.CreateMapper();
             //var mapper2 = DomainHelper.nameMapper.CreateMapper();
 
-            foreach (var item in _db.Fish.ToList())
+            foreach (var item in _db.Hazard.ToList())
             {
-                var u = mapper.Map<dom.Fish>(item);
+                var u = mapper.Map<dom.Hazard>(item);
 
                 //u.Name = mapper2.Map<dom.Fish>(item);
-                fishList.Add(u);
+                hazardList.Add(u);
             }
 
-            return fishList;
+            return hazardList;
         }
     }
 }
