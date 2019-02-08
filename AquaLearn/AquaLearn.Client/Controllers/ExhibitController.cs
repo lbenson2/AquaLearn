@@ -12,5 +12,13 @@ namespace AquaLearn.Client.Controllers
         {
             return View();
         }
+
+        [HttpPost]
+        public PartialViewResult AddPartialToView(string id)
+        {
+          return PartialView(id);
+        }
+
+        
     }
 }

@@ -3,12 +3,46 @@
   ViewData["Title"] = "Index";
 }
 
+<style>
+  #deep {background-color:blue}
+  #coral {background-color:lightcoral}
+</style>
+
 <h1>Habitat</h1>
 
-<div class="dropdown">
-  <button onclick="myFunction()" class="dropbtn">Choose Habitat</button>
-  <div id="myDropdown" class="dropdown-content">
-    <a href="exhibit/_DeepOcean">1</a>
-    <a href="exhibit/_CoralReef">2</a>
+<div>
+  <button type="button" onclick="changeDeepSea(this.id)" id="_DeepOcean">Deep Sea</button>
+  <button type="button" onclick="changeCoralReef(this.id)" id="_CoralReef">Coral Reef</button>
+  
+  <div id="placeholder">
+    <div style="display:flex; justify-content:center;">
+      <canvas id="deep" width="480" height="480" style="border:1px solid #000000;"></canvas>
+    </div>
   </div>
 </div>
+
+<script>
+  function changeCoralReef(partialViewToInsert)
+  {
+    $.ajax({
+      url: '@Url.Action("AddPartialToView", "Exhibit")',
+      data: { id: partialViewToInsert },
+      type: "Post",
+      success: function (data) {
+        $('#placeholder').html(data);
+      }
+    });
+  }
+
+  function changeDeepSea(partialViewToInsert)
+  {
+    $.ajax({
+      url: '@Url.Action("AddPartialToView", "Exhibit")',
+      data: { id: partialViewToInsert },
+      type: "Post",
+      success: function (data) {
+        $('#placeholder').html(data);
+      }
+    });
+  }
+</script>
