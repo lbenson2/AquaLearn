@@ -46,13 +46,6 @@ namespace AquaLearn.Domain.Models
             }
         }
 
-        public float[] Moving(int i)
-        {
-            Fishes[i].Swim();
-
-            return Fishes[i].Vector3Current;
-        }
-
         public float[] PlaceStill(int i)
         {
             return Plants[i].Vector3Current;
