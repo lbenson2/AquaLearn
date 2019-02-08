@@ -13,7 +13,8 @@ namespace AquaLearn.Tests.Tests
         {
             sut = new Fish()
             {
-                Name = ""
+                Name = "",
+                Description=""
             };
 
         }
@@ -21,7 +22,11 @@ namespace AquaLearn.Tests.Tests
         [Fact]
         public void Test_FishProperties()
         {
+            //Assert.IsType<WaterType>(sut.WaterType);
             Assert.IsType<string>(sut.Name);
+            Assert.IsType<string>(sut.Description);
+            Assert.IsType<bool>(sut.Schooling);
+
         }
 
 
