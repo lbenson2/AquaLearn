@@ -19,4 +19,7 @@
     <ProjectReference Include="..\AquaLearn.Domain\AquaLearn.Domain.csproj" />
   </ItemGroup>
 
+
+  <ProjectExtensions><VisualStudio><UserProperties appsettings_1Development_1json__JSONSchema="http://json.schemastore.org/avro-avsc" /></VisualStudio></ProjectExtensions>
+
 </Project>
