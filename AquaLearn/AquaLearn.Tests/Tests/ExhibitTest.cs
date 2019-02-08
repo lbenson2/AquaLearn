@@ -13,7 +13,9 @@ namespace AquaLearn.Tests.Tests
         {
             sut = new Exhibit()
             {
-                Name=""
+                Name = "",
+                WaterType=new WaterType()
+                Fishes=new List<Fish>()
             };
 
 
@@ -21,9 +23,9 @@ namespace AquaLearn.Tests.Tests
         [Fact]
         public void Test_ExhibitProperties()
         {
-            //Assert.IsType<WaterType>(sut.WaterType);
+            Assert.IsType<WaterType>(sut.WaterType);
             Assert.IsType<string>(sut.Name);
-            //Assert.IsType<List<Fish>>(sut.Fishes);
+            Assert.IsType<List<Fish>>(sut.Fishes);
            // Assert.IsType<List<Plant>>(sut.Plants);
             //Assert.IsType<List<Trash>>(sut.Trash);
            // Assert.IsType<List<Hazard>>(sut.Hazard);
