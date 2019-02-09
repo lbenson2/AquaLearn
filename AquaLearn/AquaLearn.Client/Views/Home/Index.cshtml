@@ -28,6 +28,8 @@
         @:var vector3Destinations = [];
         @:var vector3Current = [0, 0, 0];
         @:var fishes = [];
+        @:var school = [];
+        @:var plants = [];
         // Turn each fish in Domain Exhibit into a ViewModel fish for the Client Exhibit
         foreach (var fish in Exhibit.Fishes)
         {
@@ -47,7 +49,18 @@
                 Model.Fishes = new List<FishViewModel>();
             }
             Model.Fishes.Add(newFish);
-            @:fishes.push([vector3Current[0], vector3Current[1], vector3Current[2]]);
+            
+            @:var schooling = false;
+            if (fish.Schooling == true)
+            {
+                @:schooling = true;
+                @:school.push([vector3Current[0], vector3Current[1], vector3Current[2]]);
+            }
+            else
+            {
+                @:schooling = false;
+                @:fishes.push([vector3Current[0], vector3Current[1], vector3Current[2]]);
+            }
 
             @:vector3Destinations.push([0,0,0]);
         }
@@ -60,11 +73,16 @@
                 //TODO: add other properties once they can be initialized
             };
 
+            @:vector3Current[0] = @plant.Vector3Current[0];
+            @:vector3Current[1] = @plant.Vector3Current[1];
+            @:vector3Current[2] = @plant.Vector3Current[2];
+
             if (Model.Plants == null)
             {
                 Model.Plants = new List<PlantViewModel>();
             }
             Model.Plants.Add(newPlant);
+            @:plants.push([vector3Current[0], vector3Current[1], vector3Current[2]]);
         }
         // Move Speed of fish
         @:var MoveSpeed = 1;
@@ -106,15 +124,21 @@
         for (var i = 0; i < fishes.length; i++)
         {
             fishes[i] = swim(i, fishes[i][0], fishes[i][1], fishes[i][2]);
-
+            ctx.fillStyle = "blue";
             drawSquares(fishes[i][0], fishes[i][1], fishes[i][2]);
         }
-        @*@{
-            for (int i = 0; i < Model.Plants.Count; i++)
-            {
-                @:drawRectangles(@Model.Plants[i].Vector3Current[0], @Model.Plants[i].Vector3Current[1], @Model.Plants[i].Vector3Current[2]);
-            }
-        }*@
+
+        for (var i = 0; i < school.length; i++) {
+            school[i] = swimTogether(i, school[i][0], school[i][1], school[i][2]);
+            ctx.fillStyle = "black";
+            drawSquares(school[i][0], school[i][1], school[i][2]);
+        }
+
+        for (var i = 0; i < plants.length; i++)
+        {
+            ctx.fillStyle = "green";
+            drawRectangles(plants[i][0], plants[i][1], plants[i][2]);
+        }
     }
 
     function update() {
@@ -125,38 +149,14 @@
     function swim(i, x, y, z) {
         vector3Current = [x, y, z];
         //Check if at/near destination before moving
-        if (vector3Destinations[i] == null
-            || vector3Destinations[i][0] == 0
-            && vector3Destinations[i][1] == 0
-            && vector3Destinations[i][2] == 0) {
-            setDestination(i, x, y, z);
-        }
+        checkDestination(i, vector3Destinations[i][0], vector3Destinations[i][1], vector3Destinations[i][2], vector3Current[0], vector3Current[1], vector3Current[2])
+        vector3Current = basicMove(i, vector3Destinations[i][0], vector3Destinations[i][1], vector3Destinations[i][2], vector3Current[0], vector3Current[1], vector3Current[2]);
 
-        if (vector3Current[0] == vector3Destinations[i][0]
-            && vector3Current[1] == vector3Destinations[i][1]) {
-            setDestination(i, x, y, z);
-        }
-
-        // Swim right
-        if (vector3Current[0] < vector3Destinations[i][0]) {
-            vector3Current[0] += MoveSpeed;
-        }
-
-        // Swim left
-        if (vector3Current[0] > vector3Destinations[i][0]) {
-            vector3Current[0] -= MoveSpeed;
-        }
-
-        // Swim down
-        if (vector3Current[1] < vector3Destinations[i][1]) {
-            vector3Current[1] += MoveSpeed;
-        }
-
-        // Swim up
-        if (vector3Current[1] > vector3Destinations[i][1]) {
-            vector3Current[1] -= MoveSpeed;
-        }
         return vector3Current;
+    }
+
+    function swimTogether(i, x, y, z) {
+        
     }
 
     function testMove(x,y,z) {
@@ -191,5 +191,44 @@
 
     function getRandomInt(max) {
         return Math.floor(Math.random() * Math.floor(max));
+    }
+
+    function checkDestination(i, xd, yd, zd, xc, yc, zc) {
+        var vector3Dest = [xd, yd, zd];
+        var vector3Curr = [xc, yc, zc];
+        if (vector3Dest[i] == null
+            || vector3Dest[0] == 0
+            && vector3Dest[1] == 0
+            && vector3Dest[2] == 0) {
+            setDestination(i, vector3Curr[0], vector3Curr[1], vector3Curr[2]);
+        }
+
+        if (vector3Curr[0] == vector3Dest[0]
+            && vector3Curr[1] == vector3Dest[1]) {
+            setDestination(i, vector3Curr[0], vector3Curr[1], vector3Curr[2]);
+        }
+    }
+
+    function basicMove(i, xd, yd, zd, xc, yc, zc) {
+
+        // Swim right
+        if (vector3Current[0] < vector3Destinations[i][0]) {
+            vector3Current[0] += MoveSpeed;
+        }
+
+        // Swim left
+        if (vector3Current[0] > vector3Destinations[i][0]) {
+            vector3Current[0] -= MoveSpeed;
+        }
+
+        // Swim down
+        if (vector3Current[1] < vector3Destinations[i][1]) {
+            vector3Current[1] += MoveSpeed;
+        }
+
+        // Swim up
+        if (vector3Current[1] > vector3Destinations[i][1]) {
+            vector3Current[1] -= MoveSpeed;
+        }
     }
 </script>

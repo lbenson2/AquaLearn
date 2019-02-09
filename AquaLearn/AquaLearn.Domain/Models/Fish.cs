@@ -16,6 +16,7 @@ namespace AquaLearn.Domain.Models
         public Random rnd { get; set; }
 
         private float moveSpeed = 1f;
+        private float[] schoolingVector3 { get; set; }
 
         public Fish()
         {
@@ -25,6 +26,32 @@ namespace AquaLearn.Domain.Models
 
         public void Init()
         {
+            // GET FISH TO INIT
+
+            int schooling = rnd.Next(0, 2);
+            if (schooling == 0)
+            {
+                Schooling = false;
+                Vector3Current = SetVector3();
+            }
+            else
+            {
+                Schooling = true;
+                if (schoolingVector3 == null)
+                {
+                    Vector3Current = SetVector3();
+                    schoolingVector3 = Vector3Current;
+                }
+                else
+                {
+                    Vector3Current = schoolingVector3;
+                }
+            }
+        }
+
+        private float[] SetVector3()
+        {
+            float[] vector3 = new float[] { 0, 0, 0 };
             // TODO: get canvas width to be cap
             float x = rnd.Next(0, 720);
             // TODO: get canvas height to be cap
@@ -32,11 +59,12 @@ namespace AquaLearn.Domain.Models
             // Determine which layer the fish will swim on
             float z = rnd.Next(-15, -1);
 
-            Vector3Current = new float[] { 0, 0, 0 };
             // Set the x, y, z values
-            Vector3Current[0] = x;
-            Vector3Current[1] = y;
-            Vector3Current[2] = z;
+            vector3[0] = x;
+            vector3[1] = y;
+            vector3[2] = z;
+
+            return vector3;
         }
     }
 }
