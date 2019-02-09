@@ -49,7 +49,7 @@
                 Model.Fishes = new List<FishViewModel>();
             }
             Model.Fishes.Add(newFish);
-            
+
             @:var schooling = false;
             if (fish.Schooling == true)
             {
@@ -61,8 +61,7 @@
                 @:schooling = false;
                 @:fishes.push([vector3Current[0], vector3Current[1], vector3Current[2]]);
             }
-
-            @:vector3Destinations.push([0,0,0]);
+            @:vector3Destinations.push([0, 0, 0]);
         }
         // Turn each plant in Domain Exhibit into a ViewModel plant for the Client Exhibit
         foreach (var plant in Exhibit.Plants)
@@ -86,6 +85,7 @@
         }
         // Move Speed of fish
         @:var MoveSpeed = 1;
+        @:var boundary = 100;
         // Canvas init
         @:var last = new Date();
         @:var myGameArea = draw();
@@ -93,6 +93,11 @@
 
         // FPS set to ~60fps
         @:setInterval(function () { update(); }, 17);
+    }
+
+    function update() {
+        clear();
+        place();
     }
 
     function draw() {
@@ -129,7 +134,8 @@
         }
 
         for (var i = 0; i < school.length; i++) {
-            school[i] = swimTogether(i, school[i][0], school[i][1], school[i][2]);
+            destPos = i + fishes.length;
+            school[i] = swimTogether(destPos, school[i][0], school[i][1], school[i][2]);
             ctx.fillStyle = "black";
             drawSquares(school[i][0], school[i][1], school[i][2]);
         }
@@ -141,75 +147,86 @@
         }
     }
 
-    function update() {
-        clear();
-        place();
-    }
-
     function swim(i, x, y, z) {
         vector3Current = [x, y, z];
         //Check if at/near destination before moving
-        checkDestination(i, vector3Destinations[i][0], vector3Destinations[i][1], vector3Destinations[i][2], vector3Current[0], vector3Current[1], vector3Current[2])
+        vector3Destinations[i] = checkDestination(vector3Destinations[i][0], vector3Destinations[i][1], vector3Destinations[i][2], vector3Current[0], vector3Current[1], vector3Current[2])
         vector3Current = basicMove(i, vector3Destinations[i][0], vector3Destinations[i][1], vector3Destinations[i][2], vector3Current[0], vector3Current[1], vector3Current[2]);
 
         return vector3Current;
     }
 
     function swimTogether(i, x, y, z) {
-        
-    }
-
-    function testMove(x,y,z) {
         vector3Current = [x, y, z];
-
-        vector3Current[0] += 1;
+        //Check if at/near destination before moving if lead fish
+        if (i == fishes.length) {
+            vector3Destinations[i] = checkDestination(vector3Destinations[i][0], vector3Destinations[i][1], vector3Destinations[i][2], vector3Current[0], vector3Current[1], vector3Current[2], false);
+        }
+        else {
+            vector3Destinations[i] = checkDestination(vector3Destinations[i][0], vector3Destinations[i][1], vector3Destinations[i][2], vector3Current[0], vector3Current[1], vector3Current[2], true);
+        }
+        vector3Current = schoolMove(i, vector3Destinations[i][0], vector3Destinations[i][1], vector3Destinations[i][2], vector3Current[0], vector3Current[1], vector3Current[2]);
 
         return vector3Current;
     }
 
-    function setDestination(i, x, y, z)
+    function setDestination(schooling)
     {
-        if (vector3Destinations[i] != null) {
+        vector3Dest = [0, 0, 0];
+        var screenWidthMax;
+        var screenHeightMax;
+        var screenDepthMax = 15;
+        var screenWidthMin;
+        var screenHeightMin;
+        var screenDepthMin = 0;
 
-            // TODO: get canvas width to be cap
-            var x = getRandomInt(720);
-            // TODO: get canvas height to be cap
-            var y = getRandomInt(480);
-            // Determine which layer the fish will swim on
-            var z = getRandomInt(-15);
-
-            // Set the x, y, z values
-            vector3Destinations[i][0] = x;
-            vector3Destinations[i][1] = y;
-            vector3Destinations[i][2] = z;
+        if (!schooling) {
+            screenWidthMax = 720;
+            screenHeightMax = 480;
+            screenWidthMin = 0;
+            screenHeightMin = 0;
         }
         else {
-            vector3Destinations[i] = [ 0, 0, 0 ];
-            setDestination(i, x, y, z);
+            screenWidthMax = vector3Destinations[fishes.length][0] + boundary;
+            screenHeightMax = vector3Destinations[fishes.length][1] + boundary;
+            screenWidthMin = vector3Destinations[fishes.length][0] - boundary;
+            screenHeightMin = vector3Destinations[fishes.length][1] - boundary;
         }
+
+        // TODO: get canvas width to be cap
+        vector3Dest[0] = getRandomIntRange(screenWidthMin, screenWidthMax);
+        // TODO: get canvas height to be cap
+        vector3Dest[1] = getRandomIntRange(screenHeightMin, screenHeightMax);
+        // Determine which layer the fish will swim on
+        vector3Dest[2] = getRandomIntRange(screenDepthMin, screenDepthMax);
+
+        return vector3Dest;
     }
 
-    function getRandomInt(max) {
-        return Math.floor(Math.random() * Math.floor(max));
+    function getRandomIntRange(min, max) {
+        return Math.floor((Math.random() * (max - min)) + min);
     }
 
-    function checkDestination(i, xd, yd, zd, xc, yc, zc) {
+    function checkDestination(xd, yd, zd, xc, yc, zc, schooling) {
         var vector3Dest = [xd, yd, zd];
         var vector3Curr = [xc, yc, zc];
-        if (vector3Dest[i] == null
-            || vector3Dest[0] == 0
+        if (vector3Dest[0] == 0
             && vector3Dest[1] == 0
             && vector3Dest[2] == 0) {
-            setDestination(i, vector3Curr[0], vector3Curr[1], vector3Curr[2]);
+            vector3Dest = setDestination(schooling);
         }
 
         if (vector3Curr[0] == vector3Dest[0]
             && vector3Curr[1] == vector3Dest[1]) {
-            setDestination(i, vector3Curr[0], vector3Curr[1], vector3Curr[2]);
+            vector3Dest = setDestination(schooling);
         }
+
+        return vector3Dest;
     }
 
     function basicMove(i, xd, yd, zd, xc, yc, zc) {
+        vector3Current = [xc, yc, zc];
+
 
         // Swim right
         if (vector3Current[0] < vector3Destinations[i][0]) {
@@ -230,5 +247,32 @@
         if (vector3Current[1] > vector3Destinations[i][1]) {
             vector3Current[1] -= MoveSpeed;
         }
+
+        return vector3Current;
+    }
+
+    function schoolMove(i, xd, yd, zd, xc, yc, zc) {
+        vector3Current = [xc, yc, zc];
+        // Swim right
+        if (vector3Current[0] < vector3Destinations[i][0]) {
+            vector3Current[0] += MoveSpeed;
+        }
+
+        // Swim left
+        if (vector3Current[0] > vector3Destinations[i][0]) {
+            vector3Current[0] -= MoveSpeed;
+        }
+
+        // Swim down
+        if (vector3Current[1] < vector3Destinations[i][1]) {
+            vector3Current[1] += MoveSpeed;
+        }
+
+        // Swim up
+        if (vector3Current[1] > vector3Destinations[i][1]) {
+            vector3Current[1] -= MoveSpeed;
+        }
+
+        return vector3Current;
     }
 </script>
