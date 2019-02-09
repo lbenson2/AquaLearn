@@ -49,7 +49,7 @@
                 Model.Fishes = new List<FishViewModel>();
             }
             Model.Fishes.Add(newFish);
-            
+
             @:var schooling = false;
             if (fish.Schooling == true)
             {
@@ -61,8 +61,7 @@
                 @:schooling = false;
                 @:fishes.push([vector3Current[0], vector3Current[1], vector3Current[2]]);
             }
-
-            @:vector3Destinations.push([0,0,0]);
+            @:vector3Destinations.push([0, 0, 0]);
         }
         // Turn each plant in Domain Exhibit into a ViewModel plant for the Client Exhibit
         foreach (var plant in Exhibit.Plants)
@@ -129,7 +128,8 @@
         }
 
         for (var i = 0; i < school.length; i++) {
-            school[i] = swimTogether(i, school[i][0], school[i][1], school[i][2]);
+            destPos = i + fishes.length;
+            school[i] = swimTogether(destPos, school[i][0], school[i][1], school[i][2]);
             ctx.fillStyle = "black";
             drawSquares(school[i][0], school[i][1], school[i][2]);
         }
@@ -149,67 +149,60 @@
     function swim(i, x, y, z) {
         vector3Current = [x, y, z];
         //Check if at/near destination before moving
-        checkDestination(i, vector3Destinations[i][0], vector3Destinations[i][1], vector3Destinations[i][2], vector3Current[0], vector3Current[1], vector3Current[2])
+        vector3Destinations[i] = checkDestination(vector3Destinations[i][0], vector3Destinations[i][1], vector3Destinations[i][2], vector3Current[0], vector3Current[1], vector3Current[2])
         vector3Current = basicMove(i, vector3Destinations[i][0], vector3Destinations[i][1], vector3Destinations[i][2], vector3Current[0], vector3Current[1], vector3Current[2]);
 
         return vector3Current;
     }
 
     function swimTogether(i, x, y, z) {
-        
-    }
-
-    function testMove(x,y,z) {
         vector3Current = [x, y, z];
-
-        vector3Current[0] += 1;
+        //Check if at/near destination before moving if lead fish
+        if (i == fishes.length) {
+            vector3Destinations[i] = checkDestination(vector3Destinations[i][0], vector3Destinations[i][1], vector3Destinations[i][2], vector3Current[0], vector3Current[1], vector3Current[2])
+        }
+        vector3Current = schoolMove(i, vector3Destinations[i][0], vector3Destinations[i][1], vector3Destinations[i][2], vector3Current[0], vector3Current[1], vector3Current[2]);
 
         return vector3Current;
     }
 
-    function setDestination(i, x, y, z)
+    function setDestination()
     {
-        if (vector3Destinations[i] != null) {
+        vector3Dest = [0,0,0];
+        // TODO: get canvas width to be cap
+        vector3Dest[0] = getRandomInt(720);
+        // TODO: get canvas height to be cap
+        vector3Dest[1] = getRandomInt(480);
+        // Determine which layer the fish will swim on
+        vector3Dest[2] = getRandomInt(-15);
 
-            // TODO: get canvas width to be cap
-            var x = getRandomInt(720);
-            // TODO: get canvas height to be cap
-            var y = getRandomInt(480);
-            // Determine which layer the fish will swim on
-            var z = getRandomInt(-15);
-
-            // Set the x, y, z values
-            vector3Destinations[i][0] = x;
-            vector3Destinations[i][1] = y;
-            vector3Destinations[i][2] = z;
-        }
-        else {
-            vector3Destinations[i] = [ 0, 0, 0 ];
-            setDestination(i, x, y, z);
-        }
+        return vector3Dest;
     }
 
     function getRandomInt(max) {
         return Math.floor(Math.random() * Math.floor(max));
     }
 
-    function checkDestination(i, xd, yd, zd, xc, yc, zc) {
+    function checkDestination(xd, yd, zd, xc, yc, zc) {
         var vector3Dest = [xd, yd, zd];
         var vector3Curr = [xc, yc, zc];
-        if (vector3Dest[i] == null
-            || vector3Dest[0] == 0
+        if (vector3Dest[0] == 0
             && vector3Dest[1] == 0
             && vector3Dest[2] == 0) {
-            setDestination(i, vector3Curr[0], vector3Curr[1], vector3Curr[2]);
+            vector3Dest = setDestination();
         }
 
         if (vector3Curr[0] == vector3Dest[0]
             && vector3Curr[1] == vector3Dest[1]) {
-            setDestination(i, vector3Curr[0], vector3Curr[1], vector3Curr[2]);
+            vector3Dest = setDestination();
         }
+
+        return vector3Dest;
     }
 
     function basicMove(i, xd, yd, zd, xc, yc, zc) {
+        vector3Current = [xc, yc, zc];
+
 
         // Swim right
         if (vector3Current[0] < vector3Destinations[i][0]) {
@@ -230,5 +223,32 @@
         if (vector3Current[1] > vector3Destinations[i][1]) {
             vector3Current[1] -= MoveSpeed;
         }
+
+        return vector3Current;
+    }
+
+    function schoolMove(i, xd, yd, zd, xc, yc, zc) {
+        vector3Current = [xc, yc, zc];
+        // Swim right
+        if (vector3Current[0] < vector3Destinations[i][0]) {
+            vector3Current[0] += MoveSpeed;
+        }
+
+        // Swim left
+        if (vector3Current[0] > vector3Destinations[i][0]) {
+            vector3Current[0] -= MoveSpeed;
+        }
+
+        // Swim down
+        if (vector3Current[1] < vector3Destinations[i][1]) {
+            vector3Current[1] += MoveSpeed;
+        }
+
+        // Swim up
+        if (vector3Current[1] > vector3Destinations[i][1]) {
+            vector3Current[1] -= MoveSpeed;
+        }
+
+        return vector3Current;
     }
 </script>
