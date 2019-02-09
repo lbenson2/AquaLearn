@@ -79,8 +79,8 @@
         // FPS set to ~60fps
         @:setInterval(function () { update(); }, 17);
     }
-
-    function changeCoralReef(partialViewToInsert)
+    
+    function changeCoralReef(partialViewToInsert, newExhibit)
     {
       $.ajax({
         url: '@Url.Action("AddPartialToView", "Exhibit")',
@@ -90,9 +90,13 @@
           $('#placeholder').html(data);
         }
       });
-    }
+      $.ajax({
+        url: '@Url.Action("SetCoral", "Exhibit")'
+      });
 
-    function changeDeepSea(partialViewToInsert)
+    }
+  
+    function changeDeepSea(partialViewToInsert, newExhibit)
     {
       $.ajax({
         url: '@Url.Action("AddPartialToView", "Exhibit")',
@@ -101,6 +105,9 @@
         success: function (data) {
           $('#placeholder').html(data);
         }
+      });
+      $.ajax({
+        url: '@Url.Action("SetDeep", "Exhibit")'
       });
     } 
 

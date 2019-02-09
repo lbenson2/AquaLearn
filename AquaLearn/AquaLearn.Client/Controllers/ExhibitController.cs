@@ -12,6 +12,7 @@ namespace AquaLearn.Client.Controllers
         public IActionResult Index()
         {
             var i = new ExhibitViewModel();
+            i.ExhibitId = 0;
             return View(i);
         }
 
@@ -21,6 +22,20 @@ namespace AquaLearn.Client.Controllers
           return PartialView(id);
         }
 
-        
-    }
+        public IActionResult SetDeep()
+        {
+          var i = new ExhibitViewModel();
+          i.ExhibitId = 0;
+          return View(i);
+        }
+
+        public IActionResult SetCoral()
+        {
+          var i = new ExhibitViewModel();
+          i.ExhibitId = 1;
+          return View(i);
+        }
+
+    
+  }
 }
