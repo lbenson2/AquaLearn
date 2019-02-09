@@ -85,6 +85,7 @@
         }
         // Move Speed of fish
         @:var MoveSpeed = 1;
+        @:var boundary = 100;
         // Canvas init
         @:var last = new Date();
         @:var myGameArea = draw();
@@ -92,6 +93,11 @@
 
         // FPS set to ~60fps
         @:setInterval(function () { update(); }, 17);
+    }
+
+    function update() {
+        clear();
+        place();
     }
 
     function draw() {
@@ -141,11 +147,6 @@
         }
     }
 
-    function update() {
-        clear();
-        place();
-    }
-
     function swim(i, x, y, z) {
         vector3Current = [x, y, z];
         //Check if at/near destination before moving
@@ -159,42 +160,65 @@
         vector3Current = [x, y, z];
         //Check if at/near destination before moving if lead fish
         if (i == fishes.length) {
-            vector3Destinations[i] = checkDestination(vector3Destinations[i][0], vector3Destinations[i][1], vector3Destinations[i][2], vector3Current[0], vector3Current[1], vector3Current[2])
+            vector3Destinations[i] = checkDestination(vector3Destinations[i][0], vector3Destinations[i][1], vector3Destinations[i][2], vector3Current[0], vector3Current[1], vector3Current[2], false);
+        }
+        else {
+            vector3Destinations[i] = checkDestination(vector3Destinations[i][0], vector3Destinations[i][1], vector3Destinations[i][2], vector3Current[0], vector3Current[1], vector3Current[2], true);
         }
         vector3Current = schoolMove(i, vector3Destinations[i][0], vector3Destinations[i][1], vector3Destinations[i][2], vector3Current[0], vector3Current[1], vector3Current[2]);
 
         return vector3Current;
     }
 
-    function setDestination()
+    function setDestination(schooling)
     {
-        vector3Dest = [0,0,0];
+        vector3Dest = [0, 0, 0];
+        var screenWidthMax;
+        var screenHeightMax;
+        var screenDepthMax = 15;
+        var screenWidthMin;
+        var screenHeightMin;
+        var screenDepthMin = 0;
+
+        if (!schooling) {
+            screenWidthMax = 720;
+            screenHeightMax = 480;
+            screenWidthMin = 0;
+            screenHeightMin = 0;
+        }
+        else {
+            screenWidthMax = vector3Destinations[fishes.length][0] + boundary;
+            screenHeightMax = vector3Destinations[fishes.length][1] + boundary;
+            screenWidthMin = vector3Destinations[fishes.length][0] - boundary;
+            screenHeightMin = vector3Destinations[fishes.length][1] - boundary;
+        }
+
         // TODO: get canvas width to be cap
-        vector3Dest[0] = getRandomInt(720);
+        vector3Dest[0] = getRandomIntRange(screenWidthMin, screenWidthMax);
         // TODO: get canvas height to be cap
-        vector3Dest[1] = getRandomInt(480);
+        vector3Dest[1] = getRandomIntRange(screenHeightMin, screenHeightMax);
         // Determine which layer the fish will swim on
-        vector3Dest[2] = getRandomInt(-15);
+        vector3Dest[2] = getRandomIntRange(screenDepthMin, screenDepthMax);
 
         return vector3Dest;
     }
 
-    function getRandomInt(max) {
-        return Math.floor(Math.random() * Math.floor(max));
+    function getRandomIntRange(min, max) {
+        return Math.floor((Math.random() * (max - min)) + min);
     }
 
-    function checkDestination(xd, yd, zd, xc, yc, zc) {
+    function checkDestination(xd, yd, zd, xc, yc, zc, schooling) {
         var vector3Dest = [xd, yd, zd];
         var vector3Curr = [xc, yc, zc];
         if (vector3Dest[0] == 0
             && vector3Dest[1] == 0
             && vector3Dest[2] == 0) {
-            vector3Dest = setDestination();
+            vector3Dest = setDestination(schooling);
         }
 
         if (vector3Curr[0] == vector3Dest[0]
             && vector3Curr[1] == vector3Dest[1]) {
-            vector3Dest = setDestination();
+            vector3Dest = setDestination(schooling);
         }
 
         return vector3Dest;
