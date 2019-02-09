@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using AquaLearn.Client.Models;
 
 namespace AquaLearn.Client.Controllers
 {
@@ -10,7 +11,9 @@ namespace AquaLearn.Client.Controllers
     {
         public IActionResult Index()
         {
-            return View();
+            var i = new ExhibitViewModel();
+            i.ExhibitId = 0;
+            return View(i);
         }
 
         [HttpPost]
@@ -19,6 +22,20 @@ namespace AquaLearn.Client.Controllers
           return PartialView(id);
         }
 
-        
-    }
+        public IActionResult SetDeep()
+        {
+          var i = new ExhibitViewModel();
+          i.ExhibitId = 0;
+          return View(i);
+        }
+
+        public IActionResult SetCoral()
+        {
+          var i = new ExhibitViewModel();
+          i.ExhibitId = 1;
+          return View(i);
+        }
+
+    
+  }
 }

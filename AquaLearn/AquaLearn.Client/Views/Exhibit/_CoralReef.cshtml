@@ -1,10 +1,186 @@
-﻿
+﻿@model AquaLearn.Client.Models.ExhibitViewModel
+@using aldm = AquaLearn.Domain.Models;
+@using AquaLearn.Client.Models;
 @{
-    ViewData["Title"] = "Index";
+  ViewData["Title"] = "Index";
 }
 
 <body>
   <div style="display:flex; justify-content:center;">
-    <canvas id="coral" width="480" height="480" style="border:1px solid #000000;"></canvas>
+    <canvas id="myCanvas" width="720" height="480" style="border:1px solid #000000;"></canvas>
   </div>
 </body>
+
+<script>
+
+  @{
+        // C# to JS
+        var Exhibit = new aldm.Exhibit();
+        @:var vector3Destinations = [];
+        @:var vector3Current = [0, 0, 0];
+        @:var fishes = [];
+        // Turn each fish in Domain Exhibit into a ViewModel fish for the Client Exhibit
+        foreach (var fish in Exhibit.Fishes)
+        {
+
+            FishViewModel newFish = new FishViewModel()
+            {
+                Vector3Current = fish.Vector3Current
+                //TODO: add other properties once they can be initialized
+            };
+
+            @:vector3Current[0] = @fish.Vector3Current[0];
+            @:vector3Current[1] = @fish.Vector3Current[1];
+            @:vector3Current[2] = @fish.Vector3Current[2];
+
+            if (Model.Fishes == null)
+            {
+                Model.Fishes = new List<FishViewModel>();
+            }
+            Model.Fishes.Add(newFish);
+            @:fishes.push([vector3Current[0], vector3Current[1], vector3Current[2]]);
+
+            @:vector3Destinations.push([0,0,0]);
+        }
+        // Turn each plant in Domain Exhibit into a ViewModel plant for the Client Exhibit
+        foreach (var plant in Exhibit.Plants)
+        {
+            PlantViewModel newPlant = new PlantViewModel()
+            {
+                Vector3Current = plant.Vector3Current
+                //TODO: add other properties once they can be initialized
+            };
+
+            if (Model.Plants == null)
+            {
+                Model.Plants = new List<PlantViewModel>();
+            }
+            Model.Plants.Add(newPlant);
+        }
+        // Move Speed of fish
+        @:var MoveSpeed = 1;
+        // Canvas init
+        @:var last = new Date();
+        @:var myGameArea = draw();
+        @:var ctx = getContext();
+
+        // FPS set to ~60fps
+        @:setInterval(function () { update(); }, 17);
+    }
+
+    function draw() {
+        var myGameArea = document.getElementById("myCanvas");
+        return myGameArea;
+    }
+
+    function getContext() {
+        if (myGameArea.getContext) {
+            ctx = myGameArea.getContext('2d');
+        }
+        return ctx;
+    }
+
+    function drawSquares(x, y, z) {
+        ctx.fillRect(x, y, 50, 50);
+    }
+
+    function drawRectangles(x, y, z) {
+        ctx.fillRect(x, y, 50, 50);
+    }
+
+    function clear() {
+        ctx.clearRect(0, 0, 720, 480);
+    }
+
+    function place()
+    {
+        for (var i = 0; i < fishes.length; i++)
+        {
+            fishes[i] = swim(i, fishes[i][0], fishes[i][1], fishes[i][2]);
+
+            drawSquares(fishes[i][0], fishes[i][1], fishes[i][2]);
+        }
+        @*@{
+            for (int i = 0; i < Model.Plants.Count; i++)
+            {
+                @:drawRectangles(@Model.Plants[i].Vector3Current[0], @Model.Plants[i].Vector3Current[1], @Model.Plants[i].Vector3Current[2]);
+            }
+        }*@
+    }
+
+    function update() {
+        clear();
+        place();
+    }
+
+    function swim(i, x, y, z) {
+        vector3Current = [x, y, z];
+        //Check if at/near destination before moving
+        if (vector3Destinations[i] == null
+            || vector3Destinations[i][0] == 0
+            && vector3Destinations[i][1] == 0
+            && vector3Destinations[i][2] == 0) {
+            setDestination(i, x, y, z);
+        }
+
+        if (vector3Current[0] == vector3Destinations[i][0]
+            && vector3Current[1] == vector3Destinations[i][1]) {
+            setDestination(i, x, y, z);
+        }
+
+        // Swim right
+        if (vector3Current[0] < vector3Destinations[i][0]) {
+            vector3Current[0] += MoveSpeed;
+        }
+
+        // Swim left
+        if (vector3Current[0] > vector3Destinations[i][0]) {
+            vector3Current[0] -= MoveSpeed;
+        }
+
+        // Swim down
+        if (vector3Current[1] < vector3Destinations[i][1]) {
+            vector3Current[1] += MoveSpeed;
+        }
+
+        // Swim up
+        if (vector3Current[1] > vector3Destinations[i][1]) {
+            vector3Current[1] -= MoveSpeed;
+        }
+        return vector3Current;
+    }
+
+    function testMove(x,y,z) {
+        vector3Current = [x, y, z];
+
+        vector3Current[0] += 1;
+
+        return vector3Current;
+    }
+
+    function setDestination(i, x, y, z)
+    {
+        if (vector3Destinations[i] != null) {
+
+            // TODO: get canvas width to be cap
+            var x = getRandomInt(720);
+            // TODO: get canvas height to be cap
+            var y = getRandomInt(480);
+            // Determine which layer the fish will swim on
+            var z = getRandomInt(-15);
+
+            // Set the x, y, z values
+            vector3Destinations[i][0] = x;
+            vector3Destinations[i][1] = y;
+            vector3Destinations[i][2] = z;
+        }
+        else {
+            vector3Destinations[i] = [ 0, 0, 0 ];
+            setDestination(i, x, y, z);
+        }
+    }
+
+    function getRandomInt(max) {
+        return Math.floor(Math.random() * Math.floor(max));
+    }
+</script>
