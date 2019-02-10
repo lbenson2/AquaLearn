@@ -9,8 +9,6 @@ namespace AquaLearn.Data
     public class AquaLearnDbContext : DbContext
     {
         public DbSet<Role> Role { get; set; }
-        public DbSet<Fish> Teacher { get; set; }
-        public DbSet<Fish> Student { get; set; }
         public DbSet<Fish> Fish { get; set; }
         public DbSet<Plant> Plant { get; set; }
         public DbSet<Trash> Trash { get; set; }
@@ -18,7 +16,7 @@ namespace AquaLearn.Data
         public DbSet<Exhibit> Exhibit { get; set; }
         public DbSet<WaterType> WaterType { get; set; }
         public DbSet<User> User { get; set; }
-        public DbSet<Role> Role { get; set; }
+        public DbSet<Classroom> Classroom  { get; set; }
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder builder)
@@ -36,6 +34,7 @@ namespace AquaLearn.Data
             builder.Entity<Hazard>().HasKey(e => e.HazardId);
             builder.Entity<User>().HasKey(e => e.UserId);
             builder.Entity<Role>().HasKey(e => e.RoleId);
+            builder.Entity<Classroom>().HasKey(e => e.ClassroomId);
 
         }
 

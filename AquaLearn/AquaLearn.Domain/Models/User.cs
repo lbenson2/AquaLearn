@@ -8,11 +8,16 @@ namespace AquaLearn.Domain.Models
     {
         public int UserId { get; set; }
         public Role UserRole { get; set; }
+        public string Username { get; set; }
+        public string Password { get; set; }
+        public int ClassroomId { get; set; }
 
         public User()
-        {
-            UserId = 0;
+        { 
             UserRole = new Role();
+            Username = string.Empty;
+            Password = string.Empty;
+            ClassroomId = ClassroomId;
         }
     }
 }
