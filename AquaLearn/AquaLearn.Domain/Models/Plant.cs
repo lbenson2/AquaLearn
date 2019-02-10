@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace AquaLearn.Domain.Models
@@ -10,6 +11,7 @@ namespace AquaLearn.Domain.Models
         public string Name { get; set; }
         public WaterType WaterType { get; set; }
         public string Description { get; set; }
+        [NotMapped]
         public float[] Vector3Current { get; set; }
         private Random rnd { get; set; }
 

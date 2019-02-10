@@ -4,16 +4,14 @@ using AquaLearn.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace AquaLearn.Data.Entities
+namespace AquaLearn.Data.Migrations
 {
     [DbContext(typeof(AquaLearnDbContext))]
-    [Migration("20190206024856_first_migration")]
-    partial class first_migration
+    partial class AquaLearnDbContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -109,6 +107,19 @@ namespace AquaLearn.Data.Entities
                     b.ToTable("Plant");
                 });
 
+            modelBuilder.Entity("AquaLearn.Domain.Models.Role", b =>
+                {
+                    b.Property<int>("RoleId")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Name");
+
+                    b.HasKey("RoleId");
+
+                    b.ToTable("Role");
+                });
+
             modelBuilder.Entity("AquaLearn.Domain.Models.Trash", b =>
                 {
                     b.Property<int>("TrashId")
@@ -132,6 +143,21 @@ namespace AquaLearn.Data.Entities
                     b.HasIndex("WaterTypeId");
 
                     b.ToTable("Trash");
+                });
+
+            modelBuilder.Entity("AquaLearn.Domain.Models.User", b =>
+                {
+                    b.Property<int>("UserId")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int?>("UserRoleRoleId");
+
+                    b.HasKey("UserId");
+
+                    b.HasIndex("UserRoleRoleId");
+
+                    b.ToTable("User");
                 });
 
             modelBuilder.Entity("AquaLearn.Domain.Models.WaterType", b =>
@@ -196,6 +222,13 @@ namespace AquaLearn.Data.Entities
                     b.HasOne("AquaLearn.Domain.Models.WaterType", "WaterType")
                         .WithMany()
                         .HasForeignKey("WaterTypeId");
+                });
+
+            modelBuilder.Entity("AquaLearn.Domain.Models.User", b =>
+                {
+                    b.HasOne("AquaLearn.Domain.Models.Role", "UserRole")
+                        .WithMany()
+                        .HasForeignKey("UserRoleRoleId");
                 });
 #pragma warning restore 612, 618
         }
