@@ -11,3 +11,30 @@
   <button type="button" onclick="chooseStudent(this.id)" id="_StudentRegister">Student</button>
   <button type="button" onclick="chooseTeacher(this.id)" id="_TeacherRegister">Teacher</button>
 </div>
+
+<script>
+
+  function chooseStudent(partialViewToInsert)
+  {
+    $.ajax({
+      url: '@Url.Action("AddPartialToView", "Home")',
+      data: { id: partialViewToInsert },
+      type: "Post",
+      success: function (data) {
+      $('#placeholder').html(data);
+      }
+    });
+  }
+
+  function chooseStudent(partialViewToInsert)
+  {
+    $.ajax({
+      url: '@Url.Action("AddPartialToView", "Home")',
+      data: { id: partialViewToInsert },
+      type: "Post",
+      success: function (data) {
+      $('#placeholder').html(data);
+      }
+    });
+  }
+</script>

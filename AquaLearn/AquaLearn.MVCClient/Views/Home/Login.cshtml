@@ -13,20 +13,27 @@
 </div>
 
 <script> 
-
+  function chooseStudent(partialViewToInsert)
+  {
+    $.ajax({
+      url: '@Url.Action("AddPartialToView", "Home")',
+      data: { id: partialViewToInsert },
+      type: "Post",
+      success: function (data) {
+      $('#placeholder').html(data);
+      }
+    });
+  }
+  
+  function chooseStudent(partialViewToInsert)
+  {
+    $.ajax({
+      url: '@Url.Action("AddPartialToView", "Home")',
+      data: { id: partialViewToInsert },
+      type: "Post",
+      success: function (data) {
+      $('#placeholder').html(data);
+      }
+    });
+  }
 </script>
-function chooseStudent(partialViewToInsert)
-    {
-      $.ajax({
-        url: '@Url.Action("AddPartialToView", "Exhibit")',
-        data: { id: partialViewToInsert },
-        type: "Post",
-        success: function (data) {
-        $('#placeholder').html(data);
-        }
-        });
-        $.ajax({
-        url: '@Url.Action("SetCoral", "Exhibit")'
-        });
-
-        }
