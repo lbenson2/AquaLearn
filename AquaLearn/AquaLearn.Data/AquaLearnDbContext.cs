@@ -17,7 +17,6 @@ namespace AquaLearn.Data
         public DbSet<WaterType> WaterType { get; set; }
         public DbSet<User> User { get; set; }
 
-
         protected override void OnConfiguring(DbContextOptionsBuilder builder)
         {
             builder.UseSqlServer("data source=ajdotnet2019.database.windows.net;database=AquaLearnDB;user id=sqladmin;password=Florida2019;");

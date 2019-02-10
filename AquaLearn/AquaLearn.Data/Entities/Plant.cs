@@ -4,12 +4,13 @@ using System.Text;
 
 namespace AquaLearn.Data.Entities
 {
-    public partial class Student
+    public partial class Plant
     {
-        public Student()
+        public Plant()
         {
 
         }
-        public int StudentId { get; set; }
+
+        public int PlantId { get; set; }
     }
 }

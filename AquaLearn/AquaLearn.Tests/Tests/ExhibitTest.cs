@@ -26,10 +26,11 @@ namespace AquaLearn.Tests.Tests
             Assert.IsType<WaterType>(sut.WaterType);
             Assert.IsType<string>(sut.Name);
             Assert.IsType<List<Fish>>(sut.Fishes);
-           // Assert.IsType<List<Plant>>(sut.Plants);
+            Assert.IsType<int>(sut.ExhibitId);
+            Assert.IsType<List<Plant>>(sut.Plants);
             //Assert.IsType<List<Trash>>(sut.Trash);
-           // Assert.IsType<List<Hazard>>(sut.Hazard);
-            //Assert.IsType<float>(sut.Vector3Current);
+            //Assert.IsType<List<Hazard>>(sut.Hazard);
+           // Assert.IsType<float>(sut.Vector3Current);
             //Assert.IsType<float>(sut.Vector3Destination);
 
 
