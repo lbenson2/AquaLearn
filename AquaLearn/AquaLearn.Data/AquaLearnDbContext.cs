@@ -8,6 +8,9 @@ namespace AquaLearn.Data
 {
     public class AquaLearnDbContext : DbContext
     {
+        public DbSet<Role> Role { get; set; }
+        public DbSet<Fish> Teacher { get; set; }
+        public DbSet<Fish> Student { get; set; }
         public DbSet<Fish> Fish { get; set; }
         public DbSet<Plant> Plant { get; set; }
         public DbSet<Trash> Trash { get; set; }
