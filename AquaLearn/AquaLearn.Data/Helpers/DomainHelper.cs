@@ -31,6 +31,7 @@ namespace AquaLearn.Data.Helpers
             //mc.CreateMap<Student, adm.Student>();
             //mc.CreateMap<Teacher, adm.Teacher>();
             mc.CreateMap<Role, adm.Role>()
+
         //.ForPath(m => m.Prefix.Name, u => u.MapFrom(src => src.Prefix))
         // .ForMember(m => m.First, u => u.MapFrom(src => src.First))
         // .ForMember(m => m.Last, u => u.MapFrom(src => src.Last));
