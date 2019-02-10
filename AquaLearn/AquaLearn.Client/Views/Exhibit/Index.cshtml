@@ -80,7 +80,7 @@
         @:setInterval(function () { update(); }, 17);
     }
     
-    function changeCoralReef(partialViewToInsert, newExhibit)
+    function changeCoralReef(partialViewToInsert)
     {
       $.ajax({
         url: '@Url.Action("AddPartialToView", "Exhibit")',
@@ -96,7 +96,7 @@
 
     }
   
-    function changeDeepSea(partialViewToInsert, newExhibit)
+    function changeDeepSea(partialViewToInsert)
     {
       $.ajax({
         url: '@Url.Action("AddPartialToView", "Exhibit")',
