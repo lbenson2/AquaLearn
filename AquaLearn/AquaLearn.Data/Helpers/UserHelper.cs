@@ -7,37 +7,38 @@ using AquaLearn.Data.Entities;
 using adm = AquaLearn.Domain.Models;
 
 namespace AquaLearn.Data.Helpers
+
 {
-    public class TeacherHelper
+    public class UserHelper
     {
         private AquaLearnDbContext _db = new AquaLearnDbContext();
 
-        private MapperConfiguration teacherMap = new MapperConfiguration(mc =>
+        private MapperConfiguration userMap = new MapperConfiguration(mc =>
         {
             mc.Mappers.Add(DomainHelper.addressMapper.GetMappers().FirstOrDefault());
             mc.Mappers.Add(DomainHelper.countryMapper.GetMappers().FirstOrDefault());
             mc.Mappers.Add(DomainHelper.nameMapper.GetMappers().FirstOrDefault());
 
-            mc.CreateMap<Teacher, adm.Teacher>()
-              .ForMember(m => m.TeacherId, u => u.MapFrom(s => s.TeacherId))
+            mc.CreateMap<User, adm.User>()
+              .ForMember(m => m.UserId, u => u.MapFrom(s => s.UserId))
               .ForAllOtherMembers(m => m.Ignore());
         });
 
-        public List<adm.Teacher> GetTeachers()
+        public List<adm.User> GetUsers()
         {
-            var teacherList = new List<adm.Teacher>();
-            var mapper = teacherMap.CreateMapper();
+            var userList = new List<adm.User>();
+            var mapper = userMap.CreateMapper();
             var mapper2 = DomainHelper.nameMapper.CreateMapper();
 
-            foreach (var item in _db.Teacher.ToList())
+            foreach (var item in _db.User.ToList())
             {
-                var u = mapper.Map<adm.Teacher>(item);
+                var u = mapper.Map<adm.User>(item);
 
                 //u.Name = mapper2.Map<adm.Name>(item);
-                teacherList.Add(u);
+                userList.Add(u);
             }
 
-            return teacherList;
+            return userList;
         }
     }
 }

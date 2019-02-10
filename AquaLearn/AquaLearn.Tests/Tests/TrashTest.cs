@@ -23,7 +23,7 @@ namespace AquaLearn.Tests.Tests
         {
 
             Assert.IsType<string>(sut.Name);
-
+            Assert.IsType<int>(sut.TrashId);
 
         }
     }

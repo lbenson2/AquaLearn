@@ -11,9 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AquaLearn.Migration", "Aqua
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AquaLearn.Tests", "AquaLearn.Tests\AquaLearn.Tests.csproj", "{FDB2D14F-4142-497E-8B02-C47E8B0FD331}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AquaLearn.Client", "AquaLearn.Client\AquaLearn.Client.csproj", "{C1C4D851-52F5-448D-862A-4B3D4FEC6945}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AquaLearn.MVCClient", "AquaLearn.MVCClient\AquaLearn.MVCClient.csproj", "{29129AD1-25A8-4B0F-A767-D583B6DD2D86}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AquaLearn.MVCClient", "AquaLearn.MVCClient\AquaLearn.MVCClient.csproj", "{29129AD1-25A8-4B0F-A767-D583B6DD2D86}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -37,10 +35,6 @@ Global
 		{FDB2D14F-4142-497E-8B02-C47E8B0FD331}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FDB2D14F-4142-497E-8B02-C47E8B0FD331}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FDB2D14F-4142-497E-8B02-C47E8B0FD331}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C1C4D851-52F5-448D-862A-4B3D4FEC6945}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C1C4D851-52F5-448D-862A-4B3D4FEC6945}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C1C4D851-52F5-448D-862A-4B3D4FEC6945}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C1C4D851-52F5-448D-862A-4B3D4FEC6945}.Release|Any CPU.Build.0 = Release|Any CPU
 		{29129AD1-25A8-4B0F-A767-D583B6DD2D86}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{29129AD1-25A8-4B0F-A767-D583B6DD2D86}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{29129AD1-25A8-4B0F-A767-D583B6DD2D86}.Release|Any CPU.ActiveCfg = Release|Any CPU
