@@ -16,8 +16,6 @@ namespace AquaLearn.Data
         public DbSet<Exhibit> Exhibit { get; set; }
         public DbSet<WaterType> WaterType { get; set; }
         public DbSet<User> User { get; set; }
-        //public DbSet<Role> Role { get; set; }
-
 
         protected override void OnConfiguring(DbContextOptionsBuilder builder)
         {

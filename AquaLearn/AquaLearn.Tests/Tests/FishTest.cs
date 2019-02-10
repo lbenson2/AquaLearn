@@ -26,6 +26,7 @@ namespace AquaLearn.Tests.Tests
             Assert.IsType<string>(sut.Name);
             Assert.IsType<string>(sut.Description);
             Assert.IsType<bool>(sut.Schooling);
+            Assert.IsType<int>(sut.FishId);
 
         }
 
