@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using AquaLearn.MVCClient.Models;
+using AquaLearn.Domain.Models;
 
 namespace AquaLearn.MVCClient.Controllers
 {
@@ -31,24 +32,29 @@ namespace AquaLearn.MVCClient.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        //public IActionResult LoginTeacher()
-        //{
-        //  var user = new User();
-        //  return View(user);
-        //}
+        public IActionResult LoginTeacher()
+        {
+          var user = new User();
+          return View(user);
+        }
 
-        //public IActionResult LoginStudent()
-        //{
-        //  var user = new User();
-        //  return View(user);
-        //}
+        public IActionResult LoginStudent()
+        {
+          var user = new User();
+          return View(user);
+        }
 
         public IActionResult Login()
         {
           return View("Login");
         }
 
-        [HttpPost]
+        public IActionResult Register()
+        {
+          return View("Register");
+        }
+
+    [HttpPost]
         public PartialViewResult AddPartialToView(string id)
         {
           return PartialView(id);
