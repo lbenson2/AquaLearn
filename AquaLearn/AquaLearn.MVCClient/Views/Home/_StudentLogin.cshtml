@@ -1,12 +1,14 @@
-﻿<div class="text-center">
+﻿@model AquaLearn.Domain.Models.User
+
+<div class="text-center">
   <h1>Login</h1>
   @using (Html.BeginForm("loginstudent", "user"))
   {
-    @*@Html.LabelFor(u => u.UserName, "Enter your name")
-    @Html.TextBoxFor(u => u.UserName)
+    @Html.LabelFor(u => u.Username, "Enter your name")<br />
+    @Html.TextBoxFor(u => u.Username)<br />
 
-    @Html.LabelFor(u => u.Password, "Enter your password")
-    @Html.TextBoxFor(u => u.Password)*@
+    @Html.LabelFor(u => u.Password, "Enter your password")<br />
+    @Html.TextBoxFor(u => u.Password)<br />
 
     <button type="submit">Submit</button>
   }
