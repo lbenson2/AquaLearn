@@ -26,10 +26,21 @@ namespace AquaLearn.MVCClient.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
+        //public IActionResult LoginTeacher()
+        //{
+        //  var user = new User();
+        //  return View(user);
+        //}
+
+        //public IActionResult LoginStudent()
+        //{
+        //  var user = new User();
+        //  return View(user);
+        //}
+
         public IActionResult Login()
         {
-          var user = new User();
-          return View(user);
+          return View("Login");
         }
   }
 }
