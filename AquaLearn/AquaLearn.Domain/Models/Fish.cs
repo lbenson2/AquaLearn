@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace AquaLearn.Domain.Models
@@ -11,11 +12,16 @@ namespace AquaLearn.Domain.Models
         public bool Schooling { get; set; }
         public WaterType WaterType { get; set; }
         public string Description { get; set; }
+        [NotMapped]
         public float[] Destination { get; private set; }
+        [NotMapped]
         public float[] Vector3Current { get; set; }
+        [NotMapped]
         public Random rnd { get; set; }
 
+        [NotMapped]
         private float moveSpeed = 1f;
+        [NotMapped]
         private float[] schoolingVector3 { get; set; }
 
         public Fish()

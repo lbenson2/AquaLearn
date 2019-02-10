@@ -1,0 +1,114 @@
+﻿@model AquaLearn.MVCClient.Models.ExhibitViewModel
+@using aldm = AquaLearn.Domain.Models;
+@using AquaLearn.MVCClient.Models;
+@{
+    ViewData["Title"] = "Exhibit";
+}
+@section Scripts
+{
+    <script src="@Url.Content("~/Scripts/Exhibit.js")"></script>
+}
+
+@*<style>
+      #deep {background-color:blue}
+      #coral {background-color:lightcoral}
+    </style>*@
+
+<h1>Habitat</h1>
+
+<div>
+    <button type="button" onclick="changeDeepSea(this.id)" id="_DeepOcean">Deep Sea</button>
+    <button type="button" onclick="changeCoralReef(this.id)" id="_CoralReef">Coral Reef</button>
+
+    <div id="placeholder">
+        <div style="display:flex; justify-content:center;">
+            <canvas id="myCanvas" width="720" height="480" style="border:1px solid #000000;"></canvas>
+        </div>
+    </div>
+</div>
+
+<script>
+
+  @{
+        // C# to JS
+        var Exhibit = new aldm.Exhibit();
+        // Turn each fish in Domain Exhibit into a ViewModel fish for the Client Exhibit
+        foreach (var fish in Exhibit.Fishes)
+        {
+            FishViewModel newFish = new FishViewModel()
+            {
+                Vector3Current = fish.Vector3Current
+                //TODO: add other properties once they can be initialized
+            };
+
+            @:setVector3Current(@fish.Vector3Current[0], @fish.Vector3Current[1], @fish.Vector3Current[2]);
+
+            if (Model.Fishes == null)
+            {
+                Model.Fishes = new List<FishViewModel>();
+            }
+            Model.Fishes.Add(newFish);
+
+            if (fish.Schooling == true)
+            {
+                @:schooling = true;
+                @:school.push([vector3Current[0], vector3Current[1], vector3Current[2]]);
+            }
+            else
+            {
+                @:schooling = false;
+                @:fishes.push([vector3Current[0], vector3Current[1], vector3Current[2]]);
+            }
+            @:vector3Destinations.push([0, 0, 0]);
+        }
+        // Turn each plant in Domain Exhibit into a ViewModel plant for the Client Exhibit
+        foreach (var plant in Exhibit.Plants)
+        {
+            PlantViewModel newPlant = new PlantViewModel()
+            {
+                Vector3Current = plant.Vector3Current
+                //TODO: add other properties once they can be initialized
+            };
+
+            @:setVector3Current(@plant.Vector3Current[0], @plant.Vector3Current[1], @plant.Vector3Current[2]);
+
+            if (Model.Plants == null)
+            {
+                Model.Plants = new List<PlantViewModel>();
+            }
+            Model.Plants.Add(newPlant);
+            @:plants.push([vector3Current[0], vector3Current[1], vector3Current[2]]);
+        }
+    }
+
+    function changeCoralReef(partialViewToInsert, newExhibit)
+    {
+      $.ajax({
+        url: '@Url.Action("AddPartialToView", "Exhibit")',
+        data: { id: partialViewToInsert },
+        type: "Post",
+        success: function (data) {
+          $('#placeholder').html(data);
+        }
+      });
+      $.ajax({
+        url: '@Url.Action("SetCoral", "Exhibit")'
+      });
+
+    }
+
+    function changeDeepSea(partialViewToInsert, newExhibit)
+    {
+      $.ajax({
+        url: '@Url.Action("AddPartialToView", "Exhibit")',
+        data: { id: partialViewToInsert },
+        type: "Post",
+        success: function (data) {
+          $('#placeholder').html(data);
+        }
+      });
+      $.ajax({
+        url: '@Url.Action("SetDeep", "Exhibit")'
+      });
+    }
+</script>

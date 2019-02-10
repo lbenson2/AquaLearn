@@ -17,6 +17,8 @@ namespace AquaLearn.Data
         public DbSet<Hazard> Hazard { get; set; }
         public DbSet<Exhibit> Exhibit { get; set; }
         public DbSet<WaterType> WaterType { get; set; }
+        public DbSet<User> User { get; set; }
+        public DbSet<Role> Role { get; set; }
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder builder)
@@ -32,6 +34,8 @@ namespace AquaLearn.Data
             builder.Entity<Trash>().HasKey(e => e.TrashId);
             builder.Entity<Exhibit>().HasKey(e => e.ExhibitId);
             builder.Entity<Hazard>().HasKey(e => e.HazardId);
+            builder.Entity<User>().HasKey(e => e.UserId);
+            builder.Entity<Role>().HasKey(e => e.RoleId);
 
         }
 

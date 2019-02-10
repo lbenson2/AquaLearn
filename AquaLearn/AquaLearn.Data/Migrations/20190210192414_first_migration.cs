@@ -1,12 +1,25 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace AquaLearn.Data.Entities
+namespace AquaLearn.Data.Migrations
 {
     public partial class first_migration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "Role",
+                columns: table => new
+                {
+                    RoleId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Role", x => x.RoleId);
+                });
+
             migrationBuilder.CreateTable(
                 name: "WaterType",
                 columns: table => new
@@ -18,6 +31,25 @@ namespace AquaLearn.Data.Entities
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_WaterType", x => x.WaterTypeId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "User",
+                columns: table => new
+                {
+                    UserId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    UserRoleRoleId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_User", x => x.UserId);
+                    table.ForeignKey(
+                        name: "FK_User_Role_UserRoleRoleId",
+                        column: x => x.UserRoleRoleId,
+                        principalTable: "Role",
+                        principalColumn: "RoleId",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -198,6 +230,11 @@ namespace AquaLearn.Data.Entities
                 name: "IX_Trash_WaterTypeId",
                 table: "Trash",
                 column: "WaterTypeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_User_UserRoleRoleId",
+                table: "User",
+                column: "UserRoleRoleId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -215,7 +252,13 @@ namespace AquaLearn.Data.Entities
                 name: "Trash");
 
             migrationBuilder.DropTable(
+                name: "User");
+
+            migrationBuilder.DropTable(
                 name: "Exhibit");
+
+            migrationBuilder.DropTable(
+                name: "Role");
 
             migrationBuilder.DropTable(
                 name: "WaterType");
