@@ -11,13 +11,14 @@ namespace AquaLearn.Domain.Models
         public string Username { get; set; }
         public string Password { get; set; }
         public int ClassroomId { get; set; }
-
+        public List<Quiz> Quizzes { get; set; }
         public User()
         { 
             UserRole = new Role();
             Username = string.Empty;
             Password = string.Empty;
             ClassroomId = ClassroomId;
+            Quizzes = new List<Quiz>();
         }
     }
 }
