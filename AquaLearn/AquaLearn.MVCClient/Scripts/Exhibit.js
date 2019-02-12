@@ -1,20 +1,37 @@
-﻿var vector3Destinations = [];
-var vector3Current = [0, 0, 0];
-var fishes = [];
-var school = [];
-var plants = [];
+﻿var vector3Destinations;
+var vector3Current;
+var fishes;
+var school;
+var plants;
 var schooling = false;
 
 // Move Speed of fish
-var MoveSpeed = 1;
-var boundary = 100;
+var MoveSpeed;
+var boundary;
 // Canvas init
-var last = new Date();
-var myGameArea = draw();
-var ctx = getContext();
+var last;
+var myGameArea;
+var ctx;
 
 // FPS set to ~60fps
-setInterval(function () { update(); }, 17);
+//setInterval(function () { update(); }, 17);
+
+function init() {
+    vector3Destinations = [];
+    vector3Current = [0, 0, 0];
+    fishes = [];
+    school = [];
+    plants = [];
+    schooling = false;
+
+    // Move Speed of fish
+    MoveSpeed = 1;
+    boundary = 100;
+    // Canvas init
+    last = new Date();
+    myGameArea = draw();
+    ctx = getContext();
+}
 
 function update() {
     clear();
