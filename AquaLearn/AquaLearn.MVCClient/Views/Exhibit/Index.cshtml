@@ -6,7 +6,7 @@
 }
 @section Scripts
 {
-    <script src="@Url.Content("~/Scripts/Exhibit.js")"></script>
+    <script src="@Url.Content("/Scripts/Exhibit.js")"></script>
 }
 
 @*<style>
@@ -28,8 +28,8 @@
 </div>
 
 <script>
-
   @{
+      @:init();
         // C# to JS
         var Exhibit = new aldm.Exhibit();
         // Turn each fish in Domain Exhibit into a ViewModel fish for the Client Exhibit
@@ -79,7 +79,12 @@
             Model.Plants.Add(newPlant);
             @:plants.push([vector3Current[0], vector3Current[1], vector3Current[2]]);
         }
+
+
+      // FPS set to ~60fps
+      @:setInterval(function() { update(); }, 17);
     }
+    console.log("here");
 
     function changeCoralReef(partialViewToInsert, newExhibit)
     {
