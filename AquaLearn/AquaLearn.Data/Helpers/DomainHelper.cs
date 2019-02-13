@@ -10,17 +10,9 @@ namespace AquaLearn.Data.Helpers
 {
     public static class DomainHelper
     {
-        public static MapperConfiguration countryMapper = new MapperConfiguration(mc =>
-        {
-           
-        });
+        
 
-        public static MapperConfiguration addressMapper = new MapperConfiguration(mc =>
-        {
-            mc.Mappers.Add(DomainHelper.countryMapper.GetMappers().FirstOrDefault());
-
-          
-        });
+        
      
 
         public static MapperConfiguration nameMapper = new MapperConfiguration(mc =>
