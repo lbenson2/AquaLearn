@@ -14,8 +14,7 @@ namespace AquaLearn.Data.Helpers
 
         private MapperConfiguration roleMap = new MapperConfiguration(mc =>
         {
-            mc.Mappers.Add(DomainHelper.addressMapper.GetMappers().FirstOrDefault());
-            mc.Mappers.Add(DomainHelper.countryMapper.GetMappers().FirstOrDefault());
+           
             mc.Mappers.Add(DomainHelper.nameMapper.GetMappers().FirstOrDefault());
 
             mc.CreateMap<Role, adm.Role>()
@@ -33,7 +32,7 @@ namespace AquaLearn.Data.Helpers
             {
                 var u = mapper.Map<adm.Role>(item);
 
-                //u.Name = mapper2.Map<adm.Name>(item);
+                //u.Name = mapper2.Map<adm.Role>(item);
                 roleList.Add(u);
             }
 
