@@ -75,16 +75,16 @@ function place() {
         drawSquares(fishes[i][0], fishes[i][1], fishes[i][2]);
     }
 
-    for (var i = 0; i < school.length; i++) {
-        destPos = i + fishes.length;
-        school[i] = swimTogether(destPos, school[i][0], school[i][1], school[i][2]);
+    for (var ii = 0; ii < school.length; ii++) {
+        destPos = ii + fishes.length;
+        school[ii] = swimTogether(destPos, school[ii][0], school[ii][1], school[ii][2]);
         ctx.fillStyle = "black";
-        drawSquares(school[i][0], school[i][1], school[i][2]);
+        drawSquares(school[ii][0], school[ii][1], school[ii][2]);
     }
 
-    for (var i = 0; i < plants.length; i++) {
+    for (var iii = 0; iii < plants.length; iii++) {
         ctx.fillStyle = "green";
-        drawRectangles(plants[i][0], plants[i][1], plants[i][2]);
+        drawRectangles(plants[iii][0], plants[iii][1], plants[iii][2]);
     }
 }
 
@@ -112,7 +112,7 @@ function swimTogether(i, x, y, z) {
 }
 
 function setDestination(schooling) {
-    vector3Dest = [0, 0, 0];
+    var vector3Dest = [0, 0, 0];
     var screenWidthMax;
     var screenHeightMax;
     var screenDepthMax = 15;
