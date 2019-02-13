@@ -3,21 +3,29 @@
 @{
     ViewData["Title"] = "Quiz";
 }
+<body>
+  <div  class="text-center"style="background: rgba(255, 255, 255, 0.3);">
+    <div>
+      <h1 class="display-4">Welcome to the Aqua Learn Quiz!</h1>
+      <p>Test your marine knowledge and rule the seven seas with our Quiz down below. Who's that marine life? </p>
+    </div>
+    <div class="row">
+      <div class="col-3" style="margin-left:8em; margin-right:1em;">
+        <div class="quiz-container">
+          <div id="quiz"></div>
+        </div>
+        <button id="previous">Previous Question</button>
+        <button id="next">Next Question</button>
+        <button id="submit">Submit Quiz</button>
+        <div id="results"></div>
+      </div>
 
-<h1>Quiz</h1>
-
-<div class="text-center">
-    <h1 class="display-4">Welcome to the Aqua Learn Quiz!</h1>
-    <p>Test your marine knowledge and rule the seven seas with our Quiz down below. Whos that marine life? </p>
-</div>
-
-<div class="quiz-container">
-    <div id="quiz"></div>
-</div>
-<button id="previous">Previous Question</button>
-<button id="next">Next Question</button>
-<button id="submit">Submit Quiz</button>
-<div id="results"></div>
+      <div class="col" style="margin-right:8em; margin-left:1em;">
+        <canvas id="myCanvas" width="480" height="480" style="border:1px solid #000000;"></canvas>
+      </div>
+    </div>
+  </div>
+</body>
 <style>
     .question {
         font-size: 30px;
@@ -30,10 +38,10 @@
         display: inline-block;
     }
 
-        .answers label {
-            display: block;
-            margin-bottom: 10px;
-        }
+    .answers label {
+        display: block;
+        margin-bottom: 10px;
+    }
 
     button {
         font-family: 'Work Sans', sans-serif;
@@ -47,13 +55,9 @@
         margin-bottom: 20px;
     }
 
-        button:hover {
-            background-color: #38a;
-        }
-
-
-
-
+    button:hover {
+        background-color: #38a;
+    }
 
     .slide {
         position: absolute;
@@ -358,12 +362,3 @@
         nextButton.addEventListener("click", showNextSlide);
     })();
 </script>
-
-
-<div class="row">
-    <div class="col">
-        <canvas id="myCanvas" width="720" height="480" style="border:1px solid #000000;"></canvas>
-    </div>
-</div>
-
-

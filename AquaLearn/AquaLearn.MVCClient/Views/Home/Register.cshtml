@@ -3,14 +3,16 @@
   ViewData["Title"] = "Register";
 }
 
-<h1>Register</h1>
+<body>
+  <div class="text-center" style="background: rgba(255, 255, 255, 0.3);">
+    <h2>To begin, please say if you are a student or a teacher.</h2>
 
-<p>To begin, please say if you are a student or a teacher.</p>
-
-<div id="placeholder">
-  <button type="button" onclick="chooseStudent(this.id)" id="_StudentRegister">Student</button>
-  <button type="button" onclick="chooseTeacher(this.id)" id="_TeacherRegister">Teacher</button>
-</div>
+    <div id="placeholder">
+      <button type="button" onclick="chooseStudent(this.id)" id="_StudentLogin">Student</button>
+      <button type="button" onclick="chooseTeacher(this.id)" id="_TeacherLogin">Teacher</button>
+    </div>
+  </div>
+</body>
 
 <script>
 
