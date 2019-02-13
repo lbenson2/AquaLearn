@@ -4,7 +4,7 @@ using System.Text;
 using System.Linq;
 using AutoMapper;
 using AquaLearn.Data.Entities;
-using dom = AquaLearn.Domain.Models;
+using adm = AquaLearn.Domain.Models;
 
 
 namespace AquaLearn.Data.Helpers
@@ -16,24 +16,24 @@ namespace AquaLearn.Data.Helpers
         private MapperConfiguration hazardMap = new MapperConfiguration(mc =>
         {
            
-            //mc.Mappers.Add(DomainHelper.nameMapper.GetMappers().FirstOrDefault());
+            mc.Mappers.Add(DomainHelper.nameMapper.GetMappers().FirstOrDefault());
 
-            mc.CreateMap<Hazard, dom.Hazard>()
+            mc.CreateMap<Hazard, adm.Hazard>()
               .ForMember(m => m.HazardId, u => u.MapFrom(s => s.HazardId))
               .ForAllOtherMembers(m => m.Ignore());
         });
 
-        public List<dom.Hazard> GetHazards()
+        public List<adm.Hazard> GetHazards()
         {
-            var hazardList = new List<dom.Hazard>();
+            var hazardList = new List<adm.Hazard>();
             var mapper = hazardMap.CreateMapper();
-            //var mapper2 = DomainHelper.nameMapper.CreateMapper();
+            var mapper2 = DomainHelper.nameMapper.CreateMapper();
 
             foreach (var item in _db.Hazard.ToList())
             {
-                var u = mapper.Map<dom.Hazard>(item);
+                var u = mapper.Map<adm.Hazard>(item);
 
-                //u.Name = mapper2.Map<dom.Fish>(item);
+                //u.Name = mapper2.Map<adm.Fish>(item);
                 hazardList.Add(u);
             }
 

@@ -33,7 +33,7 @@ namespace AquaLearn.Data.Helpers
             {
                 var u = mapper.Map<adm.User>(item);
 
-                //u.Name = mapper2.Map<adm.Name>(item);
+                //u.Name = mapper2.Map<adm.User>(item);
                 userList.Add(u);
             }
 
