@@ -16,7 +16,7 @@ namespace AquaLearn.Data.Helpers
         private MapperConfiguration fishMap = new MapperConfiguration(mc =>
         {
            
-            //mc.Mappers.Add(DomainHelper.nameMapper.GetMappers().FirstOrDefault());
+            mc.Mappers.Add(DomainHelper.nameMapper.GetMappers().FirstOrDefault());
 
             mc.CreateMap<Fish, adm.Fish>()
               .ForMember(m => m.FishId, u => u.MapFrom(s => s.FishId))
