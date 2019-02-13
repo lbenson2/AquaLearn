@@ -76,7 +76,7 @@ function place() {
     }
 
     for (var ii = 0; ii < school.length; ii++) {
-        destPos = ii + fishes.length;
+        var destPos = ii + fishes.length;
         school[ii] = swimTogether(destPos, school[ii][0], school[ii][1], school[ii][2]);
         ctx.fillStyle = "black";
         drawSquares(school[ii][0], school[ii][1], school[ii][2]);
