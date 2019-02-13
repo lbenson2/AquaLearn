@@ -15,8 +15,7 @@ namespace AquaLearn.Data.Helpers
 
         private MapperConfiguration plantMap = new MapperConfiguration(mc =>
         {
-            //mc.Mappers.Add(DomainHelper.addressMapper.GetMappers().FirstOrDefault());
-            //mc.Mappers.Add(DomainHelper.countryMapper.GetMappers().FirstOrDefault());
+           
             //mc.Mappers.Add(DomainHelper.nameMapper.GetMappers().FirstOrDefault());
 
             mc.CreateMap<Plant, dom.Plant>()
@@ -34,7 +33,7 @@ namespace AquaLearn.Data.Helpers
             {
                 var u = mapper.Map<dom.Plant>(item);
 
-                //u.Name = mapper2.Map<dom.Fish>(item);
+               // u.Name = mapper2.Map<dom.Plant>(item);
                 plantList.Add(u);
             }
 

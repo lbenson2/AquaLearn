@@ -15,8 +15,7 @@ namespace AquaLearn.Data.Helpers
 
         private MapperConfiguration exhibitMap = new MapperConfiguration(mc =>
         {
-            //mc.Mappers.Add(DomainHelper.addressMapper.GetMappers().FirstOrDefault());
-            //mc.Mappers.Add(DomainHelper.countryMapper.GetMappers().FirstOrDefault());
+         
             //mc.Mappers.Add(DomainHelper.nameMapper.GetMappers().FirstOrDefault());
 
             mc.CreateMap<Exhibit, dom.Exhibit>()
