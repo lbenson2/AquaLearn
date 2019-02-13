@@ -1,5 +1,6 @@
 ﻿using AquaLearn.Domain.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,6 +9,17 @@ namespace AquaLearn.Data
 {
     public class AquaLearnDbContext : DbContext
     {
+        public AquaLearnDbContext(IConfiguration config)
+        {
+            Configuration = config;
+        }
+
+        public AquaLearnDbContext()
+        { 
+        }
+
+
+        public static IConfiguration Configuration { get; set; }
         public DbSet<Role> Role { get; set; }
         public DbSet<Fish> Fish { get; set; }
         public DbSet<Plant> Plant { get; set; }
@@ -22,7 +34,7 @@ namespace AquaLearn.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder builder)
         {
-            builder.UseSqlServer("data source=ajdotnet2019.database.windows.net;database=AquaLearnDB;user id=sqladmin;password=Florida2019;");
+            builder.UseSqlServer(Configuration.GetConnectionString("AquaLearnDb"));
         }
 
         protected override void OnModelCreating(ModelBuilder builder)
