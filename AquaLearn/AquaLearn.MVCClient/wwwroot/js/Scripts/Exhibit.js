@@ -1,36 +1,51 @@
-﻿var vector3Destinations;
-var vector3Current;
-var fishes;
-var school;
-var plants;
-var schooling = false;
+﻿var vector3Destinations = [];
+var vector3Current = [0, 0, 0];
+var numFish = 3;
+var fishes = [];
+var school = [];
+var plants = [];
+var schooling = getRandomIntRange(0, 2);
 
 // Move Speed of fish
-var MoveSpeed;
-var boundary;
+var MoveSpeed = 1;
+var canvasHeight = 480;
+var canvasWidth = 720;
+var boundary = 100;
 // Canvas init
-var last;
-var myGameArea;
-var ctx;
+var last = new Date();
+var myGameArea = draw();
+var ctx = getContext();
+var schoolingVector3 = setRndVector3();
 
-// FPS set to ~60fps
-//setInterval(function () { update(); }, 17);
+setInterval(function () { update(); }, 17);
 
 function init() {
-    vector3Destinations = [];
-    vector3Current = [0, 0, 0];
-    fishes = [];
-    school = [];
-    plants = [];
-    schooling = false;
+    
+    for (var i = 0; i <= numFish; i++) {
+        // add fish to fishes
+        if (schooling == 0) {
+            vector3Current = setRndVector3();
+        }
+        else {
+            if (schoolingVector3 == null) {
+                vector3Current = setRndVector3();
+                schoolingVector3 = Vector3Current;
+            }
+            else {
+                vector3Current = schoolingVector3;
+            }
+        }
 
-    // Move Speed of fish
-    MoveSpeed = 1;
-    boundary = 100;
-    // Canvas init
-    last = new Date();
-    myGameArea = draw();
-    ctx = getContext();
+        fishes.push(vector3Current);
+    }
+}
+
+function setRndVector3()
+{
+    // TODO: get canvas height and width
+    var vector3 = float[getRandomIntRange(0, 720), getRandomIntRange(0, 480), getRandomIntRange(-15, -1)];
+
+    return vector3;
 }
 
 function update() {
