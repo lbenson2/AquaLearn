@@ -14,11 +14,6 @@
 
   <ItemGroup>
     <Content Remove="wwwroot\js\Exhibit.js" />
-    <Content Remove="wwwroot\js\Scripts\Exhibit.js" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="wwwroot\js\Scripts\Exhibit.js" />
   </ItemGroup>
 
 
