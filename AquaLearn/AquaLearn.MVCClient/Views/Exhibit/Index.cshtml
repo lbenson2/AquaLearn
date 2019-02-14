@@ -9,11 +9,17 @@
     <script src="@Url.Content("/Scripts/Exhibit.js")"></script>
 }
 
+<style>
+  import url('https://fonts.googleapis.com/css?family=Fredoka+One');
+</style>
+
 <div">
-  <h1>Habitat</h1>
+  <h1 class="text-center" style="font-family:'Fredoka One', cursive;">Habitat</h1>
   <div>
-    <button type="button" onclick="changeDeepSea(this.id)" id="_DeepOcean">Deep Sea</button>
-    <button type="button" onclick="changeCoralReef(this.id)" id="_CoralReef">Coral Reef</button>
+    <div class="text-center">
+      <button type="button" onclick="changeDeepSea(this.id)" id="_DeepOcean">Deep Sea</button>
+      <button type="button" onclick="changeCoralReef(this.id)" id="_CoralReef">Coral Reef</button>
+    </div>
 
     <div id="placeholder">
       <div style="display:flex; justify-content:center;">
