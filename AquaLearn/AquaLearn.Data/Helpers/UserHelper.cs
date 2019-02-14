@@ -12,7 +12,7 @@ namespace AquaLearn.Data.Helpers
 {
     public class UserHelper
     {
-        private static AquaLearnDbContext _db = new AquaLearnDbContext();
+        private static AquaLearnIMDbContext _db = new AquaLearnIMDbContext();
 
         private MapperConfiguration userMap = new MapperConfiguration(mc =>
         {
@@ -34,6 +34,7 @@ namespace AquaLearn.Data.Helpers
                 du.Add(new adm.User()
                 {
                     UserId = item.UserId
+
                 });
             }
 

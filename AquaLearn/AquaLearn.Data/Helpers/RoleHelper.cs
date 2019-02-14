@@ -10,7 +10,7 @@ namespace AquaLearn.Data.Helpers
 {
     public class RoleHelper
     {
-        private AquaLearnDbContext _db = new AquaLearnDbContext();
+        private AquaLearnIMDbContext _db = new AquaLearnIMDbContext();
 
         private MapperConfiguration roleMap = new MapperConfiguration(mc =>
         {
@@ -21,6 +21,21 @@ namespace AquaLearn.Data.Helpers
               .ForMember(m => m.RoleId, u => u.MapFrom(s => s.RoleId))
               .ForAllOtherMembers(m => m.Ignore());
         });
+
+        public List<adm.Role> GetRoles2()
+        {
+            var dr = new List<adm.Role>();
+
+            foreach (var item in _db.Role.ToList())
+            {
+                dr.Add(new adm.Role()
+                {
+                    RoleId = item.RoleId
+                });
+            }
+
+            return dr;
+        }
 
         public List<adm.Role> GetRoles()
         {

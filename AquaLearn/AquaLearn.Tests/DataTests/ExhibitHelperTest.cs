@@ -32,7 +32,17 @@ namespace AquaLearn.Tests.DataTests
         [Fact]
         public void Test_GetExhibits()
         {
-            //var actual = Sut.GetExhibits();
+            var actual = Sut.GetExhibits();
+
+            Assert.NotNull(actual);
+            //Assert.True(actual.Count > 0);
+            //Assert.NotNull(actual.Username == "Spkr");
+        }
+
+        [Fact]
+        public void Test_GetExhibits2()
+        {
+            //var actual2 = Sut.GetExhibits2;
 
             //Assert.NotNull(actual);
             //Assert.True(actual.Count > 0);

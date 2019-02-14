@@ -11,7 +11,7 @@ namespace AquaLearn.Data.Helpers
 {
     public class TrashHelper
     {
-        private AquaLearnDbContext _db = new AquaLearnDbContext();
+        private AquaLearnIMDbContext _db = new AquaLearnIMDbContext();
 
         private MapperConfiguration trashMap = new MapperConfiguration(mc =>
         {
@@ -22,6 +22,22 @@ namespace AquaLearn.Data.Helpers
               .ForMember(m => m.TrashId, u => u.MapFrom(s => s.TrashId))
               .ForAllOtherMembers(m => m.Ignore());
         });
+
+        public List<adm.Trash> GetTrash2()
+        {
+            var dt = new List<adm.Trash>();
+
+            foreach (var item in _db.Trash.ToList())
+            {
+                dt.Add(new adm.Trash()
+                {
+                    TrashId = item.TrashId
+                });
+            }
+
+            return dt;
+        }
+
 
         public List<adm.Trash> GetTrash()
         {

@@ -11,7 +11,7 @@ namespace AquaLearn.Data.Helpers
 {
     public class PlantHelper
     {
-        private AquaLearnDbContext _db = new AquaLearnDbContext();
+        private AquaLearnIMDbContext _db = new AquaLearnIMDbContext();
 
         private MapperConfiguration plantMap = new MapperConfiguration(mc =>
         {
@@ -22,6 +22,21 @@ namespace AquaLearn.Data.Helpers
               .ForMember(m => m.PlantId, u => u.MapFrom(s => s.PlantId))
               .ForAllOtherMembers(m => m.Ignore());
         });
+
+        public List<adm.Plant> GetPlants2()
+        {
+            var dp = new List<adm.Plant>();
+
+            foreach (var item in _db.Plant.ToList())
+            {
+                dp.Add(new adm.Plant()
+                {
+                    PlantId = item.PlantId
+                });
+            }
+
+            return dp;
+        }
 
         public List<adm.Plant> GetPlants()
         {
