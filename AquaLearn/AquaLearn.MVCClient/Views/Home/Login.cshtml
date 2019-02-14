@@ -3,14 +3,20 @@
   ViewData["Title"] = "Login";
 }
 
-<h1>Login</h1>
+<style>
+  import url('https://fonts.googleapis.com/css?family=Fredoka+One');
+</style>
 
-<p>To begin, please say if you are a student or a teacher.</p>
+<body>
+  <div class="text-center" style="background: rgba(255, 255, 255, 0.3);">
+    <h2 style="font-family:'Fredoka One', cursive;">Are you a student or a teacher?</h2>
 
-<div id="placeholder">
-  <button type="button" onclick="chooseStudent(this.id)" id="_StudentLogin">Student</button>
-  <button type="button" onclick="chooseTeacher(this.id)" id="_TeacherLogin">Teacher</button>
-</div>
+    <div id="placeholder">
+      <button type="button" onclick="chooseStudent(this.id)" id="_StudentLogin">Student</button>
+      <button type="button" onclick="chooseTeacher(this.id)" id="_TeacherLogin">Teacher</button>
+    </div>
+  </div>
+</body>
 
 <script> 
   function chooseStudent(partialViewToInsert)
@@ -25,7 +31,7 @@
     });
   }
   
-  function chooseStudent(partialViewToInsert)
+  function chooseTeacher(partialViewToInsert)
   {
     $.ajax({
       url: '@Url.Action("AddPartialToView", "Home")',
