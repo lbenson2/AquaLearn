@@ -19,5 +19,7 @@ namespace AquaLearn.Domain.Models
             Password = string.Empty;
             Quizzes = new List<Quiz>();
         }
+
+       
     }
 }

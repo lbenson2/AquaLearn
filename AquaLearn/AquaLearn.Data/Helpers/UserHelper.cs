@@ -5,13 +5,14 @@ using System.Linq;
 using AutoMapper;
 using AquaLearn.Data.Entities;
 using adm = AquaLearn.Domain.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace AquaLearn.Data.Helpers
 
 {
     public class UserHelper
     {
-        private AquaLearnDbContext _db = new AquaLearnDbContext();
+        private static AquaLearnDbContext _db = new AquaLearnDbContext();
 
         private MapperConfiguration userMap = new MapperConfiguration(mc =>
         {
@@ -23,7 +24,23 @@ namespace AquaLearn.Data.Helpers
               .ForAllOtherMembers(m => m.Ignore());
         });
 
-        public List<adm.User> GetUsers()
+
+        public static List<adm.User> GetUsers()
+        {
+            var du = new List<adm.User>();
+
+            foreach (var item in _db.User.ToList())
+            {
+                du.Add(new adm.User()
+                {
+                    UserId = item.UserId
+                });
+            }
+
+            return du;
+        }
+
+        public List<adm.User> GetUsers2()
         {
             var userList = new List<adm.User>();
             var mapper = userMap.CreateMapper();
@@ -33,11 +50,13 @@ namespace AquaLearn.Data.Helpers
             {
                 var u = mapper.Map<adm.User>(item);
 
-                //u.Name = mapper2.Map<adm.User>(item);
+               // u.Username = mapper2.Map<adm.User.Username>(item);
                 userList.Add(u);
             }
 
             return userList;
         }
+
+        
     }
 }
