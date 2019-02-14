@@ -17,8 +17,9 @@ namespace AquaLearn.Domain.Models
             UserRole = new Role();
             Username = string.Empty;
             Password = string.Empty;
-            ClassroomId = ClassroomId;
             Quizzes = new List<Quiz>();
         }
+
+       
     }
 }

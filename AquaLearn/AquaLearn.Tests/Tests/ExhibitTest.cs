@@ -14,8 +14,13 @@ namespace AquaLearn.Tests.Tests
             sut = new Exhibit()
             {
                 Name = "",
-                WaterType=new WaterType(),
-                Fishes=new List<Fish>()
+                WaterType = new WaterType(),
+                Fishes = new List<Fish>(),
+                Trash = new List<Trash>(),
+                Hazard = new List<Hazard>(),
+                //Vector3Current = new float[],
+                //Vector3Current = new float[],
+
             };
 
 
@@ -28,9 +33,9 @@ namespace AquaLearn.Tests.Tests
             Assert.IsType<List<Fish>>(sut.Fishes);
             Assert.IsType<int>(sut.ExhibitId);
             Assert.IsType<List<Plant>>(sut.Plants);
-            //Assert.IsType<List<Trash>>(sut.Trash);
-            //Assert.IsType<List<Hazard>>(sut.Hazard);
-           // Assert.IsType<float>(sut.Vector3Current);
+            Assert.IsType<List<Trash>>(sut.Trash);
+            Assert.IsType<List<Hazard>>(sut.Hazard);
+            //Assert.IsType<float[]>(sut.Vector3Current);
             //Assert.IsType<float>(sut.Vector3Destination);
 
 

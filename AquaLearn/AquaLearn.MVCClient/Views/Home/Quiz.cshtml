@@ -1,5 +1,7 @@
 ﻿@model AquaLearn.MVCClient.Models.ExhibitViewModel
 @using AquaLearn.Domain.Models;
+@using aldm = AquaLearn.Domain.Models;
+@using AquaLearn.MVCClient.Models;
 @{
     ViewData["Title"] = "Quiz";
 }
@@ -64,302 +66,288 @@
         background-color: #38a;
     }
 
-    .slide {
-        position: absolute;
-        left: 0px;
-        top: 0px;
-        width: 100%;
-        z-index: 1;
-        opacity: 0;
-        transition: opacity 0.5s;
-    }
+    <script>
 
-    .active-slide {
-        opacity: 1;
-        z-index: 2;
-    }
+        (function () {
+            const myQuestions = [
+                {
 
-    .quiz-container {
-        position: relative;
-        height: 200px;
-        margin-top: 40px;
-    }
-</style>
-
-<script>
-
-    (function () {
-        const myQuestions = [
-            {
-                question: "Who is that fish?",
-                answers: {
-                    a: "Shark",
-                    b: "Swordfish",
-                    c: "Tuna",
-                    d: "Clown Fish"
+                    question: "Who is that fish?",
+                    answers: {
+                        a: "Shark",
+                        b: "Swordfish",
+                        c: "Tuna",
+                        d: "Clown Fish"
+                    },
+                    correctAnswer: "a"
                 },
-                correctAnswer: "a"
-            },
-            {
-                question: "Who is that fish?",
-                answers: {
-                    a: "Swordfish",
-                    b: "Shark",
-                    c: "Tuna",
-                    d: "Clown Fish"
+                {
+                    question: "Who is that fish?",
+                    answers: {
+                        a: "Swordfish",
+                        b: "Shark",
+                        c: "Tuna",
+                        d: "Clown Fish"
+                    },
+                    correctAnswer: "a"
                 },
-                correctAnswer: "a"
-            },
-            {
-                question: "Who is that fish?",
-                answers: {
-                    a: "Swordfish",
-                    b: "Shark",
-                    c: "Tuna",
-                    d: "Clown Fish"
+                {
+                    question: "Who is that fish?",
+                    answers: {
+                        a: "Swordfish",
+                        b: "Shark",
+                        c: "Tuna",
+                        d: "Clown Fish"
+                    },
+                    correctAnswer: "c"
                 },
-                correctAnswer: "c"
-            },
-            {
-                question: "Who is that fish?",
-                answers: {
-                    a: "Swordfish",
-                    b: "Clown Fish",
-                    c: "Tuna",
-                    d: "Shark"
+                {
+                    question: "Who is that fish?",
+                    answers: {
+                        a: "Swordfish",
+                        b: "Clown Fish",
+                        c: "Tuna",
+                        d: "Shark"
+                    },
+                    correctAnswer: "b"
                 },
-                correctAnswer: "b"
-            },
-            {
-                question: "Who is that fish?",
-                answers: {
-                    a: "StingRay",
-                    b: "JellyFish",
-                    c: "Eel",
-                    d: "Seahorse"
+                {
+                    question: "Who is that fish?",
+                    answers: {
+                        a: "StingRay",
+                        b: "JellyFish",
+                        c: "Eel",
+                        d: "Seahorse"
+                    },
+                    correctAnswer: "a"
                 },
-                correctAnswer: "a"
-            },
-            {
-                question: "Who is that fish?",
-                answers: {
-                    a: "StingRay",
-                    b: "Eel",
-                    c: "JellyFish",
-                    d: "Seahorse"
+                {
+                    question: "Who is that fish?",
+                    answers: {
+                        a: "StingRay",
+                        b: "Eel",
+                        c: "JellyFish",
+                        d: "Seahorse"
+                    },
+                    correctAnswer: "c"
                 },
-                correctAnswer: "c"
-            },
-            {
-                question: "Who is that fish?",
-                answers: {
-                    a: "StingRay",
-                    b: "Eel",
-                    c: "JellyFish",
-                    d: "Seahorse"
+                {
+                    question: "Who is that fish?",
+                    answers: {
+                        a: "StingRay",
+                        b: "Eel",
+                        c: "JellyFish",
+                        d: "Seahorse"
+                    },
+                    correctAnswer: "b"
                 },
-                correctAnswer: "b"
-            },
-            {
-                question: "Who is that fish?",
-                answers: {
-                    a: "StingRay",
-                    b: "Seahorse",
-                    c: "JellyFish",
-                    d: "Eel"
+                {
+                    question: "Who is that fish?",
+                    answers: {
+                        a: "StingRay",
+                        b: "Seahorse",
+                        c: "JellyFish",
+                        d: "Eel"
+                    },
+                    correctAnswer: "b"
                 },
-                correctAnswer: "b"
-            },
-            {
-                question: "Who is that Mammal?",
-                answers: {
-                    a: "Blue Whale",
-                    b: "Seal",
-                    c: "Walrus",
-                    d: "Dolphin"
+                {
+                    question: "Who is that Mammal?",
+                    answers: {
+                        a: "Blue Whale",
+                        b: "Seal",
+                        c: "Walrus",
+                        d: "Dolphin"
+                    },
+                    correctAnswer: "a"
                 },
-                correctAnswer: "a"
-            },
-            {
-                question: "Who is that Mammal?",
-                answers: {
-                    a: "Blue Whale",
-                    b: "Walruse",
-                    c: "Seal",
-                    d: "Dolphin"
+                {
+                    question: "Who is that Mammal?",
+                    answers: {
+                        a: "Blue Whale",
+                        b: "Walruse",
+                        c: "Seal",
+                        d: "Dolphin"
+                    },
+                    correctAnswer: "c"
                 },
-                correctAnswer: "c"
-            },
-            {
-                question: "Who is that Mammal?",
-                answers: {
-                    a: "Blue Whale",
-                    b: "Seal",
-                    c: "Walrus",
-                    d: "Dolphin"
+                {
+                    question: "Who is that Mammal?",
+                    answers: {
+                        a: "Blue Whale",
+                        b: "Seal",
+                        c: "Walrus",
+                        d: "Dolphin"
+                    },
+                    correctAnswer: "c"
                 },
-                correctAnswer: "c"
-            },
-            {
-                question: "Who is that Mammal?",
-                answers: {
-                    a: "Blue Whale",
-                    b: "Seal",
-                    c: "Walrus",
-                    d: "Dolphin"
+                {
+                    question: "Who is that Mammal?",
+                    answers: {
+                        a: "Blue Whale",
+                        b: "Seal",
+                        c: "Walrus",
+                        d: "Dolphin"
+                    },
+                    correctAnswer: "d"
                 },
-                correctAnswer: "d"
-            },
-            {
-                question: "Who is that Mammal?",
-                answers: {
-                    a: "Squid",
-                    b: "Octopus",
-                    c: "Manatee",
-                    d: "Oyster"
+                {
+                    question: "Who is that Mammal?",
+                    answers: {
+                        a: "Squid",
+                        b: "Octopus",
+                        c: "Manatee",
+                        d: "Oyster"
+                    },
+                    correctAnswer: "c"
                 },
-                correctAnswer: "c"
-            },
-            {
-                question: "Who is that Mollusk?",
-                answers: {
-                    a: "Squid",
-                    b: "Octopus",
-                    c: "Manatee",
-                    d: "Oyster"
+                {
+                    question: "Who is that Mollusk?",
+                    answers: {
+                        a: "Squid",
+                        b: "Octopus",
+                        c: "Manatee",
+                        d: "Oyster"
+                    },
+                    correctAnswer: "a"
                 },
-                correctAnswer: "a"
-            },
-            {
-                question: "Who is that Mollusk?",
-                answers: {
-                    a: "Squid",
-                    b: "Octopus",
-                    c: "Manatee",
-                    d: "Oyster"
+                {
+                    question: "Who is that Mollusk?",
+                    answers: {
+                        a: "Squid",
+                        b: "Octopus",
+                        c: "Manatee",
+                        d: "Oyster"
+                    },
+                    correctAnswer: "b"
                 },
-                correctAnswer: "b"
-            },
-            {
-                question: "Who is that Mollusk?",
-                answers: {
-                    a: "Squid",
-                    b: "Octopus",
-                    c: "Manatee",
-                    d: "Oyster"
+                {
+                    question: "Who is that Mollusk?",
+                    answers: {
+                        a: "Squid",
+                        b: "Octopus",
+                        c: "Manatee",
+                        d: "Oyster"
+                    },
+                    correctAnswer: "d"
                 },
-                correctAnswer: "d"
-            },
 
 
 
 
 
 
-        ];
+            ];
 
-        function buildQuiz() {
-            // we'll need a place to store the HTML output
-            const output = [];
+            function buildQuiz() {
+                // we'll need a place to store the HTML output
+                const output = [];
 
-            // for each question...
-            myQuestions.forEach((currentQuestion, questionNumber) => {
-                // we'll want to store the list of answer choices
-                const answers = [];
+                // for each question...
+                myQuestions.forEach((currentQuestion, questionNumber) => {
+                    // we'll want to store the list of answer choices
+                    const answers = [];
 
-                // and for each available answer...
-                for (letter in currentQuestion.answers) {
-                    // ...add an HTML radio button
-                    answers.push(
-                        `<label>
-             <input type="radio" name="question${questionNumber}" value="${letter}">
-              ${letter} :
-              ${currentQuestion.answers[letter]}
-           </label>`
+                    // and for each available answer...
+                    for (letter in currentQuestion.answers) {
+                        // ...add an HTML radio button
+                        answers.push(
+                            `<label>
+                     <input type="radio" name="question${questionNumber}" value="${letter}">
+                      ${letter} :
+                      ${currentQuestion.answers[letter]}
+                   </label>`
+                        );
+                    }
+
+                    // add this question and its answers to the output
+                    output.push(
+                        `<div class="slide">
+                   <div class="question"> ${currentQuestion.question} </div>
+                   <div class="answers"> ${answers.join("")} </div>
+                 </div>`
                     );
-                }
+                });
 
-                // add this question and its answers to the output
-                output.push(
-                    `<div class="slide">
-           <div class="question"> ${currentQuestion.question} </div>
-           <div class="answers"> ${answers.join("")} </div>
-         </div>`
-                );
-            });
-
-            // finally combine our output list into one string of HTML and put it on the page
-            quizContainer.innerHTML = output.join("");
-        }
-
-        function showResults() {
-            // gather answer containers from our quiz
-            const answerContainers = quizContainer.querySelectorAll(".answers");
-
-            // keep track of user's answers
-            let numCorrect = 0;
-
-            // for each question...
-            myQuestions.forEach((currentQuestion, questionNumber) => {
-                // find selected answer
-                const answerContainer = answerContainers[questionNumber];
-                const selector = `input[name=question${questionNumber}]:checked`;
-                const userAnswer = (answerContainer.querySelector(selector) || {}).value;
-
-                // if answer is correct
-                if (userAnswer === currentQuestion.correctAnswer) {
-                    // add to the number of correct answers
-                    numCorrect++;
-
-
-                }
-            });
-
-            // show number of correct answers out of total
-            resultsContainer.innerHTML = `${numCorrect} out of ${myQuestions.length}`;
-        }
-
-        function showSlide(n) {
-            slides[currentSlide].classList.remove("active-slide");
-            slides[n].classList.add("active-slide");
-            currentSlide = n;
-
-            if (currentSlide === 0) {
-                previousButton.style.display = "none";
-            } else {
-                previousButton.style.display = "inline-block";
+                // finally combine our output list into one string of HTML and put it on the page
+                quizContainer.innerHTML = output.join("");
             }
 
-            if (currentSlide === slides.length - 1) {
-                nextButton.style.display = "none";
-                submitButton.style.display = "inline-block";
-            } else {
-                nextButton.style.display = "inline-block";
-                submitButton.style.display = "none";
+            function showResults() {
+                // gather answer containers from our quiz
+                const answerContainers = quizContainer.querySelectorAll(".answers");
+
+                // keep track of user's answers
+                let numCorrect = 0;
+
+                // for each question...
+                myQuestions.forEach((currentQuestion, questionNumber) => {
+                    // find selected answer
+                    const answerContainer = answerContainers[questionNumber];
+                    const selector = `input[name=question${questionNumber}]:checked`;
+                    const userAnswer = (answerContainer.querySelector(selector) || {}).value;
+
+                    // if answer is correct
+                    if (userAnswer === currentQuestion.correctAnswer) {
+                        // add to the number of correct answers
+                        numCorrect++;
+
+
+                    }
+                });
+
+                // show number of correct answers out of total
+                resultsContainer.innerHTML = `${numCorrect} out of ${myQuestions.length}`;
             }
-        }
 
-        function showNextSlide() {
-            showSlide(currentSlide + 1);
-        }
+            function showSlide(n) {
+                slides[currentSlide].classList.remove("active-slide");
+                slides[n].classList.add("active-slide");
+                currentSlide = n;
 
-        function showPreviousSlide() {
-            showSlide(currentSlide - 1);
-        }
+                if (currentSlide === 0) {
+                    previousButton.style.display = "none";
+                } else {
+                    previousButton.style.display = "inline-block";
+                }
 
-        const quizContainer = document.getElementById("quiz");
-        const resultsContainer = document.getElementById("results");
-        const submitButton = document.getElementById("submit");
+                if (currentSlide === slides.length - 1) {
+                    nextButton.style.display = "none";
+                    submitButton.style.display = "inline-block";
+                } else {
+                    nextButton.style.display = "inline-block";
+                    submitButton.style.display = "none";
+                }
+            }
 
-        // display quiz right away
-        buildQuiz();
+            function showNextSlide() {
+                showSlide(currentSlide + 1);
+            }
 
-        const previousButton = document.getElementById("previous");
-        const nextButton = document.getElementById("next");
-        const slides = document.querySelectorAll(".slide");
-        let currentSlide = 0;
+            function showPreviousSlide() {
+                showSlide(currentSlide - 1);
+            }
 
-        showSlide(0);
+            const quizContainer = document.getElementById("quiz");
+            const resultsContainer = document.getElementById("results");
+            const submitButton = document.getElementById("submit");
+
+            // display quiz right away
+            buildQuiz();
+
+            const previousButton = document.getElementById("previous");
+            const nextButton = document.getElementById("next");
+            const slides = document.querySelectorAll(".slide");
+            let currentSlide = 0;
+
+            showSlide(0);
+
+            // on submit, show results
+            submitButton.addEventListener("click", showResults);
+            previousButton.addEventListener("click", showPreviousSlide);
+            nextButton.addEventListener("click", showNextSlide);
+        })();
+    </script>
 
         // on submit, show results
         submitButton.addEventListener("click", showResults);
@@ -367,3 +355,4 @@
         nextButton.addEventListener("click", showNextSlide);
     })();
 </script>
+

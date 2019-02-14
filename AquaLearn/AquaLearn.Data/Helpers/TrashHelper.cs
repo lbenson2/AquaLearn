@@ -4,37 +4,52 @@ using System.Text;
 using System.Linq;
 using AutoMapper;
 using AquaLearn.Data.Entities;
-using dom = AquaLearn.Domain.Models;
+using adm = AquaLearn.Domain.Models;
 
 
 namespace AquaLearn.Data.Helpers
 {
     public class TrashHelper
     {
-        private AquaLearnDbContext _db = new AquaLearnDbContext();
+        private AquaLearnIMDbContext _db = new AquaLearnIMDbContext();
 
         private MapperConfiguration trashMap = new MapperConfiguration(mc =>
         {
-            //mc.Mappers.Add(DomainHelper.addressMapper.GetMappers().FirstOrDefault());
-            //mc.Mappers.Add(DomainHelper.countryMapper.GetMappers().FirstOrDefault());
-            //mc.Mappers.Add(DomainHelper.nameMapper.GetMappers().FirstOrDefault());
+           
+            mc.Mappers.Add(DomainHelper.nameMapper.GetMappers().FirstOrDefault());
 
-            mc.CreateMap<Trash, dom.Trash>()
+            mc.CreateMap<Trash, adm.Trash>()
               .ForMember(m => m.TrashId, u => u.MapFrom(s => s.TrashId))
               .ForAllOtherMembers(m => m.Ignore());
         });
 
-        public List<dom.Trash> GetTrash()
+        public List<adm.Trash> GetTrash2()
         {
-            var trashList = new List<dom.Trash>();
-            var mapper = trashMap.CreateMapper();
-            //var mapper2 = DomainHelper.nameMapper.CreateMapper();
+            var dt = new List<adm.Trash>();
 
             foreach (var item in _db.Trash.ToList())
             {
-                var u = mapper.Map<dom.Trash>(item);
+                dt.Add(new adm.Trash()
+                {
+                    TrashId = item.TrashId
+                });
+            }
 
-                //u.Name = mapper2.Map<dom.Fish>(item);
+            return dt;
+        }
+
+
+        public List<adm.Trash> GetTrash()
+        {
+            var trashList = new List<adm.Trash>();
+            var mapper = trashMap.CreateMapper();
+            var mapper2 = DomainHelper.nameMapper.CreateMapper();
+
+            foreach (var item in _db.Trash.ToList())
+            {
+                var u = mapper.Map<adm.Trash>(item);
+
+                //u.Name = mapper2.Map<adm.Fish>(item);
                 trashList.Add(u);
             }
 

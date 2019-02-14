@@ -7,19 +7,14 @@ using System.Text;
 
 namespace AquaLearn.Data
 {
-    public class AquaLearnDbContext : DbContext
+    public class AquaLearnIMDbContext : DbContext
     {
-        public AquaLearnDbContext(IConfiguration config)
+      
+        public AquaLearnIMDbContext()
         {
-            Configuration = config;
+
         }
 
-        public AquaLearnDbContext()
-        { 
-        }
-
-
-        public static IConfiguration Configuration { get; set; }
         public DbSet<Role> Role { get; set; }
         public DbSet<Fish> Fish { get; set; }
         public DbSet<Plant> Plant { get; set; }
@@ -28,13 +23,13 @@ namespace AquaLearn.Data
         public DbSet<Exhibit> Exhibit { get; set; }
         public DbSet<WaterType> WaterType { get; set; }
         public DbSet<User> User { get; set; }
-        public DbSet<Classroom> Classroom  { get; set;}
+        public DbSet<Classroom> Classroom { get; set; }
         public DbSet<Quiz> Quiz { get; set; }
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder builder)
         {
-            builder.UseSqlServer(Configuration.GetConnectionString("AquaLearnDb"));
+            builder.UseInMemoryDatabase(databaseName:("AquaLearnIMDbContext"));
         }
 
         protected override void OnModelCreating(ModelBuilder builder)

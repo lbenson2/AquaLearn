@@ -5,18 +5,18 @@ using System.Linq;
 using AutoMapper;
 using AquaLearn.Data.Entities;
 using adm = AquaLearn.Domain.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace AquaLearn.Data.Helpers
 
 {
     public class UserHelper
     {
-        private AquaLearnDbContext _db = new AquaLearnDbContext();
+        private static AquaLearnIMDbContext _db = new AquaLearnIMDbContext();
 
         private MapperConfiguration userMap = new MapperConfiguration(mc =>
         {
-            mc.Mappers.Add(DomainHelper.addressMapper.GetMappers().FirstOrDefault());
-            mc.Mappers.Add(DomainHelper.countryMapper.GetMappers().FirstOrDefault());
+          
             mc.Mappers.Add(DomainHelper.nameMapper.GetMappers().FirstOrDefault());
 
             mc.CreateMap<User, adm.User>()
@@ -24,7 +24,24 @@ namespace AquaLearn.Data.Helpers
               .ForAllOtherMembers(m => m.Ignore());
         });
 
-        public List<adm.User> GetUsers()
+
+        public static List<adm.User> GetUsers()
+        {
+            var du = new List<adm.User>();
+
+            foreach (var item in _db.User.ToList())
+            {
+                du.Add(new adm.User()
+                {
+                    UserId = item.UserId
+
+                });
+            }
+
+            return du;
+        }
+
+        public List<adm.User> GetUsers2()
         {
             var userList = new List<adm.User>();
             var mapper = userMap.CreateMapper();
@@ -34,11 +51,13 @@ namespace AquaLearn.Data.Helpers
             {
                 var u = mapper.Map<adm.User>(item);
 
-                //u.Name = mapper2.Map<adm.Name>(item);
+               // u.Username = mapper2.Map<adm.User.Username>(item);
                 userList.Add(u);
             }
 
             return userList;
         }
+
+        
     }
 }

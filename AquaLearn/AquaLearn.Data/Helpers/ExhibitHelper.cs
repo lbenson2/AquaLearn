@@ -4,37 +4,51 @@ using System.Text;
 using System.Linq;
 using AutoMapper;
 using AquaLearn.Data.Entities;
-using dom = AquaLearn.Domain.Models;
+using adm = AquaLearn.Domain.Models;
 
 
 namespace AquaLearn.Data.Helpers
 {
     public class ExhibitHelper
     {
-        private AquaLearnDbContext _db = new AquaLearnDbContext();
+        private AquaLearnIMDbContext _db = new AquaLearnIMDbContext();
 
         private MapperConfiguration exhibitMap = new MapperConfiguration(mc =>
         {
-            //mc.Mappers.Add(DomainHelper.addressMapper.GetMappers().FirstOrDefault());
-            //mc.Mappers.Add(DomainHelper.countryMapper.GetMappers().FirstOrDefault());
-            //mc.Mappers.Add(DomainHelper.nameMapper.GetMappers().FirstOrDefault());
+         
+            mc.Mappers.Add(DomainHelper.nameMapper.GetMappers().FirstOrDefault());
 
-            mc.CreateMap<Exhibit, dom.Exhibit>()
+            mc.CreateMap<Exhibit, adm.Exhibit>()
               .ForMember(m => m.ExhibitId, u => u.MapFrom(s => s.ExhibitId))
               .ForAllOtherMembers(m => m.Ignore());
         });
 
-        public List<dom.Exhibit> GetExhibits()
+        public List<adm.Exhibit> GetExhibits2()
         {
-            var exhibitList = new List<dom.Exhibit>();
-            var mapper = exhibitMap.CreateMapper();
-            //var mapper2 = DomainHelper.nameMapper.CreateMapper();
+            var de = new List<adm.Exhibit>();
 
             foreach (var item in _db.Exhibit.ToList())
             {
-                var u = mapper.Map<dom.Exhibit>(item);
+                de.Add(new adm.Exhibit()
+                {
+                    ExhibitId = item.ExhibitId
+                });
+            }
 
-                //u.Name = mapper2.Map<dom.Fish>(item);
+            return de;
+        }
+
+        public List<adm.Exhibit> GetExhibits()
+        {
+            var exhibitList = new List<adm.Exhibit>();
+            var mapper = exhibitMap.CreateMapper();
+            var mapper2 = DomainHelper.nameMapper.CreateMapper();
+
+            foreach (var item in _db.Exhibit.ToList())
+            {
+                var u = mapper.Map<adm.Exhibit>(item);
+
+                //u.Name = mapper2.Map<adm.Exhibit>(item);
                 exhibitList.Add(u);
             }
 
