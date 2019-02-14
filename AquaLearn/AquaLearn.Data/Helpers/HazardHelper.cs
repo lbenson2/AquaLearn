@@ -11,7 +11,7 @@ namespace AquaLearn.Data.Helpers
 {
     public class HazardHelper
     {
-        private AquaLearnDbContext _db = new AquaLearnDbContext();
+        private AquaLearnIMDbContext _db = new AquaLearnIMDbContext();
 
         private MapperConfiguration hazardMap = new MapperConfiguration(mc =>
         {
@@ -22,6 +22,21 @@ namespace AquaLearn.Data.Helpers
               .ForMember(m => m.HazardId, u => u.MapFrom(s => s.HazardId))
               .ForAllOtherMembers(m => m.Ignore());
         });
+
+        public List<adm.Hazard> GetHazards2()
+        {
+            var dh = new List<adm.Hazard>();
+
+            foreach (var item in _db.Hazard.ToList())
+            {
+                dh.Add(new adm.Hazard()
+                {
+                    HazardId = item.HazardId
+                });
+            }
+
+            return dh;
+        }
 
         public List<adm.Hazard> GetHazards()
         {

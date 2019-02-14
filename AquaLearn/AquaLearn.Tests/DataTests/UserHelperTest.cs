@@ -33,11 +33,21 @@ namespace AquaLearn.Tests.DataTests
         [Fact]
         public void Test_GetUsers2()
         {
-           //var actual = Sut.GetUsers2;
+           //var actual2 = Sut.GetUsers2;
 
             //Assert.NotNull(actual);
             //Assert.True(actual.Count > 0);
            //Assert.NotNull(actual.Username == "Spkr");
+        }
+
+        [Fact]
+        public void Test_GetUsers()
+        {
+            //var actual = Sut.GetUsers();
+
+            //Assert.NotNull(actual);
+            //Assert.True(actual.Count > 0);
+            //Assert.NotNull(actual.Username == "Spkr");
         }
     }
 }

@@ -11,7 +11,7 @@ namespace AquaLearn.Data.Helpers
 {
     public class ExhibitHelper
     {
-        private AquaLearnDbContext _db = new AquaLearnDbContext();
+        private AquaLearnIMDbContext _db = new AquaLearnIMDbContext();
 
         private MapperConfiguration exhibitMap = new MapperConfiguration(mc =>
         {
@@ -22,6 +22,21 @@ namespace AquaLearn.Data.Helpers
               .ForMember(m => m.ExhibitId, u => u.MapFrom(s => s.ExhibitId))
               .ForAllOtherMembers(m => m.Ignore());
         });
+
+        public List<adm.Exhibit> GetExhibits2()
+        {
+            var de = new List<adm.Exhibit>();
+
+            foreach (var item in _db.Exhibit.ToList())
+            {
+                de.Add(new adm.Exhibit()
+                {
+                    ExhibitId = item.ExhibitId
+                });
+            }
+
+            return de;
+        }
 
         public List<adm.Exhibit> GetExhibits()
         {
