@@ -1,58 +1,45 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Microsoft.EntityFrameworkCore;
 using System.Linq;
-using AutoMapper;
-using AquaLearn.Data.Entities;
-using adm = AquaLearn.Domain.Models;
+using AquaLearn.Domain.Models;
+
 
 
 namespace AquaLearn.Data.Helpers
 {
     public class PlantHelper
     {
-        private AquaLearnIMDbContext _db = new AquaLearnIMDbContext();
+        public AquaLearnDbContext _db { get; set; }
+        public AquaLearnIMDbContext _idb { get; set; }
 
-        private MapperConfiguration plantMap = new MapperConfiguration(mc =>
+        public PlantHelper()
         {
-           
-            mc.Mappers.Add(DomainHelper.nameMapper.GetMappers().FirstOrDefault());
-
-            mc.CreateMap<Plant, adm.Plant>()
-              .ForMember(m => m.PlantId, u => u.MapFrom(s => s.PlantId))
-              .ForAllOtherMembers(m => m.Ignore());
-        });
-
-        public List<adm.Plant> GetPlants2()
-        {
-            var dp = new List<adm.Plant>();
-
-            foreach (var item in _db.Plant.ToList())
-            {
-                dp.Add(new adm.Plant()
-                {
-                    PlantId = item.PlantId
-                });
-            }
-
-            return dp;
+            _db = new AquaLearnDbContext();
         }
 
-        public List<adm.Plant> GetPlants()
+        public PlantHelper(AquaLearnIMDbContext idb)
         {
-            var plantList = new List<adm.Plant>();
-            var mapper = plantMap.CreateMapper();
-            var mapper2 = DomainHelper.nameMapper.CreateMapper();
+            _idb = idb;
+        }
 
-            foreach (var item in _db.Plant.ToList())
+
+
+        public List<Plant> GetPlants()
+        {
+            if (_db != null)
             {
-                var u = mapper.Map<adm.Plant>(item);
+                var z = _db.Plant.ToList();
+                return z;
 
-               // u.Name = mapper2.Map<adm.Plant>(item);
-                plantList.Add(u);
+            }
+            else
+            {
+                var y = _idb.Plant.ToList();
+                return y;
             }
 
-            return plantList;
         }
     }
 }

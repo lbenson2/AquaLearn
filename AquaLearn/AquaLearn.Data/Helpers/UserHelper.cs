@@ -1,63 +1,45 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using System.Linq;
-using AutoMapper;
-using AquaLearn.Data.Entities;
-using adm = AquaLearn.Domain.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using AquaLearn.Domain.Models;
+
 
 namespace AquaLearn.Data.Helpers
-
 {
     public class UserHelper
     {
-        private static AquaLearnIMDbContext _db = new AquaLearnIMDbContext();
+        public AquaLearnDbContext _db { get; set; }
+        public AquaLearnIMDbContext _idb { get; set; }
 
-        private MapperConfiguration userMap = new MapperConfiguration(mc =>
+        public UserHelper()
         {
-          
-            mc.Mappers.Add(DomainHelper.nameMapper.GetMappers().FirstOrDefault());
-
-            mc.CreateMap<User, adm.User>()
-              .ForMember(m => m.UserId, u => u.MapFrom(s => s.UserId))
-              .ForAllOtherMembers(m => m.Ignore());
-        });
-
-
-        public static List<adm.User> GetUsers()
-        {
-            var du = new List<adm.User>();
-
-            foreach (var item in _db.User.ToList())
-            {
-                du.Add(new adm.User()
-                {
-                    UserId = item.UserId
-
-                });
-            }
-
-            return du;
+            _db = new AquaLearnDbContext();
         }
 
-        public List<adm.User> GetUsers2()
+        public UserHelper(AquaLearnIMDbContext idb)
         {
-            var userList = new List<adm.User>();
-            var mapper = userMap.CreateMapper();
-            var mapper2 = DomainHelper.nameMapper.CreateMapper();
-
-            foreach (var item in _db.User.ToList())
-            {
-                var u = mapper.Map<adm.User>(item);
-
-               // u.Username = mapper2.Map<adm.User.Username>(item);
-                userList.Add(u);
-            }
-
-            return userList;
+            _idb = idb;
         }
 
-        
+
+
+        public List<User> GetUsers()
+        {
+            if (_db != null)
+            {
+                var z = _db.User.ToList();
+                return z;
+
+            }
+            else
+            {
+                var y = _idb.User.ToList();
+                return y;
+            }
+
+        }
     }
 }
+

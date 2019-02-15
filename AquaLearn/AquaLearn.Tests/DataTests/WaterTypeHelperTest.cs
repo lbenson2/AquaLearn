@@ -21,7 +21,7 @@ namespace AquaLearn.Tests.DataTests
             WaterType = new WaterType()
             {
                 //WaterTypeId = 22,
-                Name = "SaltWater"
+                Name = "Ocean Salt Water"
                 
 
 
@@ -59,10 +59,11 @@ namespace AquaLearn.Tests.DataTests
             db.SaveChanges();
             var actual3 = Sut.GetWaterTypesFinal();
 
-            Assert.NotNull(actual3[0]);
+           Assert.NotNull(actual3[0]);
            Assert.True(actual3.Count > 0);
            Assert.True(actual3[0].WaterTypeId == 1);
-            //Assert.NotNull(actual.Username == "Spkr");
+            Assert.True(actual3[0].Name == "Ocean Salt Water");
+            
         }
 
 
