@@ -8,14 +8,14 @@ using adm = AquaLearn.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace AquaLearn.Data.Helpers
-
 {
     public class UserHelper
     {
-        private static AquaLearnDbContext _db = new AquaLearnDbContext();
+        private static AquaLearnIMDbContext _db = new AquaLearnIMDbContext();
 
         private MapperConfiguration userMap = new MapperConfiguration(mc =>
         {
+
             mc.Mappers.Add(DomainHelper.nameMapper.GetMappers().FirstOrDefault());
 
             mc.CreateMap<User, adm.User>()
@@ -50,11 +50,60 @@ namespace AquaLearn.Data.Helpers
             {
                 var u = mapper.Map<adm.User>(item);
 
-               // u.Username = mapper2.Map<adm.User.Username>(item);
+                // u.Username = mapper2.Map<adm.User.Username>(item);
                 userList.Add(u);
             }
 
             return userList;
+        }
+
+        public static bool SetUser(adm.User user)
+        {
+            var newUser = new adm.User()
+            {
+                Username = user.Username,
+                Password = user.Password
+            };
+
+            _db.User.Add(newUser);
+
+            return _db.SaveChanges() == 1;
+        }
+
+        public AquaLearnDbContext _dbn { get; set; }
+        public AquaLearnIMDbContext _idb { get; set; }
+
+        private MapperConfiguration userMap = new MapperConfiguration(mc =>
+        {
+            _dbn = new AquaLearnDbContext();
+        }
+
+        public static List<adm.User> GetUsers()
+        {
+            var du = new List<adm.User>();
+
+            foreach (var item in _db.User.ToList())
+            {
+                du.Add(new adm.User()
+                {
+                    UserId = item.UserId
+
+                });
+            }
+        }
+
+        public List<adm.User> GetUserTest()
+        {
+            if (_dbn != null)
+            {
+                var z = _dbn.User.ToList();
+                return z;
+            }
+            else
+            {
+              var y = _idb.User.ToList();
+              return y;
+            }
         }
 
         public static adm.User GetUserByUserName(string username)
@@ -89,5 +138,5 @@ namespace AquaLearn.Data.Helpers
 
         return _db.SaveChanges() == 1;
         }
-  }
+    }
 }

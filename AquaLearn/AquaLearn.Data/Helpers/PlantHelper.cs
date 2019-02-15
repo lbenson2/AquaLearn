@@ -24,6 +24,21 @@ namespace AquaLearn.Data.Helpers
             _idb = idb;
         }
 
+        public long SetPlant(Plant plant)
+        {
+            if (_db != null)
+            {
+                _db.Plant.Add(plant);
+                return _db.SaveChanges();
+            }
+            else
+            {
+                _idb.Plant.Add(plant);
+                return _idb.SaveChanges();
+            }
+
+        }
+
 
 
         public List<Plant> GetPlants()

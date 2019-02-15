@@ -22,6 +22,21 @@ namespace AquaLearn.Data.Helpers
             _idb = idb;
         }
 
+        public long SetRole(Role role)
+        {
+            if (_db != null)
+            {
+                _db.Role.Add(role);
+                return _db.SaveChanges();
+            }
+            else
+            {
+                _idb.Role.Add(role);
+                return _idb.SaveChanges();
+            }
+            
+        }
+
 
 
         public List<Role> GetRoles()
