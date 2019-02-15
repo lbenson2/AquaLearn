@@ -5,6 +5,7 @@ using System.Linq;
 using AquaLearn.Data.Helpers;
 using AquaLearn.Domain.Models;
 using Xunit;
+using AquaLearn.Data;
 
 namespace AquaLearn.Tests.DataTests
 {
@@ -15,10 +16,11 @@ namespace AquaLearn.Tests.DataTests
 
         public RoleHelperTest()
         {
-            Sut = new RoleHelper();
+            Sut = new RoleHelper(new AquaLearnIMDbContext());
 
             Role = new Role()
             {
+                Name="Teacher"
 
 
 
@@ -27,23 +29,21 @@ namespace AquaLearn.Tests.DataTests
 
         }
 
-        [Fact]
-        public void Test_GetRole2()
-        {
-            //var actual2 = Sut.GetRoles2;
-
-            //Assert.NotNull(actual);
-            //Assert.True(actual.Count > 0);
-            //Assert.NotNull(actual.Username == "Spkr");
-        }
+      
 
         [Fact]
         public void Test_GetRoles()
         {
+            var db = Sut._idb;
+            db.Role.Add(Role);
+            db.SaveChanges();
             var actual = Sut.GetRoles();
+           
 
-            //Assert.NotNull(actual);
-            //Assert.True(actual.Count > 0);
+            Assert.NotNull(actual);
+            Assert.True(actual.Count > 0);
+            Assert.True(actual[0].RoleId == 1);
+            Assert.True(actual[0].Name == "Teacher");
             //Assert.NotNull(actual.Username == "Spkr");
         }
     }

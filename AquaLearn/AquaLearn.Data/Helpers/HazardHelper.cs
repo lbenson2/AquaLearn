@@ -1,58 +1,44 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Microsoft.EntityFrameworkCore;
 using System.Linq;
-using AutoMapper;
-using AquaLearn.Data.Entities;
-using adm = AquaLearn.Domain.Models;
+using AquaLearn.Domain.Models;
 
 
 namespace AquaLearn.Data.Helpers
 {
     public class HazardHelper
     {
-        private AquaLearnIMDbContext _db = new AquaLearnIMDbContext();
+        public AquaLearnDbContext _db { get; set; }
+        public AquaLearnIMDbContext _idb { get; set; }
 
-        private MapperConfiguration hazardMap = new MapperConfiguration(mc =>
+        public HazardHelper()
         {
-           
-            mc.Mappers.Add(DomainHelper.nameMapper.GetMappers().FirstOrDefault());
-
-            mc.CreateMap<Hazard, adm.Hazard>()
-              .ForMember(m => m.HazardId, u => u.MapFrom(s => s.HazardId))
-              .ForAllOtherMembers(m => m.Ignore());
-        });
-
-        public List<adm.Hazard> GetHazards2()
-        {
-            var dh = new List<adm.Hazard>();
-
-            foreach (var item in _db.Hazard.ToList())
-            {
-                dh.Add(new adm.Hazard()
-                {
-                    HazardId = item.HazardId
-                });
-            }
-
-            return dh;
+            _db = new AquaLearnDbContext();
         }
 
-        public List<adm.Hazard> GetHazards()
+        public HazardHelper(AquaLearnIMDbContext idb)
         {
-            var hazardList = new List<adm.Hazard>();
-            var mapper = hazardMap.CreateMapper();
-            var mapper2 = DomainHelper.nameMapper.CreateMapper();
+            _idb = idb;
+        }
 
-            foreach (var item in _db.Hazard.ToList())
+
+
+        public List<Hazard> GetHazards()
+        {
+            if (_db != null)
             {
-                var u = mapper.Map<adm.Hazard>(item);
+                var z = _db.Hazard.ToList();
+                return z;
 
-                //u.Name = mapper2.Map<adm.Fish>(item);
-                hazardList.Add(u);
+            }
+            else
+            {
+                var y = _idb.Hazard.ToList();
+                return y;
             }
 
-            return hazardList;
         }
     }
 }

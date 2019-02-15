@@ -5,6 +5,7 @@ using System.Linq;
 using AquaLearn.Data.Helpers;
 using AquaLearn.Domain.Models;
 using Xunit;
+using AquaLearn.Data;
 
 namespace AquaLearn.Tests.DataTests
 {
@@ -15,11 +16,15 @@ namespace AquaLearn.Tests.DataTests
 
         public TrashHelperTest()
         {
-            Sut = new TrashHelper();
+            Sut = new TrashHelper(new AquaLearnIMDbContext());
 
             Trash = new Trash()
             {
-                
+                Name="Plastic Bottles",
+                Schooling=true,
+                Description="Americans throw away 35 billion plastic water bottles every year.Making the ocean inhabitable for sea creatures."
+
+
 
 
 
@@ -27,24 +32,24 @@ namespace AquaLearn.Tests.DataTests
 
         }
 
-        [Fact]
-        public void Test_GetTrash2()
-        {
-            //var actual2 = Sut.GetTrash2;
-
-            //Assert.NotNull(actual);
-            //Assert.True(actual.Count > 0);
-            //Assert.NotNull(actual.Username == "Spkr");
-        }
+        
 
         [Fact]
         public void Test_GetTrash()
         {
+            var db = Sut._idb;
+            db.Trash.Add(Trash);
+            db.SaveChanges();
             var actual = Sut.GetTrash();
 
             Assert.NotNull(actual);
-            //Assert.True(actual.Count > 0);
-            //Assert.NotNull(actual.Username == "Spkr");
+            Assert.True(actual.Count > 0);
+            Assert.True(actual[0].TrashId == 1);
+            Assert.True(actual[0].Name == "Plastic Bottles");
+            Assert.True(actual[0].Schooling == true);
+            Assert.IsType<string>(actual[0].Description);
+            //Assert.True(actual[0].Description == "Americans throw away 35 billion plastic water bottles every year. Making the ocean inhabitable for sea creatures.");
+
         }
     }
 }

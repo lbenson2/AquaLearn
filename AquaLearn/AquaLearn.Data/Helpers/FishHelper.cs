@@ -1,58 +1,44 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Microsoft.EntityFrameworkCore;
 using System.Linq;
-using AutoMapper;
-using AquaLearn.Data.Entities;
-using adm = AquaLearn.Domain.Models;
+using AquaLearn.Domain.Models;
 
 
 namespace AquaLearn.Data.Helpers
 {
     public class FishHelper
     {
-        private AquaLearnIMDbContext _db = new AquaLearnIMDbContext();
+        public AquaLearnDbContext _db { get; set; }
+        public AquaLearnIMDbContext _idb { get; set; }
 
-        private MapperConfiguration fishMap = new MapperConfiguration(mc =>
+        public FishHelper()
         {
-           
-            mc.Mappers.Add(DomainHelper.nameMapper.GetMappers().FirstOrDefault());
-
-            mc.CreateMap<Fish, adm.Fish>()
-              .ForMember(m => m.FishId, u => u.MapFrom(s => s.FishId))
-              .ForAllOtherMembers(m => m.Ignore());
-        });
-
-        public List<adm.Fish> GetFishes2()
-        {
-            var df = new List<adm.Fish>();
-
-            foreach (var item in _db.Fish.ToList())
-            {
-                df.Add(new adm.Fish()
-                {
-                    FishId = item.FishId
-                });
-            }
-
-            return df;
+            _db = new AquaLearnDbContext();
         }
 
-        public List<adm.Fish> GetFishes()
+        public FishHelper(AquaLearnIMDbContext idb)
         {
-            var fishList = new List<adm.Fish>();
-            var mapper = fishMap.CreateMapper();
-            var mapper2 = DomainHelper.nameMapper.CreateMapper();
+            _idb = idb;
+        }
 
-            foreach (var item in _db.Fish.ToList())
+
+
+        public List<Fish> GetFishes()
+        {
+            if (_db != null)
             {
-                var u = mapper.Map<adm.Fish>(item);
+                var z = _db.Fish.ToList();
+                return z;
 
-                //u.Name = mapper2.Map<adm.Fish>(item);
-                fishList.Add(u);
+            }
+            else
+            {
+                var y = _idb.Fish.ToList();
+                return y;
             }
 
-            return fishList;
         }
     }
 }
