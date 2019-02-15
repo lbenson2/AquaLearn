@@ -12,10 +12,10 @@ namespace AquaLearn.Data.Helpers
     public class UserHelper
     {
         private static AquaLearnIMDbContext _db = new AquaLearnIMDbContext();
+        public static AquaLearnDbContext _dbn = new AquaLearnDbContext();
 
-        private MapperConfiguration userMap = new MapperConfiguration(mc =>
+        private readonly MapperConfiguration userMap = new MapperConfiguration(mc =>
         {
-
             mc.Mappers.Add(DomainHelper.nameMapper.GetMappers().FirstOrDefault());
 
             mc.CreateMap<User, adm.User>()
@@ -23,7 +23,7 @@ namespace AquaLearn.Data.Helpers
               .ForAllOtherMembers(m => m.Ignore());
         });
 
-
+        #region Get
         public static List<adm.User> GetUsers()
         {
             var du = new List<adm.User>();
@@ -36,7 +36,6 @@ namespace AquaLearn.Data.Helpers
 
                 });
             }
-
             return du;
         }
 
@@ -57,41 +56,6 @@ namespace AquaLearn.Data.Helpers
             return userList;
         }
 
-        public static bool SetUser(adm.User user)
-        {
-            var newUser = new adm.User()
-            {
-                Username = user.Username,
-                Password = user.Password
-            };
-
-            _db.User.Add(newUser);
-
-            return _db.SaveChanges() == 1;
-        }
-
-        public AquaLearnDbContext _dbn { get; set; }
-        public AquaLearnIMDbContext _idb { get; set; }
-
-        private MapperConfiguration userMap = new MapperConfiguration(mc =>
-        {
-            _dbn = new AquaLearnDbContext();
-        }
-
-        public static List<adm.User> GetUsers()
-        {
-            var du = new List<adm.User>();
-
-            foreach (var item in _db.User.ToList())
-            {
-                du.Add(new adm.User()
-                {
-                    UserId = item.UserId
-
-                });
-            }
-        }
-
         public List<adm.User> GetUserTest()
         {
             if (_dbn != null)
@@ -101,8 +65,8 @@ namespace AquaLearn.Data.Helpers
             }
             else
             {
-              var y = _idb.User.ToList();
-              return y;
+                var y = _db.User.ToList();
+                return y;
             }
         }
 
@@ -111,7 +75,11 @@ namespace AquaLearn.Data.Helpers
             return _db.User.FirstOrDefault(m => m.Username == username);
         }
 
-        public bool SetUser(adm.User user)
+        #endregion
+
+        #region Set
+
+        public static bool SetUser(adm.User user)
         {
             var checkuser = GetUserByUserName(user.Username);
 
@@ -128,15 +96,17 @@ namespace AquaLearn.Data.Helpers
 
         public static bool SetUser2(adm.User user)
         {
-          var newUser = new adm.User()
-          {
-            Username = user.Username,
-            Password = user.Password
-          };
-      
-          _db.User.Add(newUser);
+            var newUser = new adm.User()
+            {
+                Username = user.Username,
+                Password = user.Password
+            };
 
-        return _db.SaveChanges() == 1;
+            _db.User.Add(newUser);
+
+            return _db.SaveChanges() == 1;
         }
+
+        #endregion
     }
 }

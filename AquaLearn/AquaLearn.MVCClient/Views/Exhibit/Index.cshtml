@@ -1,7 +1,4 @@
-﻿@model AquaLearn.MVCClient.Models.ExhibitViewModel
-@using aldm = AquaLearn.Domain.Models;
-@using AquaLearn.MVCClient.Models;
-@{
+﻿@{
     ViewData["Title"] = "Exhibit";
 }
 
@@ -16,12 +13,12 @@
   }
 </style>
 
+
 <div>
-  <div>
     <div>
-      <button type="button" onclick="changeExhibit(this.id)" id="_DeepOcean">Deep Sea</button>
-      <button type="button" onclick="changeExhibit(this.id)" id="_CoralReef">Coral Reef</button>
-      <button type="button" onclick="changeExhibit(this.id)" id="_Pollution">Pollution</button>
+        <button type="button" onclick="changeExhibit(this.id)" id="_DeepOcean">Deep Sea</button>
+        <button type="button" onclick="changeExhibit(this.id)" id="_CoralReef">Coral Reef</button>
+        <button type="button" onclick="changeExhibit(this.id)" id="_Pollution">Pollution</button>
     </div>
 
     <div id="placeholder">
