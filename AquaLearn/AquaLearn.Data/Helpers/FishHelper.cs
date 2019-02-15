@@ -23,6 +23,21 @@ namespace AquaLearn.Data.Helpers
             _idb = idb;
         }
 
+        public long SetFish(Fish fish)
+        {
+            if (_db != null)
+            {
+                _db.Fish.Add(fish);
+                return _db.SaveChanges();
+            }
+            else
+            {
+                _idb.Fish.Add(fish);
+                return _idb.SaveChanges();
+            }
+
+        }
+
 
 
         public List<Fish> GetFishes()

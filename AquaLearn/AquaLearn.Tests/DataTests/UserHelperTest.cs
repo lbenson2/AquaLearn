@@ -39,7 +39,7 @@ namespace AquaLearn.Tests.DataTests
             var db = Sut._idb;
             db.User.Add(User);
             db.SaveChanges();
-            var actual = Sut.GetUsers();
+            var actual = Sut.GetUserTest();
 
             Assert.NotNull(actual);
             Assert.True(actual.Count > 0);

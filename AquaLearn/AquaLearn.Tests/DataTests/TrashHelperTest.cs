@@ -18,6 +18,7 @@ namespace AquaLearn.Tests.DataTests
         {
             Sut = new TrashHelper(new AquaLearnIMDbContext());
 
+
             Trash = new Trash()
             {
                 Name="Plastic Bottles",
