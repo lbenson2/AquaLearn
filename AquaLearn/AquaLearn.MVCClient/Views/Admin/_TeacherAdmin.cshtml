@@ -1,9 +1,46 @@
-﻿@model UserViewModel;
+﻿@model UserModel;
 @{
     ViewData["Title"] = "_TeacherAdmin";
 }
 
-<h1>Welcome @User !</h1>
+<h1>Welcome @Model.Username !</h1>
 
 
 
+<div>
+    <h2>
+         Your Classroom
+    </h2>
+    
+
+ </div>
+
+        @*@foreach (var student in Model.Students)
+        {
+            if (student.ClassroomId == this.User)
+            {
+                var arr = @student.ClassroomId;
+
+                pizza.PizzaType.PizzaName = arr[0];
+
+                decimal mult = 0;
+
+                if (pizza.Size == "Basic")
+                {
+                    mult = 1;
+                }
+                else { mult = 1.75M; }
+
+            </div>
+        </div>*@
+
+<div>
+@using (Html.BeginForm("AddStudent", "user"))
+{
+    @Html.LabelFor(u => u.Username, "Add Student")<br />
+    @Html.TextBoxFor(u => u.Username)<br />
+
+    <button type="submit"> Add</button>
+}
+
+</div>
