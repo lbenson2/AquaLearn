@@ -6,7 +6,7 @@
 
 <div>
   <h1 style="font-family:'Fredoka One', cursive;">Student Login</h1>
-  @using (Html.BeginForm("loginstudent", "user"))
+  @using (Html.BeginForm("validation", "user"))
   {
     @Html.LabelFor(u => u.Username, "Enter your name")<br />
     @Html.TextBoxFor(u => u.Username)<br />
