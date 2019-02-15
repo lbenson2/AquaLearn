@@ -7,15 +7,34 @@
 
 <h1>Habitat</h1>
 
-<div>
-    <button type="button" onclick="changeExhibit(this.id)" id="_DeepOcean">Deep Sea</button>
-    <button type="button" onclick="changeExhibit(this.id)" id="_CoralReef">Coral Reef</button>
+<style>
+  figure {
+    display: inline-block;
+    text-align: center;
+    justify-content:center;
+    border: 2px solid #aaaaaa;
+  }
+</style>
 
+<div>
+  <div>
+    <div>
+      <button type="button" onclick="changeExhibit(this.id)" id="_DeepOcean">Deep Sea</button>
+      <button type="button" onclick="changeExhibit(this.id)" id="_CoralReef">Coral Reef</button>
+    </div>
 
     <div id="placeholder">
       <div style="display:flex; justify-content:center;">
         <canvas id="myCanvas" width="720" height="480" style="border:1px solid #000000;"></canvas>
       </div>
+      <figure width="720">
+        <article>
+          lorem ipsum
+        </article>
+        <article>
+          lorem
+        </article>
+      </figure>
     </div>
   </div>
 </div>
