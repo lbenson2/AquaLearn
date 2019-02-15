@@ -72,13 +72,22 @@ namespace AquaLearn.Data.Helpers
             }
             else
             {
-               
                 _db.User.Add(user);
                 return _db.SaveChanges() > 0;
             }
         }
 
+        public static bool SetUser2(adm.User user)
+        {
+          var newUser = new adm.User()
+          {
+            Username = user.Username,
+            Password = user.Password
+          };
+      
+          _db.User.Add(newUser);
 
-
-    }
+        return _db.SaveChanges() == 1;
+        }
+  }
 }
