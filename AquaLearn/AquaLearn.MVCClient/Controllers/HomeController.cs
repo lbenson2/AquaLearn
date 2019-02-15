@@ -54,7 +54,7 @@ namespace AquaLearn.MVCClient.Controllers
           return View("Register");
         }
 
-    [HttpPost]
+        [HttpPost]
         public PartialViewResult AddPartialToView(string id)
         {
           return PartialView(id);

@@ -2,57 +2,43 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
-using AutoMapper;
-using AquaLearn.Data.Entities;
-using adm = AquaLearn.Domain.Models;
+using AquaLearn.Domain.Models;
+using Microsoft.EntityFrameworkCore;
 
 
 namespace AquaLearn.Data.Helpers
 {
     public class ExhibitHelper
     {
-        private AquaLearnIMDbContext _db = new AquaLearnIMDbContext();
+        public AquaLearnDbContext _db { get; set; }
+        public AquaLearnIMDbContext _idb { get; set; }
 
-        private MapperConfiguration exhibitMap = new MapperConfiguration(mc =>
+        public ExhibitHelper()
         {
-         
-            mc.Mappers.Add(DomainHelper.nameMapper.GetMappers().FirstOrDefault());
-
-            mc.CreateMap<Exhibit, adm.Exhibit>()
-              .ForMember(m => m.ExhibitId, u => u.MapFrom(s => s.ExhibitId))
-              .ForAllOtherMembers(m => m.Ignore());
-        });
-
-        public List<adm.Exhibit> GetExhibits2()
-        {
-            var de = new List<adm.Exhibit>();
-
-            foreach (var item in _db.Exhibit.ToList())
-            {
-                de.Add(new adm.Exhibit()
-                {
-                    ExhibitId = item.ExhibitId
-                });
-            }
-
-            return de;
+            _db = new AquaLearnDbContext();
         }
 
-        public List<adm.Exhibit> GetExhibits()
+        public ExhibitHelper(AquaLearnIMDbContext idb)
         {
-            var exhibitList = new List<adm.Exhibit>();
-            var mapper = exhibitMap.CreateMapper();
-            var mapper2 = DomainHelper.nameMapper.CreateMapper();
+            _idb = idb;
+        }
 
-            foreach (var item in _db.Exhibit.ToList())
+
+
+        public List<Exhibit> GetExhibits()
+        {
+            if (_db != null)
             {
-                var u = mapper.Map<adm.Exhibit>(item);
+                var z = _db.Exhibit.ToList();
+                return z;
 
-                //u.Name = mapper2.Map<adm.Exhibit>(item);
-                exhibitList.Add(u);
+            }
+            else
+            {
+                var y = _idb.Exhibit.ToList();
+                return y;
             }
 
-            return exhibitList;
         }
     }
 }

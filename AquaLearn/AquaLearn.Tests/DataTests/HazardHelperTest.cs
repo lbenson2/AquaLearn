@@ -5,6 +5,7 @@ using System.Linq;
 using AquaLearn.Data.Helpers;
 using AquaLearn.Domain.Models;
 using Xunit;
+using AquaLearn.Data;
 
 namespace AquaLearn.Tests.DataTests
 {
@@ -15,10 +16,13 @@ namespace AquaLearn.Tests.DataTests
 
         public HazardHelperTest()
         {
-            Sut = new HazardHelper();
+            Sut = new HazardHelper(new AquaLearnIMDbContext());
 
             Hazard = new Hazard()
             {
+                Name="Plastic",
+                Description="Pollution"
+
 
 
 
@@ -27,24 +31,21 @@ namespace AquaLearn.Tests.DataTests
 
         }
 
-        [Fact]
-        public void Test_GetHazard2()
-        {
-            //var actual = Sut.GetHazards2;
-
-            //Assert.NotNull(actual);
-            //Assert.True(actual.Count > 0);
-            //Assert.NotNull(actual.Username == "Spkr");
-        }
+       
 
         [Fact]
-        public void Test_GetHazard()
+        public void Test_GetHazards()
         {
+            var db = Sut._idb;
+            db.Hazard.Add(Hazard);
+            db.SaveChanges();
             var actual = Sut.GetHazards();
 
             Assert.NotNull(actual);
-            //Assert.True(actual.Count > 0);
-            //Assert.NotNull(actual.Username == "Spkr");
+            Assert.True(actual.Count > 0);
+            Assert.True(actual[0].HazardId == 1);
+            Assert.True(actual[0].Description == "Pollution");
+            Assert.True(actual[0].Name == "Plastic");
         }
     }
 }
