@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
@@ -93,20 +93,7 @@ namespace AquaLearn.Data.Helpers
                 return _db.SaveChanges() > 0;
             }
         }
-
-        public static bool SetUser2(adm.User user)
-        {
-            var newUser = new adm.User()
-            {
-                Username = user.Username,
-                Password = user.Password
-            };
-
-            _db.User.Add(newUser);
-
-            return _db.SaveChanges() == 1;
-        }
-
+      
         #endregion
     }
 }

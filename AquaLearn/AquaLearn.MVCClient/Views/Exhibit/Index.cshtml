@@ -8,11 +8,16 @@
   figure {
     display: inline-block;
     text-align: center;
-    justify-content:center;
+    justify-content: center;
+    border: 2px solid #aaaaaa;
+    width: 65%;
+    margin-left: 195px;
+  }
+
+  article {
     border: 2px solid #aaaaaa;
   }
 </style>
-
 
 <div>
     <div>
@@ -25,12 +30,16 @@
       <div style="display:flex; justify-content:center;">
         <canvas id="myCanvas" width="720" height="480" style="border:1px solid #000000;"></canvas>
       </div>
-      <figure width="720">
+      <figure>
         <article>
-          lorem ipsum
+          <h2>
+            lorem ipsum
+          </h2>
         </article>
         <article>
-          lorem
+          <h3>
+            lorem
+          </h3>
         </article>
       </figure>
     </div>
@@ -339,26 +348,16 @@
         vector3Current = [xc, yc, zc];
 
         // Swim right
-        if (vector3Current[0] < vector3Destinations[i][0]) {
-            vector3Current[0] += MoveSpeed;
-            fishesMove[i] = direction[1];
-        }
+        vector3Current = swimRight(i, vector3Current[0], vector3Current[1], vector3Current[2]);
 
         // Swim left
-        if (vector3Current[0] > vector3Destinations[i][0]) {
-            vector3Current[0] -= MoveSpeed;
-            fishesMove[i] = direction[0];
-        }
+        vector3Current = swimLeft(i, vector3Current[0], vector3Current[1], vector3Current[2]);
 
         // Swim down
-        if (vector3Current[1] < vector3Destinations[i][1]) {
-            vector3Current[1] += MoveSpeed;
-        }
+        vector3Current = swimDown(i, vector3Current[0], vector3Current[1], vector3Current[2]);
 
         // Swim up
-        if (vector3Current[1] > vector3Destinations[i][1]) {
-            vector3Current[1] -= MoveSpeed;
-        }
+        vector3Current = swimUp(i, vector3Current[0], vector3Current[1], vector3Current[2]);
 
         return vector3Current;
     }
@@ -366,26 +365,16 @@
     function schoolMove(i, xd, yd, zd, xc, yc, zc) {
         vector3Current = [xc, yc, zc];
         // Swim right
-        if (vector3Current[0] < vector3Destinations[i][0]) {
-            vector3Current[0] += MoveSpeed;
-            fishesMove[i] = direction[1];
-        }
+        vector3Current = swimRight(i, vector3Current[0], vector3Current[1], vector3Current[2]);
 
         // Swim left
-        if (vector3Current[0] > vector3Destinations[i][0]) {
-            vector3Current[0] -= MoveSpeed;
-            fishesMove[i] = direction[0];
-        }
+        vector3Current = swimLeft(i, vector3Current[0], vector3Current[1], vector3Current[2]);
 
         // Swim down
-        if (vector3Current[1] < vector3Destinations[i][1]) {
-            vector3Current[1] += MoveSpeed;
-        }
+        vector3Current = swimDown(i, vector3Current[0], vector3Current[1], vector3Current[2]);
 
         // Swim up
-        if (vector3Current[1] > vector3Destinations[i][1]) {
-            vector3Current[1] -= MoveSpeed;
-        }
+        vector3Current = swimUp(i, vector3Current[0], vector3Current[1], vector3Current[2]);
 
         return vector3Current;
     }
@@ -416,38 +405,55 @@
     }
 
     // Applies to stingray, octopus, seahorse
-    function swimFloor() {
+    function swimFloor(i, x, y, z) {
+        vector3Current = [xc, yc, zc];
+        // Swim right
+        vector3Current = swimRight(i, vector3Current[0], vector3Current[1], vector3Current[2]);
 
+        // Swim left
+        vector3Current = swimLeft(i, vector3Current[0], vector3Current[1], vector3Current[2]);
+
+        return vector3Current;
     }
 
     // Applies to Eels, oysters
-    function swimNone() {
+    function swimNone(i, x, y, z) {
+        vector3Current = [xc, yc, zc];
 
+        return vector3Current;
     }
 
-    function swimLeft() {
+    function swimLeft(i, xc, yc, zc) {
+        vector3Current = [xc, yc, zc];
         if (vector3Current[0] > vector3Destinations[i][0]) {
             vector3Current[0] -= MoveSpeed;
             fishesMove[i] = direction[0];
         }
+        return vector3Current;
     }
 
-    function swimRight() {
+    function swimRight(i, xc, yc, zc) {
+        vector3Current = [xc, yc, zc];
         if (vector3Current[0] < vector3Destinations[i][0]) {
             vector3Current[0] += MoveSpeed;
             fishesMove[i] = direction[1];
         }
+        return vector3Current;
     }
 
-    function swimUp() {
+    function swimUp(i, xc, yc, zc) {
+        vector3Current = [xc, yc, zc];
         if (vector3Current[1] > vector3Destinations[i][1]) {
             vector3Current[1] -= MoveSpeed;
         }
+        return vector3Current;
     }
 
-    function swimDown() {
+    function swimDown(i, xc, yc, zc) {
+        vector3Current = [xc, yc, zc];
         if (vector3Current[1] < vector3Destinations[i][1]) {
             vector3Current[1] += MoveSpeed;
         }
+        return vector3Current;
     }
 </script>
