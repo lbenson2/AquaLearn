@@ -1,57 +1,43 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Microsoft.EntityFrameworkCore;
 using System.Linq;
-using AutoMapper;
-using AquaLearn.Data.Entities;
-using adm = AquaLearn.Domain.Models;
+using AquaLearn.Domain.Models;
 
 namespace AquaLearn.Data.Helpers
 {
     public class RoleHelper
     {
-        private AquaLearnIMDbContext _db = new AquaLearnIMDbContext();
+        public AquaLearnDbContext _db { get; set; }
+        public AquaLearnIMDbContext _idb { get; set; }
 
-        private MapperConfiguration roleMap = new MapperConfiguration(mc =>
+        public RoleHelper()
         {
-           
-            mc.Mappers.Add(DomainHelper.nameMapper.GetMappers().FirstOrDefault());
-
-            mc.CreateMap<Role, adm.Role>()
-              .ForMember(m => m.RoleId, u => u.MapFrom(s => s.RoleId))
-              .ForAllOtherMembers(m => m.Ignore());
-        });
-
-        public List<adm.Role> GetRoles2()
-        {
-            var dr = new List<adm.Role>();
-
-            foreach (var item in _db.Role.ToList())
-            {
-                dr.Add(new adm.Role()
-                {
-                    RoleId = item.RoleId
-                });
-            }
-
-            return dr;
+            _db = new AquaLearnDbContext();
         }
 
-        public List<adm.Role> GetRoles()
+        public RoleHelper(AquaLearnIMDbContext idb)
         {
-            var roleList = new List<adm.Role>();
-            var mapper = roleMap.CreateMapper();
-            var mapper2 = DomainHelper.nameMapper.CreateMapper();
+            _idb = idb;
+        }
 
-            foreach (var item in _db.Role.ToList())
+
+
+        public List<Role> GetRoles()
+        {
+            if (_db != null)
             {
-                var u = mapper.Map<adm.Role>(item);
+                var z = _db.Role.ToList();
+                return z;
 
-                //u.Name = mapper2.Map<adm.Role>(item);
-                roleList.Add(u);
+            }
+            else
+            {
+                var y = _idb.Role.ToList();
+                return y;
             }
 
-            return roleList;
         }
     }
 }

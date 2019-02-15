@@ -5,6 +5,7 @@ using System.Linq;
 using AquaLearn.Data.Helpers;
 using AquaLearn.Domain.Models;
 using Xunit;
+using AquaLearn.Data;
 
 namespace AquaLearn.Tests.DataTests
 {
@@ -15,36 +16,40 @@ namespace AquaLearn.Tests.DataTests
 
         public FishHelperTest()
         {
-            Sut = new FishHelper();
+            Sut = new FishHelper(new AquaLearnIMDbContext());
 
             Fish = new Fish()
             {
-                
-               
+                Name = "Shark",
+                Schooling = false,
+                Description="Sharks are the most threatening predators in the ocean."
+            
+
+
 
 
             };
 
         }
 
-        [Fact]
-        public void Test_GetFish2()
-        {
-            //Svar actual = Sut.GetFishes2;
-
-            //Assert.NotNull(actual);
-            //Assert.True(actual.Count > 0);
-            //Assert.NotNull(actual.Username == "Spkr");
-        }
+       
 
         [Fact]
-        public void Test_GetFish()
+        public void Test_GetFishes()
         {
+            var db = Sut._idb;
+            db.Fish.Add(Fish);
+            db.SaveChanges();
             var actual = Sut.GetFishes();
 
-            Assert.NotNull(actual);
-            //Assert.True(actual.Count > 0);
-            //Assert.NotNull(actual.Username == "Spkr");
+            Assert.NotNull(actual[0]);
+            Assert.True(actual.Count > 0);
+            Assert.True(actual[0].FishId == 1);
+            Assert.True(actual[0].Name == "Shark");
+            Assert.True(actual[0].Schooling == false);
+            Assert.IsType<string>(actual[0].Description);
+            // Assert.True(actual[0].Description == "Sharks are the most threatening predators in the ocean.");
+
         }
     }
 }

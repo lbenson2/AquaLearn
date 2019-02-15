@@ -1,59 +1,44 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Microsoft.EntityFrameworkCore;
 using System.Linq;
-using AutoMapper;
-using AquaLearn.Data.Entities;
-using adm = AquaLearn.Domain.Models;
+using AquaLearn.Domain.Models;
 
 
 namespace AquaLearn.Data.Helpers
 {
     public class TrashHelper
     {
-        private AquaLearnIMDbContext _db = new AquaLearnIMDbContext();
+        public AquaLearnDbContext _db { get; set; }
+        public AquaLearnIMDbContext _idb { get; set; }
 
-        private MapperConfiguration trashMap = new MapperConfiguration(mc =>
+        public TrashHelper()
         {
-           
-            mc.Mappers.Add(DomainHelper.nameMapper.GetMappers().FirstOrDefault());
+            _db = new AquaLearnDbContext();
+        }
 
-            mc.CreateMap<Trash, adm.Trash>()
-              .ForMember(m => m.TrashId, u => u.MapFrom(s => s.TrashId))
-              .ForAllOtherMembers(m => m.Ignore());
-        });
-
-        public List<adm.Trash> GetTrash2()
+        public TrashHelper(AquaLearnIMDbContext idb)
         {
-            var dt = new List<adm.Trash>();
-
-            foreach (var item in _db.Trash.ToList())
-            {
-                dt.Add(new adm.Trash()
-                {
-                    TrashId = item.TrashId
-                });
-            }
-
-            return dt;
+            _idb = idb;
         }
 
 
-        public List<adm.Trash> GetTrash()
+
+        public List<Trash> GetTrash()
         {
-            var trashList = new List<adm.Trash>();
-            var mapper = trashMap.CreateMapper();
-            var mapper2 = DomainHelper.nameMapper.CreateMapper();
-
-            foreach (var item in _db.Trash.ToList())
+            if (_db != null)
             {
-                var u = mapper.Map<adm.Trash>(item);
+                var z = _db.Trash.ToList();
+                return z;
 
-                //u.Name = mapper2.Map<adm.Fish>(item);
-                trashList.Add(u);
+            }
+            else
+            {
+                var y = _idb.Trash.ToList();
+                return y;
             }
 
-            return trashList;
         }
     }
 }
