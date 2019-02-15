@@ -12,7 +12,7 @@ namespace AquaLearn.Data.Helpers
     public class UserHelper
     {
         private static AquaLearnIMDbContext _db = new AquaLearnIMDbContext();
-        public static AquaLearnDbContext _dbn = new AquaLearnDbContext();
+        //public static AquaLearnDbContext _dbn = new AquaLearnDbContext();
 
         private readonly MapperConfiguration userMap = new MapperConfiguration(mc =>
         {
@@ -56,6 +56,19 @@ namespace AquaLearn.Data.Helpers
             return userList;
         }
 
+        public AquaLearnDbContext _dbn { get; set; }
+        public AquaLearnIMDbContext _idb { get; set; }
+
+        public UserHelper()
+        {
+            _dbn = new AquaLearnDbContext();
+        }
+
+        public UserHelper(AquaLearnIMDbContext idb)
+        {
+            _idb = idb;
+        }
+
         public List<adm.User> GetUserTest()
         {
             if (_dbn != null)
@@ -65,7 +78,7 @@ namespace AquaLearn.Data.Helpers
             }
             else
             {
-                var y = _db.User.ToList();
+                var y = _idb.User.ToList();
                 return y;
             }
         }
