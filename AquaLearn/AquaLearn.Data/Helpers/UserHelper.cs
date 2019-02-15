@@ -6,15 +6,11 @@ using AutoMapper;
 using AquaLearn.Data.Entities;
 using adm = AquaLearn.Domain.Models;
 using Microsoft.EntityFrameworkCore;
-//using AquaLearn.Domain.Models;
 
 namespace AquaLearn.Data.Helpers
-
 {
     public class UserHelper
     {
-
-
         private static AquaLearnIMDbContext _db = new AquaLearnIMDbContext();
 
         private MapperConfiguration userMap = new MapperConfiguration(mc =>
@@ -77,17 +73,24 @@ namespace AquaLearn.Data.Helpers
         public AquaLearnDbContext _dbn { get; set; }
         public AquaLearnIMDbContext _idb { get; set; }
 
-        public UserHelper()
+        private MapperConfiguration userMap = new MapperConfiguration(mc =>
         {
             _dbn = new AquaLearnDbContext();
         }
 
-        public UserHelper(AquaLearnIMDbContext idb)
+        public static List<adm.User> GetUsers()
         {
-            _idb = idb;
+            var du = new List<adm.User>();
+
+            foreach (var item in _db.User.ToList())
+            {
+                du.Add(new adm.User()
+                {
+                    UserId = item.UserId
+
+                });
+            }
         }
-
-
 
         public List<adm.User> GetUserTest()
         {
@@ -95,17 +98,45 @@ namespace AquaLearn.Data.Helpers
             {
                 var z = _dbn.User.ToList();
                 return z;
-
             }
             else
             {
-                var y = _idb.User.ToList();
-                return y;
+              var y = _idb.User.ToList();
+              return y;
             }
-
         }
 
+        public static adm.User GetUserByUserName(string username)
+        {
+            return _db.User.FirstOrDefault(m => m.Username == username);
+        }
 
+        public bool SetUser(adm.User user)
+        {
+            var checkuser = GetUserByUserName(user.Username);
+
+            if (checkuser != null && checkuser.Username == user.Username)
+            {
+                return false;
+            }
+            else
+            {
+                _db.User.Add(user);
+                return _db.SaveChanges() > 0;
+            }
+        }
+
+        public static bool SetUser2(adm.User user)
+        {
+          var newUser = new adm.User()
+          {
+            Username = user.Username,
+            Password = user.Password
+          };
+      
+          _db.User.Add(newUser);
+
+        return _db.SaveChanges() == 1;
+        }
     }
 }
-

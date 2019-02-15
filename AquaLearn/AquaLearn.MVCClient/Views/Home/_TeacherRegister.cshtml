@@ -1,8 +1,12 @@
 ﻿@model AquaLearn.Domain.Models.User
 
+<style>
+  import url('https://fonts.googleapis.com/css?family=Fredoka+One');{}
+</style>
+
 <div class="text-center">
-  <h1>Login</h1>
-  @using (Html.BeginForm("registerteacher", "user"))
+  <h1 style="font-family:'Fredoka One', cursive;">Teacher Register</h1>
+  @using (Html.BeginForm("post", "user"))
   {
     @Html.LabelFor(u => u.Username, "Enter your name")<br />
     @Html.TextBoxFor(u => u.Username)<br />
