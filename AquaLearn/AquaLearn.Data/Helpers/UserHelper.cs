@@ -12,11 +12,10 @@ namespace AquaLearn.Data.Helpers
 {
     public class UserHelper
     {
-        private static AquaLearnIMDbContext _db = new AquaLearnIMDbContext();
+        private static AquaLearnDbContext _db = new AquaLearnDbContext();
 
         private MapperConfiguration userMap = new MapperConfiguration(mc =>
         {
-          
             mc.Mappers.Add(DomainHelper.nameMapper.GetMappers().FirstOrDefault());
 
             mc.CreateMap<User, adm.User>()
@@ -58,6 +57,28 @@ namespace AquaLearn.Data.Helpers
             return userList;
         }
 
-        
+        public static adm.User GetUserByUserName(string username)
+        {
+            return _db.User.FirstOrDefault(m => m.Username == username);
+        }
+
+        public bool SetUser(adm.User user)
+        {
+            var checkuser = GetUserByUserName(user.Username);
+
+            if (checkuser != null && checkuser.Username == user.Username)
+            {
+                return false;
+            }
+            else
+            {
+               
+                _db.User.Add(user);
+                return _db.SaveChanges() > 0;
+            }
+        }
+
+
+
     }
 }
