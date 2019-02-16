@@ -8,7 +8,25 @@ using AquaLearn.Data;
 
 namespace AquaLearn.Tests.DataTests
 {
-  class QuizHelperTest
+  public class QuizHelperTest
   {
+    public QuizHelper Sut { get; set; }
+    public Quiz Quiz { get; set; }
+
+    public QuizHelperTest()
+    {
+      Quiz = new Quiz()
+      {
+        
+      };
+    }
+
+    [Fact]
+    public void Test_GetQuizes()
+    {
+      Assert.True(Sut.GetQuizzes().Count >= 0);
+      Assert.True(Sut.GetScoresByStudent(1).Count >= 0);
+    }
+    
   }
 }
