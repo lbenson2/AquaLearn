@@ -56,8 +56,36 @@
 
     // C# to JS conversion
 
+    var fishNames = [];
+    var fishDescriptions = [];
+    var fishSchooling = [];
 
-    var fishSpriteSheet = new Image();
+    @foreach (var fish in Model.Fishes)
+    {
+        @:fishNames.push("@fish.Name");
+        @:fishDescriptions.push("@fish.Description");
+        @:fishSchooling.push("@fish.Schooling");
+    }
+
+    var plantNames = [];
+    var plantDescriptions = [];
+    @foreach (var plant in Model.Plants)
+    {
+        @:plantNames.push(@plant.Name);
+        @:plantDescriptions.push(@plant.Description);
+    }
+
+    var trashNames = [];
+    var trashDescriptions = [];
+    @foreach (var trash in Model.Trash)
+    {
+        @:trashNames.push(@trash.Name);
+        @:trashDescriptions.push(@trash.Description);
+    }
+
+    // JS INIT
+
+    var fishSpriteSheet = foreach;
     fishSpriteSheet.src = "@Url.Content("~/images/fishSpriteSheet.png")";
     var vector3Destinations = [];
     var vector3Current = [0, 0, 0];
