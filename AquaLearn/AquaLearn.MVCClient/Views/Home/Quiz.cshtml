@@ -17,7 +17,7 @@
       <h3 style="margin-left:40px; margin-right:40px;">Test your marine knowledge and rule the seven seas with our Quiz down below. Who's that marine life? </h3>
     </div>
     <div class="row">
-      <div class="col-3" style="margin-left:8em; margin-right:1em;">
+      <div class="col-4" style="margin-left:2em; margin-right:1em;">
         <div class="quiz-container">
           <div id="quiz"></div>
         </div>
@@ -27,7 +27,7 @@
         <div id="results"></div>
       </div>
 
-      <div class="col" style="margin-right:8em; margin-left:1em;">
+      <div class="col" style="margin-right:0; margin-left:1em;">
         <canvas id="myCanvas" width="480" height="480" style="border:1px solid #000000;"></canvas>
       </div>
     </div>
@@ -64,6 +64,27 @@
 
     button:hover {
         background-color: #38a;
+    }
+
+    .slide {
+      position: absolute;
+      left: 0px;
+      top: 0px;
+      width: 100%;
+      z-index: 1;
+      opacity: 0;
+      transition: opacity 0.5s;
+    }
+
+    .active-slide {
+      opacity: 1;
+      z-index: 2;
+    }
+
+    .quiz-container {
+      position: relative;
+      height: 200px;
+      margin-top: 40px;
     }
     </style>
 
