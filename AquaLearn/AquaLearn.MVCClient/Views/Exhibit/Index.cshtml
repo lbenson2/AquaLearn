@@ -59,12 +59,14 @@
     var fishNames = [];
     var fishDescriptions = [];
     var fishSchooling = [];
+    var fishWaterType = [];
 
     @foreach (var fish in Model.Fishes)
     {
         @:fishNames.push("@fish.Name");
         @:fishDescriptions.push("@fish.Description");
         @:fishSchooling.push("@fish.Schooling");
+        @:fishWaterType.push("@fish.WaterType.Name");
     }
 
     var plantNames = [];
@@ -83,6 +85,56 @@
         @:trashDescriptions.push(@trash.Description);
     }
 
+    // Fish per exhibit
+    var fishExDeepNameSingle = [];
+    var fishExDeepDescSingle = [];
+    var fishExDeepNameSchool = [];
+    var fishExDeepDescSchool = [];
+
+    var fishExCoralNameSingle = [];
+    var fishExCoralDescSingle = [];
+    var fishExCoralNameSchool = [];
+    var fishExCoralDescSchool = [];
+
+    var fishExPollNameSingle = [];
+    var fishExPollDescSingle = [];
+    var fishExPollNameSchool = [];
+    var fishExPollDescSchool = [];
+
+    for (var i = 0; i < fishWaterType.length; i++) {
+        if (fishWaterType[i] == "Deep Ocean") {
+            if (fishSchooling[i] == 0) {
+                fishExDeepNameSingle.push(fishNames[i]);
+                fishExDeepDescSingle.push(fishDescriptions[i]);
+            }
+            else {
+                fishExDeepNameSchool.push(fishNames[i]);
+                fishExDeepDescSchool.push(fishDescriptions[i]);
+            }
+        }
+        else if (fishWaterType[i] == "Coral Reef") {
+            if (fishSchooling[i] == 0) {
+                fishExCoralNameSingle.push(fishNames[i]);
+                fishExCoralDescSingle.push(fishDescriptions[i]);
+            }
+            else {
+                fishExCoralNameSchool.push(fishNames[i]);
+                fishExCoralDescSchool.push(fishDescriptions[i]);
+            }
+        }
+        else // fishWaterType == "Pollution"
+        {
+            if (fishSchooling[i] == 0) {
+                fishExPollNameSingle.push(fishNames[i]);
+                fishExPollDescSingle.push(fishDescriptions[i]);
+            }
+            else {
+                fishExPollNameSchool.push(fishNames[i]);
+                fishExPollDescSchool.push(fishDescriptions[i]);
+            }
+        }
+    }
+
     // JS INIT
 
     var fishSpriteSheet = foreach;
@@ -91,6 +143,8 @@
     var vector3Current = [0, 0, 0];
     var numFish = getRandomIntRange(3, 15);
     var numPlants = getRandomIntRange(5, 10);
+    var currFishSingle = [];
+    var currFishSchool = [];
     var fishes = [];
     var fishesMove = [];
     var trash = [];
@@ -122,14 +176,18 @@
             if (schooling == 0) {
                 vector3Current = setRndVector3();
                 fishes.push(vector3Current);
+
+                currFishSingle.push(GetFishSingleInEx());
             }
             else {
                 if (schoolingVector3 == null) {
                     vector3Current = setRndVector3();
                     schoolingVector3 = vector3Current;
+                    currFishSchool.push(GetFishSchoolInEx());
                 }
                 else {
                     vector3Current = schoolingVector3;
+                    currFishSchool.push(currFishSchool[0]);
                 }
                 school.push(vector3Current);
             }
@@ -156,25 +214,35 @@
     }
 
     function place() {
-        var regColor;
-        var schoolColor;
-        var plantColor;
-
         switch (exhibitType) {
             case "_CoralReef":
                 regColor = "blue";
                 schoolColor = "black";
                 plantColor = "green";
+                fishExDeepNameSingle = [];
+                fishExDeepDescSingle = [];
+                fishExDeepNameSchool = [];
+                fishExDeepDescSchool = [];
                 break;
             case "_DeepOcean":
                 regColor = "red";
                 schoolColor = "purple";
                 plantColor = "lime";
+
+                fishExCoralNameSingle = [];
+                fishExCoralDescSingle = [];
+                fishExCoralNameSchool = [];
+                fishExCoralDescSchool = [];
                 break;
             default:
                 regColor = "brown";
                 schoolColor = "grey";
                 plantColor = "black";
+
+                fishExPollNameSingle = [];
+                fishExPollDescSingle = [];
+                fishExPollNameSchool = [];
+                fishExPollDescSchool = [];
                 break;
         }
 
@@ -183,7 +251,7 @@
         for (var i = 0; i < fishes.length; i++) {
             fishes[i] = swim(i, fishes[i][0], fishes[i][1], fishes[i][2]);
             // currFish setup [name, startx, startyl, startyr, width, height]
-            var currFish = getFish();
+            var currFish = getFishSprite();
             var yPos;
             if (fishesMove[i] == 'l') {
                 yPos = currFish[2];
@@ -212,6 +280,8 @@
         fishes = [];
         school = [];
         plants = [];
+        currFishSingle = [];
+        currFishSchool = [];
 
         numFish = getRandomIntRange(3, 15);
         numPlants = getRandomIntRange(5, 10);
@@ -283,13 +353,14 @@
         return ctx;
     }
 
-    function getMoveType(name){
+    function getMoveType(name, i, x, y, z){
         if (name == "Shark"
             || name == "Whale"
             || name == "Swordfish"
             || name == "Manatees"
             || name == "Giant Squid") {
             // swim
+            swim(i, x, y, z);
         }
         else if (name == "Tuna"
             || name == "Clownfish"
@@ -298,18 +369,55 @@
             || name == "Walruses"
             || name == "Dolphins") {
             // swim together
+            swimTogether(i, x, y, z);
         }
         else if (name == "Stingray"
             || name == "Ocotopus"
             || name == "Seahorse") {
             // swim floor
+            swimFloor(i, x, y, z);
         }
         else {
             // Swim None
+            swimNone(i, x, y, z);
         }
     }
 
-    function getFish(name) {
+    function GetFishSingleInEx() {
+        var fishSingle = 0;
+        switch (exhibitType) {
+            case "_CoralReef":
+                fishSingle = fishExCoralNameSingle.length;
+                break;
+            case "_DeepOcean":
+                fishSingle = fishExDeepNameSingle.length;
+                break;
+            default:
+                fishSingle = fishExPollNameSingle.length;
+                break;
+        }
+
+        return getRandomIntRange(0, fishSingle);
+    }
+
+    function GetFishSchoolInEx() {
+        var fishSingle = 0;
+        switch (exhibitType) {
+            case "_CoralReef":
+                fishSingle = fishExCoralNameSchool.length;
+                break;
+            case "_DeepOcean":
+                fishSingle = fishExDeepNameSchool.length;
+                break;
+            default:
+                fishSingle = fishExPollNameSchool.length;
+                break;
+        }
+
+        return getRandomIntRange(0, fishSingle);
+    }
+
+    function getFishSprite(name) {
         var sprite;
         switch (name) {
             // [name, startx, startyl, startyr, width, height]
@@ -486,7 +594,7 @@
 
     // Applies to stingray, octopus, seahorse
     function swimFloor(i, x, y, z) {
-        vector3Current = [xc, yc, zc];
+        vector3Current = [x, y, z];
         // Swim right
         vector3Current = swimRight(i, vector3Current[0], vector3Current[1], vector3Current[2]);
 
@@ -498,13 +606,13 @@
 
     // Applies to Eels, oysters
     function swimNone(i, x, y, z) {
-        vector3Current = [xc, yc, zc];
+        vector3Current = [x, y, z];
 
         return vector3Current;
     }
 
-    function swimLeft(i, xc, yc, zc) {
-        vector3Current = [xc, yc, zc];
+    function swimLeft(i, x, y, z) {
+        vector3Current = [x, y, z];
         if (vector3Current[0] > vector3Destinations[i][0]) {
             vector3Current[0] -= MoveSpeed;
             fishesMove[i] = direction[0];
@@ -512,8 +620,8 @@
         return vector3Current;
     }
 
-    function swimRight(i, xc, yc, zc) {
-        vector3Current = [xc, yc, zc];
+    function swimRight(i, x, y, z) {
+        vector3Current = [x, y, z];
         if (vector3Current[0] < vector3Destinations[i][0]) {
             vector3Current[0] += MoveSpeed;
             fishesMove[i] = direction[1];
@@ -521,16 +629,16 @@
         return vector3Current;
     }
 
-    function swimUp(i, xc, yc, zc) {
-        vector3Current = [xc, yc, zc];
+    function swimUp(i, x, y, z) {
+        vector3Current = [x, y, z];
         if (vector3Current[1] > vector3Destinations[i][1]) {
             vector3Current[1] -= MoveSpeed;
         }
         return vector3Current;
     }
 
-    function swimDown(i, xc, yc, zc) {
-        vector3Current = [xc, yc, zc];
+    function swimDown(i, x, y, z) {
+        vector3Current = [x, y, z];
         if (vector3Current[1] < vector3Destinations[i][1]) {
             vector3Current[1] += MoveSpeed;
         }
