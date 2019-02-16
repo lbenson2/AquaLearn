@@ -1,4 +1,6 @@
-﻿@{
+﻿@model AquaLearn.MVCClient.Models.ExhibitModel
+
+@{
     ViewData["Title"] = "Exhibit";
 }
 
@@ -51,6 +53,10 @@
     // *******************
 
     // INITIALIZE
+
+    // C# to JS conversion
+
+
     var fishSpriteSheet = new Image();
     fishSpriteSheet.src = "@Url.Content("~/images/fishSpriteSheet.png")";
     var vector3Destinations = [];
@@ -249,26 +255,89 @@
         return ctx;
     }
 
-    function getFish() {
-        // [name, startx, startyl, startyr, width, height]
-        var shark = ["Shark", 250, 250, 0, 250, 150];
-        var swordfish = ["Swordfish", 700, 250, 0, 250, 100];
-        var tuna = ["Tuna", 500, 350, 100, 150, 50];
-        var clownfish = ["Clownfish", 850, 350, 100, 100, 50];
-        var stingray = ["Stingray", 350, 400, 150, 100, 100];
-        var jellyfish = ["Jellyfish", 450, 400, 150, 100, 100];
-        var eels = ["Eels", 950, 350, 100, 100, 50];
-        var seahorse = ["Seahorse", 950, 400, 150, 100, 100];
-        var whale = ["Whales", 0, 250, 0, 250, 150];
-        var seal = ["Seals", 650, 350, 100, 200, 50];
-        var walrus = ["Walruses", 500, 250, 0, 200, 100];
-        var dolphin = ["Dolphins", 950, 250, 0, 250, 100];
-        var manatee = ["Manatees", 150, 400, 150, 200, 100];
-        var octopus = ["Ocotopus", 0, 400, 150, 150, 100];
-        var squid = ["Giant Squid", 850, 400, 150, 100, 100];
-        var oysters = ["Oysters", 550, 400, 150, 100, 100];
+    function getMoveType(name){
+        if (name == "Shark"
+            || name == "Whale"
+            || name == "Swordfish"
+            || name == "Manatees"
+            || name == "Giant Squid") {
+            // swim
+        }
+        else if (name == "Tuna"
+            || name == "Clownfish"
+            || name == "Jellyfish"
+            || name == "Seals"
+            || name == "Walruses"
+            || name == "Dolphins") {
+            // swim together
+        }
+        else if (name == "Stingray"
+            || name == "Ocotopus"
+            || name == "Seahorse") {
+            // swim floor
+        }
+        else {
+            // Swim None
+        }
+    }
 
-        return oysters;
+    function getFish(name) {
+        var sprite;
+        switch (name) {
+            // [name, startx, startyl, startyr, width, height]
+            case "Shark":
+                sprite = ["Shark", 250, 250, 0, 250, 150];
+                break;
+            case "Swordfish":
+                sprite = ["Swordfish", 700, 250, 0, 250, 100];
+                break;
+            case "Tuna":
+                sprite = ["Tuna", 500, 350, 100, 150, 50];
+                break;
+            case "Clownfish":
+                sprite = ["Clownfish", 850, 350, 100, 100, 50];
+                break;
+            case "Stingray":
+                sprite = ["Stingray", 350, 400, 150, 100, 100];
+                break;
+            case "Jellyfish":
+                sprite = ["Jellyfish", 450, 400, 150, 100, 100];
+                break;
+            case "Eels":
+                sprite = ["Eels", 950, 350, 100, 100, 50];
+                break;
+            case "Seahorse":
+                sprite = ["Seahorse", 950, 400, 150, 100, 100];
+                break;
+            case "Whales":
+                sprite = ["Whales", 0, 250, 0, 250, 150];
+                break;
+            case "Seals":
+                sprite = ["Seals", 650, 350, 100, 200, 50];
+                break;
+            case "Walruses":
+                sprite = ["Walruses", 500, 250, 0, 200, 100];
+                break;
+            case "Dolphins":
+                sprite = ["Dolphins", 950, 250, 0, 250, 100];
+                break;
+            case "Manatees":
+                sprite = ["Manatees", 150, 400, 150, 200, 100];
+                break;
+            case "Ocotopus":
+                sprite = ["Ocotopus", 0, 400, 150, 150, 100];
+                break;
+            case "Giant Squid":
+                sprite = ["Giant Squid", 850, 400, 150, 100, 100];
+                break;
+            case "Oysters":
+                sprite = ["Oysters", 550, 400, 150, 100, 100];
+                break;
+            default:
+                sprite = ["Clownfish", 850, 350, 100, 100, 50];
+                break;
+        }
+        return sprite;
     }
 
     function getRandomIntRange(min, max) {
@@ -344,41 +413,6 @@
     // MOVEMENT & PLACEMENT
     // *******************
 
-    function basicMove(i, xd, yd, zd, xc, yc, zc) {
-        vector3Current = [xc, yc, zc];
-
-        // Swim right
-        vector3Current = swimRight(i, vector3Current[0], vector3Current[1], vector3Current[2]);
-
-        // Swim left
-        vector3Current = swimLeft(i, vector3Current[0], vector3Current[1], vector3Current[2]);
-
-        // Swim down
-        vector3Current = swimDown(i, vector3Current[0], vector3Current[1], vector3Current[2]);
-
-        // Swim up
-        vector3Current = swimUp(i, vector3Current[0], vector3Current[1], vector3Current[2]);
-
-        return vector3Current;
-    }
-
-    function schoolMove(i, xd, yd, zd, xc, yc, zc) {
-        vector3Current = [xc, yc, zc];
-        // Swim right
-        vector3Current = swimRight(i, vector3Current[0], vector3Current[1], vector3Current[2]);
-
-        // Swim left
-        vector3Current = swimLeft(i, vector3Current[0], vector3Current[1], vector3Current[2]);
-
-        // Swim down
-        vector3Current = swimDown(i, vector3Current[0], vector3Current[1], vector3Current[2]);
-
-        // Swim up
-        vector3Current = swimUp(i, vector3Current[0], vector3Current[1], vector3Current[2]);
-
-        return vector3Current;
-    }
-
     // Applies to Shark, Whale, Swordfish, Manatees, squid
     function swim(i, x, y, z) {
         vector3Current = [x, y, z];
@@ -399,7 +433,25 @@
         else {
             vector3Destinations[i] = checkDestination(vector3Destinations[i][0], vector3Destinations[i][1], vector3Destinations[i][2], vector3Current[0], vector3Current[1], vector3Current[2], true);
         }
-        vector3Current = schoolMove(i, vector3Destinations[i][0], vector3Destinations[i][1], vector3Destinations[i][2], vector3Current[0], vector3Current[1], vector3Current[2]);
+        vector3Current = basicMove(i, vector3Destinations[i][0], vector3Destinations[i][1], vector3Destinations[i][2], vector3Current[0], vector3Current[1], vector3Current[2]);
+
+        return vector3Current;
+    }
+
+    function basicMove(i, xd, yd, zd, xc, yc, zc) {
+        vector3Current = [xc, yc, zc];
+
+        // Swim right
+        vector3Current = swimRight(i, vector3Current[0], vector3Current[1], vector3Current[2]);
+
+        // Swim left
+        vector3Current = swimLeft(i, vector3Current[0], vector3Current[1], vector3Current[2]);
+
+        // Swim down
+        vector3Current = swimDown(i, vector3Current[0], vector3Current[1], vector3Current[2]);
+
+        // Swim up
+        vector3Current = swimUp(i, vector3Current[0], vector3Current[1], vector3Current[2]);
 
         return vector3Current;
     }
