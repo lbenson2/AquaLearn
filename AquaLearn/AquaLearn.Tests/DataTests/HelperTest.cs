@@ -15,24 +15,62 @@ namespace AquaLearn.Tests.DataTests
 
         //private readonly Fish sut;
 
-        public PlantHelper Sutp { get; set; }
-        public Plant plant { get; set; }
+        public RoleHelper Sutr { get; set; }
+        public Role role { get; set; }
+
+        public TrashHelper Sutt { get; set; }
+        public Trash trash { get; set; }
 
         public FishHelper Sutf { get; set; }
         public Fish fish { get; set; }
 
-        public RoleHelper Sutr { get; set; }
-        public Role role { get; set; }
 
-        //public TrashHelper Sutt { get; set; }
-        //public Trash Trash { get; set; }
+
+        public PlantHelper Sutp { get; set; }
+        public Plant plant { get; set; }
+
+        public HazardHelper Suth { get; set; }
+        public Hazard hazard { get; set; }
 
         public HelperTest()
         {
-            Sutp = new PlantHelper(new AquaLearnIMDbContext());
-            Sutf = new FishHelper(new AquaLearnIMDbContext()); //(new AquaLearnIMDbContext());
             Sutr = new RoleHelper(new AquaLearnIMDbContext());
-            // Sutt = new TrashHelper(new AquaLearnIMDbContext());
+            Sutt = new TrashHelper(new AquaLearnIMDbContext());
+            Sutf = new FishHelper(new AquaLearnIMDbContext());
+            Sutp = new PlantHelper(new AquaLearnIMDbContext());
+            Suth = new HazardHelper(new AquaLearnIMDbContext());
+
+
+
+            role = new Role()
+            {
+
+                Name = "Teacher"
+
+            };
+
+            trash = new Trash()
+            {
+                Name = "Plastic Bottles",
+                Schooling = true,
+                Description = "Americans throw away 35 billion plastic water bottles every year.Making the ocean inhabitable for sea creatures."
+
+
+            };
+
+            fish = new Fish()
+            {
+                Name = "Shark",
+                Schooling = false,
+                Description = "Sharks are the most threatening predators in the ocean.",
+                WaterType = new WaterType()
+                {
+                    WaterTypeId = 4,
+                    Name = "Ocean Salt Water"
+                }
+
+            };
+
 
             plant = new Plant()
             {
@@ -42,86 +80,134 @@ namespace AquaLearn.Tests.DataTests
 
             };
 
-            fish = new Fish()
+            hazard = new Hazard()
             {
-                Name = "Shark",
-                Schooling = false,
-                Description = "Sharks are the most threatening predators in the ocean."
-
-            };
-
-            role = new Role()
-            {
-
-                Name = "Teacher"
+                Name = "Plastic",
+                Description = "Pollution"
 
             };
 
 
-            Sutp.SetPlant(plant);
-            Sutf.SetFish(fish);
+
+
+
             Sutr.SetRole(role);
-            //Sutt.SetTrash(trash);
+            Sutt.SetTrash(trash);
+           // Sutf.SetFish(fish);
 
-
-
+           // Sutp.SetPlant(plant);
+           
+           
+            
 
         }
 
-        //[Fact]
-        //public void Test_GetRoles()
-        //{
-        //    //var db = Sut._idb;
-        //    //db.Role.Add(Role);
-        //    //db.SaveChanges();
-        //    var actual = Sutr.GetRoles();
 
 
-        //    Assert.NotNull(actual);
-        //    Assert.True(actual.Count > 0);
-        //    Assert.NotNull(actual[0].Name);
-        //    Assert.True(actual[0].RoleId == 1);
-        //    Assert.True(actual[0].Name == "Teacher");
-        //    //Assert.NotNull(actual.Username == "Spkr");
-        //}
+        [Fact]
+        public void Test_GetaRoles()
+        {
+            //var db = Sut._idb;
+            //db.Role.Add(Role);
+            //db.SaveChanges();
+            var actual = Sutr.GetRoles();
+
+
+            Assert.NotNull(actual);
+            Assert.True(actual.Count > 0);
+            Assert.NotNull(actual[0].Name);
+            Assert.True(actual[0].RoleId == 1);
+            Assert.True(actual[0].Name == "Teacher");
+           
+        }
+
+
+        [Fact]
+        public void Test_GetbTrash()
+        {
+           
+            //var db = Sutt._idb;
+            //db.Trash.Add(trash);
+            //db.SaveChanges();
+            var actual = Sutt.GetTrash();
+
+            Assert.NotNull(actual);
+            Assert.True(actual.Count > 0);
+            Assert.True(actual[0].TrashId == 1);
+            Assert.True(actual[0].Name == "Plastic Bottles");
+            Assert.True(actual[0].Schooling == true);
+            Assert.IsType<string>(actual[0].Description);
+            //Assert.True(actual[0].Description == "Americans throw away 35 billion plastic water bottles every year. Making the ocean inhabitable for sea creatures.");
+
+        }
+
+
+        [Fact]
+        public void Test_GetcFishes()
+        {
+            Sutf.SetFish(fish);
+            //var db = Sut._idb;
+            //db.Fish.Add(Fish);
+            //db.SaveChanges();
+            var actual = Sutf.GetFishes();
+
+            Assert.NotNull(actual[0]);
+            Assert.True(actual.Count > 0);
+            Assert.True(actual[0].FishId == 1);
+            //Assert.True(actual[0].Name == "Shark");
+            Assert.True(actual[0].Schooling == false);
+            Assert.IsType<string>(actual[0].Description);
+            Assert.True(actual[0].WaterType.WaterTypeId == 4);
+            Assert.True(actual[0].WaterType.Name == "Ocean Salt Water");
+            // Assert.True(actual[0].Description == "Sharks are the most threatening predators in the ocean.");
+
+        }
+
+        [Fact]
+        public void Test_GetdPlants()
+        {
+            Sutp.SetPlant(plant);
+            //var db = Sut._idb;
+            //db.Plant.Add(Plant);
+            //db.SaveChanges();
+            var actual = Sutp.GetPlants();
+
+            Assert.NotNull(actual);
+            Assert.True(actual.Count > 0);
+            Assert.True(actual[0].PlantId == 1);
+            //Assert.IsType<string>(actual[0].Description);
+            //Assert.True(actual[0].Description == "Algae are very diverse and found almost everywhere on the planet. They play an important role in many ecosystems, including providing the foundation for the aquatic food chains supporting all fisheries in the oceans and inland, as well as producing about 70 percent of all the air we breathe.");
+            //Assert.True(actual[0].Name == "Algae");
+        }
+
+        [Fact]
+        public void Test_GeteHazards()
+        {
+            //var db = Sut._idb;
+            //db.Hazard.Add(Hazard);
+            //db.SaveChanges();
+            Suth.SetHazard(hazard);
+            var actual = Suth.GetHazards();
+
+            Assert.NotNull(actual);
+            Assert.True(actual.Count > 0);
+            Assert.True(actual[0].HazardId == 1);
+            Assert.True(actual[0].Description == "Pollution");
+            Assert.True(actual[0].Name == "Plastic");
+        }
 
 
 
-        //[Fact]
-        //public void Test_GetFishes()
-        //{
-        //    //var db = Sut._idb;
-        //    //db.Fish.Add(Fish);
-        //    //db.SaveChanges();
-        //   var actual = Sutf.GettheFishes2();
-
-        //    Assert.NotNull(actual[0]);
-        //    Assert.True(actual.Count > 0);
-        //    Assert.True(actual[0].FishId == 1);
-        //    Assert.True(actual[0].Name == "Shark");
-        //    Assert.True(actual[0].Schooling == false);
-        //    Assert.IsType<string>(actual[0].Description);
-        //    // Assert.True(actual[0].Description == "Sharks are the most threatening predators in the ocean.");
-
-        //}
 
 
-        //[Fact]
-        //public void Test_GetPlants()
-        //{
-        //    //var db = Sut._idb;
-        //    //db.Plant.Add(Plant);
-        //    //db.SaveChanges();
-        //    var actual = Sutp.GetPlants();
 
-        //    Assert.NotNull(actual);
-        //    Assert.True(actual.Count > 0);
-        //    Assert.True(actual[0].PlantId == 1);
-        //    //Assert.IsType<string>(actual[0].Description);
-        //    //Assert.True(actual[0].Description == "Algae are very diverse and found almost everywhere on the planet. They play an important role in many ecosystems, including providing the foundation for the aquatic food chains supporting all fisheries in the oceans and inland, as well as producing about 70 percent of all the air we breathe.");
-        //    Assert.True(actual[0].Name == "Algae");
-        //}
 
-        
+
+
+
+
+
+
+
     }
 }

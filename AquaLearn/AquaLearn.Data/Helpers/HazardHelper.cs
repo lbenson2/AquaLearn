@@ -23,6 +23,21 @@ namespace AquaLearn.Data.Helpers
             _idb = idb;
         }
 
+        public long SetHazard(Hazard hazard)
+        {
+            if (_db != null)
+            {
+                _db.Hazard.Add(hazard);
+                return _db.SaveChanges();
+            }
+            else
+            {
+                _idb.Hazard.Add(hazard);
+                return _idb.SaveChanges();
+            }
+
+        }
+
 
 
         public List<Hazard> GetHazards()
