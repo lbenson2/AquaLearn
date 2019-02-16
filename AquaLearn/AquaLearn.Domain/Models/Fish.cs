@@ -12,6 +12,7 @@ namespace AquaLearn.Domain.Models
         public bool Schooling { get; set; }
         public WaterType WaterType { get; set; }
         public string Description { get; set; }
+        public int ExhibitId { get; set; }
         [NotMapped]
         public float[] Destination { get; private set; }
         [NotMapped]

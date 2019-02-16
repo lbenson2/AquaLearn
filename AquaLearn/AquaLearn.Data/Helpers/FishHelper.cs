@@ -31,7 +31,7 @@ namespace AquaLearn.Data.Helpers
 
         public List<adm.Fish> GettheFishes2()
         {
-            return _idb.Fish.Include(x => x.WaterType).ToList();
+            return _dbn.Fish.Include(x => x.WaterType).ToList();
         }
 
 

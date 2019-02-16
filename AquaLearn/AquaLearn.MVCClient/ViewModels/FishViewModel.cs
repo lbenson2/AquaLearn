@@ -12,7 +12,7 @@ namespace AquaLearn.MVCClient.ViewModels
         public List<ald.Fish> GetFishes()
         {
             var helper = new FishHelper();
-            return helper.GetFishes();
+            return helper.GettheFishes2();
         }
     }
 }

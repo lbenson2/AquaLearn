@@ -66,23 +66,23 @@
         @:fishNames.push("@fish.Name");
         @:fishDescriptions.push("@fish.Description");
         @:fishSchooling.push("@fish.Schooling");
-        @:fishWaterType.push("@fish.WaterType.Name");
+        @:fishWaterType.push("@fish.ExhibitId");
     }
 
     var plantNames = [];
     var plantDescriptions = [];
     @foreach (var plant in Model.Plants)
     {
-        @:plantNames.push(@plant.Name);
-        @:plantDescriptions.push(@plant.Description);
+        @:plantNames.push("@plant.Name");
+        @:plantDescriptions.push("@plant.Description");
     }
 
     var trashNames = [];
     var trashDescriptions = [];
     @foreach (var trash in Model.Trash)
     {
-        @:trashNames.push(@trash.Name);
-        @:trashDescriptions.push(@trash.Description);
+        @:trashNames.push("@trash.Name");
+        @:trashDescriptions.push("@trash.Description");
     }
 
     // Fish per exhibit
@@ -102,8 +102,8 @@
     var fishExPollDescSchool = [];
 
     for (var i = 0; i < fishWaterType.length; i++) {
-        if (fishWaterType[i] == "Deep Ocean") {
-            if (fishSchooling[i] == 0) {
+        if (fishWaterType[i] == 1) {
+            if (fishSchooling[i] == "False") {
                 fishExDeepNameSingle.push(fishNames[i]);
                 fishExDeepDescSingle.push(fishDescriptions[i]);
             }
@@ -112,8 +112,8 @@
                 fishExDeepDescSchool.push(fishDescriptions[i]);
             }
         }
-        else if (fishWaterType[i] == "Coral Reef") {
-            if (fishSchooling[i] == 0) {
+        else if (fishWaterType[i] == 2) {
+            if (fishSchooling[i] == "False") {
                 fishExCoralNameSingle.push(fishNames[i]);
                 fishExCoralDescSingle.push(fishDescriptions[i]);
             }
@@ -124,7 +124,7 @@
         }
         else // fishWaterType == "Pollution"
         {
-            if (fishSchooling[i] == 0) {
+            if (fishSchooling[i] == "False") {
                 fishExPollNameSingle.push(fishNames[i]);
                 fishExPollDescSingle.push(fishDescriptions[i]);
             }
@@ -136,8 +136,7 @@
     }
 
     // JS INIT
-
-    var fishSpriteSheet = foreach;
+    var fishSpriteSheet = new Image();
     fishSpriteSheet.src = "@Url.Content("~/images/fishSpriteSheet.png")";
     var vector3Destinations = [];
     var vector3Current = [0, 0, 0];
@@ -233,14 +232,24 @@
             drawImage(fishSpriteSheet, currFish[1], yPos, currFish[4], currFish[5], fishes[i][0], fishes[i][1], currFish[4], currFish[5]);
         }
 
-        //// School Fish
+        // School Fish
 
-        //for (var i = 0; i < school.length; i++) {
-        //    destPos = i + fishes.length;
-        //    school[i] = swimTogether(destPos, school[i][0], school[i][1], school[i][2]);
-        //    ctx.fillStyle = schoolColor;
-        //    drawSquares(school[i][0], school[i][1], school[i][2]);
-        //}
+        for (var i = 0; i < school.length; i++) {
+            destPos = i + fishes.length;
+            // currFish setup [name, startx, startyl, startyr, width, height]
+            var currFish = getFishSprite(currFishSchool[i]);
+            school[i] = swimTogether(currFish, destPos, school[i][0], school[i][1], school[i][2]);
+
+            var yPos;
+            if (fishesMove[i + fishes.length] == 'l') {
+                yPos = currFish[2];
+            }
+            else {
+                yPos = currFish[3];
+            }
+
+            drawImage(fishSpriteSheet, currFish[1], yPos, currFish[4], currFish[5], fishes[i][0], fishes[i][1], currFish[4], currFish[5]);
+        }
 
         //// Plants
 
@@ -298,18 +307,18 @@
         if (vector3Dest[0] == 0
             && vector3Dest[1] == 0
             && vector3Dest[2] == 0) {
-            vector3Dest = setDestination(schooling);
+            vector3Dest = setDestination(name, schooling);
         }
 
         if (checkVertical(name)) {
             if (vector3Curr[0] == vector3Dest[0]
                 && vector3Curr[1] == vector3Dest[1]) {
-                vector3Dest = setDestination(schooling);
+                vector3Dest = setDestination(name, schooling);
             }
         }
         else {
             if (vector3Curr[0] == vector3Dest[0]) {
-                vector3Dest = setDestination(schooling);
+                vector3Dest = setDestination(name, schooling);
             }
         }
 
@@ -358,9 +367,8 @@
 
     function getSwimType(name, i, x, y, z) {
         var vector3 = [x, y, z];
-
         if (name == "Shark"
-            || name == "Whale"
+            || name == "Whales"
             || name == "Swordfish"
             || name == "Manatees"
             || name == "Giant Squid") {
@@ -482,6 +490,7 @@
                 sprite = ["Clownfish", 850, 350, 100, 100, 50];
                 break;
         }
+
         return sprite;
     }
 
@@ -502,12 +511,13 @@
                 name = fishExPollNameSingle[i];
                 break;
         }
+
         return name;
     }
 
     // SET
 
-    function setDestination(schooling) {
+    function setDestination(name, schooling) {
         vector3Dest = [0, 0, 0];
         var screenWidthMax;
         var screenHeightMax;
@@ -517,8 +527,8 @@
         var screenDepthMin = 0;
 
         if (!schooling) {
-            screenWidthMax = 720;
-            screenHeightMax = 480;
+            screenWidthMax = 720 - name[4];
+            screenHeightMax = 480 - name[5];
             screenWidthMin = 0;
             screenHeightMin = 0;
         }
@@ -587,13 +597,13 @@
         vector3Current = [x, y, z];
         //Check if at/near destination before moving
         vector3Destinations[i] = checkDestination(name, vector3Destinations[i][0], vector3Destinations[i][1], vector3Destinations[i][2], vector3Current[0], vector3Current[1], vector3Current[2])
-        vector3Current = getSwimType(name, i, vector3Current[0], vector3Current[1], vector3Current[2]);
+        vector3Current = getSwimType(name[0], i, vector3Current[0], vector3Current[1], vector3Current[2]);
 
         return vector3Current;
     }
 
     // Applies to Tuna, Clownfish, jellyfish, seals, walruses, dolphins
-    function swimTogether(i, x, y, z) {
+    function swimTogether(name, i, x, y, z) {
         vector3Current = [x, y, z];
         //Check if at/near destination before moving if lead fish
         if (i == fishes.length) {
@@ -602,7 +612,7 @@
         else {
             vector3Destinations[i] = checkDestination(name, vector3Destinations[i][0], vector3Destinations[i][1], vector3Destinations[i][2], vector3Current[0], vector3Current[1], vector3Current[2], true);
         }
-        vector3Current = getSwimType(name, i, vector3Current[0], vector3Current[1], vector3Current[2]);
+        vector3Current = getSwimType(name[0], i, vector3Current[0], vector3Current[1], vector3Current[2]);
 
         return vector3Current;
     }
