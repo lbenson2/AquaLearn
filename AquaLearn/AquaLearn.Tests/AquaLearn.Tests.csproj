@@ -15,6 +15,7 @@
   <ItemGroup>
     <ProjectReference Include="..\AquaLearn.Data\AquaLearn.Data.csproj" />
     <ProjectReference Include="..\AquaLearn.Domain\AquaLearn.Domain.csproj" />
+    <ProjectReference Include="..\AquaLearn.MVCClient\AquaLearn.MVCClient.csproj" />
   </ItemGroup>
 
 </Project>
