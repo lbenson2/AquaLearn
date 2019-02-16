@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AquaLearn.Tests", "AquaLear
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AquaLearn.MVCClient", "AquaLearn.MVCClient\AquaLearn.MVCClient.csproj", "{29129AD1-25A8-4B0F-A767-D583B6DD2D86}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AquaLearn.MVCTest", "AquaLearn.MVCTest\AquaLearn.MVCTest.csproj", "{01B8C157-2399-49EB-B3A0-AFA85558AE65}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{29129AD1-25A8-4B0F-A767-D583B6DD2D86}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{29129AD1-25A8-4B0F-A767-D583B6DD2D86}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{29129AD1-25A8-4B0F-A767-D583B6DD2D86}.Release|Any CPU.Build.0 = Release|Any CPU
+		{01B8C157-2399-49EB-B3A0-AFA85558AE65}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{01B8C157-2399-49EB-B3A0-AFA85558AE65}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{01B8C157-2399-49EB-B3A0-AFA85558AE65}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{01B8C157-2399-49EB-B3A0-AFA85558AE65}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
