@@ -108,6 +108,7 @@
                 fishExDeepDescSingle.push(fishDescriptions[i]);
             }
             else {
+                console.log(fishNames[i]);
                 fishExDeepNameSchool.push(fishNames[i]);
                 fishExDeepDescSchool.push(fishDescriptions[i]);
             }
@@ -161,7 +162,7 @@
     var last = new Date();
     var myGameArea = draw();
     var ctx = getContext();
-    var schoolingVector3 = setRndVector3();
+    var schoolingVector3 = [];
     var exhibitType = "_DeepOcean"
 
     init();
@@ -179,7 +180,8 @@
                 currFishSingle.push(GetFishSingleInEx());
             }
             else {
-                if (schoolingVector3 == null) {
+                if (schoolingVector3 == null
+                || schoolingVector3.length == 0) {
                     vector3Current = setRndVector3();
                     schoolingVector3 = vector3Current;
                     currFishSchool.push(GetFishSchoolInEx());
@@ -195,10 +197,10 @@
             vector3Destinations.push([0,0,0]);
         }
 
-        // Init Plants
-        for (var i = 0; i <= numPlants; i++) {
-            plants.push(setPlantDestination());
-        }
+        //// Init Plants
+        //for (var i = 0; i <= numPlants; i++) {
+        //    plants.push(setPlantDestination());
+        //}
     }
 
     // UPDATE
@@ -219,7 +221,7 @@
 
         for (var i = 0; i < fishes.length; i++) {
             // currFish setup [name, startx, startyl, startyr, width, height]
-            var currFish = getFishSprite(currFishSingle[i]);
+            var currFish = getFishSprite(currFishSingle[i], true);
             fishes[i] = swim(currFish, i, fishes[i][0], fishes[i][1], fishes[i][2]);
             var yPos;
             if (fishesMove[i] == 'l') {
@@ -237,7 +239,8 @@
         for (var i = 0; i < school.length; i++) {
             destPos = i + fishes.length;
             // currFish setup [name, startx, startyl, startyr, width, height]
-            var currFish = getFishSprite(currFishSchool[i]);
+            var currFish = getFishSprite(currFishSchool[i], false);
+            console.log(currFish[0]);
             school[i] = swimTogether(currFish, destPos, school[i][0], school[i][1], school[i][2]);
 
             var yPos;
@@ -248,7 +251,7 @@
                 yPos = currFish[3];
             }
 
-            drawImage(fishSpriteSheet, currFish[1], yPos, currFish[4], currFish[5], fishes[i][0], fishes[i][1], currFish[4], currFish[5]);
+            drawImage(fishSpriteSheet, currFish[1], yPos, currFish[4], currFish[5], school[i][0], school[i][1], currFish[4], currFish[5]);
         }
 
         //// Plants
@@ -265,6 +268,7 @@
         plants = [];
         currFishSingle = [];
         currFishSchool = [];
+        schoolingVector3 = [];
 
         numFish = getRandomIntRange(3, 15);
         numPlants = getRandomIntRange(5, 10);
@@ -276,14 +280,6 @@
     function draw() {
         var myGameArea = document.getElementById("myCanvas");
         return myGameArea;
-    }
-
-    function drawSquares(x, y, z) {
-        ctx.fillRect(x, y, 50, 50);
-    }
-
-    function drawRectangles(x, y, z) {
-        ctx.fillRect(x, y, 50, 100);
     }
 
     function drawImage(img, sx, sy, sw, sh, dx, dy, dw, dh) {
@@ -299,6 +295,14 @@
         // Fill with gradient
         ctx.fillStyle = grd;
         ctx.fillRect(0, 0, canvasWidth, canvasHeight);
+
+        var grd2 = ctx.createLinearGradient(0, 0, 0, 50);
+        grd2.addColorStop(0, "yellow");
+        grd2.addColorStop(1, "tan");
+
+        // Fill with gradient
+        ctx.fillStyle = grd2;
+        ctx.fillRect(0, canvasHeight - canvasHeight * 0.1, canvasWidth, 50);
     }
 
     function checkDestination(name, xd, yd, zd, xc, yc, zc, schooling) {
@@ -432,8 +436,8 @@
         return getRandomIntRange(0, fishSingle);
     }
 
-    function getFishSprite(i) {
-        var name = getName(i);
+    function getFishSprite(i, single) {
+        var name = getName(i, single);
 
         var sprite;
         switch (name) {
@@ -498,17 +502,32 @@
         return Math.floor((Math.random() * (max - min)) + min);
     }
 
-    function getName(i) {
+    function getName(i, single) {
         var name;
         switch (exhibitType) {
             case "_CoralReef":
-                name = fishExCoralNameSingle[i];
+                if (single) {
+                    name = fishExCoralNameSingle[i];
+                }
+                else {
+                    name = fishExCoralNameSchool[i];
+                }
                 break;
             case "_DeepOcean":
-                name = fishExDeepNameSingle[i];
+                if (single) {
+                    name = fishExDeepNameSingle[i];
+                }
+                else {
+                    name = fishExDeepNameSchool[i];
+                }
                 break;
             default:
-                name = fishExPollNameSingle[i];
+                if (single) {
+                    name = fishExPollNameSingle[i];
+                }
+                else {
+                    name = fishExPollNameSchool[i];
+                }
                 break;
         }
 
