@@ -12,7 +12,7 @@ namespace AquaLearn.Data.Helpers
     public class UserHelper
     {
         private static AquaLearnIMDbContext _db = new AquaLearnIMDbContext();
-        //public static AquaLearnDbContext _dbn = new AquaLearnDbContext();
+        public static AquaLearnDbContext _dbn = new AquaLearnDbContext();
 
         private readonly MapperConfiguration userMap = new MapperConfiguration(mc =>
         {
@@ -56,7 +56,7 @@ namespace AquaLearn.Data.Helpers
             return userList;
         }
 
-        public AquaLearnDbContext _dbn { get; set; }
+        //public AquaLearnDbContext _dbn { get; set; }
         public AquaLearnIMDbContext _idb { get; set; }
 
         public UserHelper()
@@ -85,7 +85,38 @@ namespace AquaLearn.Data.Helpers
 
         public static adm.User GetUserByUserName(string username)
         {
-            return _db.User.FirstOrDefault(m => m.Username == username);
+            return _dbn.User.FirstOrDefault(m => m.Username == username);
+        }
+
+
+        public static adm.Classroom GetUserByClassroomName(string classname)
+        {
+            return _dbn.Classroom.FirstOrDefault(m => m.Name == classname);
+        }
+
+        public static bool GetLogin(string username, string password)
+        {
+            var logged = GetUserByUserName(username);
+
+            // user exists if not null
+            if (logged != null)
+            {
+                // check password
+                // password correct
+                if (logged.Password == password)
+                {
+                    return true;
+                }
+                // password incorrect
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
         }
 
         #endregion
