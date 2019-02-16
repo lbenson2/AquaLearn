@@ -1,21 +1,46 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Microsoft.EntityFrameworkCore;
 using System.Linq;
-using AquaLearn.Domain.Models;
-
+using AutoMapper;
+using AquaLearn.Data.Entities;
+using adm = AquaLearn.Domain.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace AquaLearn.Data.Helpers
 {
     public class FishHelper
     {
-        public AquaLearnDbContext _db { get; set; }
+        private static AquaLearnDbContext _db = new AquaLearnDbContext();
+
+        public static List<adm.Fish> GettheFishes()
+        {
+            var df = new List<adm.Fish>();
+
+            foreach (var item in _db.Fish.ToList())
+            {
+                df.Add(new adm.Fish()
+                {
+                    Name = item.Name
+
+                });
+            }
+            return df;
+        }
+
+
+        public List<adm.Fish> GettheFishes2()
+        {
+            return _idb.Fish.Include(x => x.WaterType).ToList();
+        }
+
+
+        public AquaLearnDbContext _dbn { get; set; }
         public AquaLearnIMDbContext _idb { get; set; }
 
         public FishHelper()
         {
-            _db = new AquaLearnDbContext();
+            _dbn = new AquaLearnDbContext();
         }
 
         public FishHelper(AquaLearnIMDbContext idb)
@@ -23,12 +48,12 @@ namespace AquaLearn.Data.Helpers
             _idb = idb;
         }
 
-        public long SetFish(Fish fish)
+        public long SetFish(adm.Fish fish)
         {
-            if (_db != null)
+            if (_dbn != null)
             {
-                _db.Fish.Add(fish);
-                return _db.SaveChanges();
+                _dbn.Fish.Add(fish);
+                return _dbn.SaveChanges();
             }
             else
             {
@@ -40,11 +65,11 @@ namespace AquaLearn.Data.Helpers
 
 
 
-        public List<Fish> GetFishes()
+        public List<adm.Fish> GetFishes()
         {
-            if (_db != null)
+            if (_dbn != null)
             {
-                var z = _db.Fish.ToList();
+                var z = _dbn.Fish.ToList();
                 return z;
 
             }

@@ -13,8 +13,9 @@ namespace AquaLearn.Tests.Tests
         {
             sut = new Fish()
             {
-                Name = "",
-                Description=""
+                Name = "Shark",
+                Schooling = false,
+                Description = "Sharks are the most threatening predators in the ocean."
             };
 
         }
