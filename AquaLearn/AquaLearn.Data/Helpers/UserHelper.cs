@@ -12,7 +12,7 @@ namespace AquaLearn.Data.Helpers
     public class UserHelper
     {
         private static AquaLearnIMDbContext _db = new AquaLearnIMDbContext();
-        public static AquaLearnDbContext _dbn = new AquaLearnDbContext();
+        public static AquaLearnDbContext _dbb = new AquaLearnDbContext();
 
         private readonly MapperConfiguration userMap = new MapperConfiguration(mc =>
         {
@@ -56,7 +56,7 @@ namespace AquaLearn.Data.Helpers
             return userList;
         }
 
-        //public AquaLearnDbContext _dbn { get; set; }
+        public AquaLearnDbContext _dbn { get; set; }
         public AquaLearnIMDbContext _idb { get; set; }
 
         public UserHelper()
@@ -78,20 +78,20 @@ namespace AquaLearn.Data.Helpers
             }
             else
             {
-                var y = _db.User.ToList();
+                var y = _idb.User.ToList();
                 return y;
             }
         }
 
         public static adm.User GetUserByUserName(string username)
         {
-            return _dbn.User.FirstOrDefault(m => m.Username == username);
+            return _dbb.User.FirstOrDefault(m => m.Username == username);
         }
 
 
         public static adm.Classroom GetUserByClassroomName(string classname)
         {
-            return _dbn.Classroom.FirstOrDefault(m => m.Name == classname);
+            return _dbb.Classroom.FirstOrDefault(m => m.Name == classname);
         }
 
         public static bool GetLogin(string username, string password)
