@@ -16,7 +16,7 @@ namespace AquaLearn.MVCClient.Controllers
             var fishVM = new FishViewModel();
             var plantVM = new PlantViewModel();
             var trashVM = new TrashViewModel();
-            
+
             ex.Fishes = fishVM.GetFishes();
             ex.Plants = plantVM.GetPlants();
             ex.Trash = trashVM.GetTrash();
