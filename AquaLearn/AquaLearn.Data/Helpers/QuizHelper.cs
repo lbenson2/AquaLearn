@@ -14,8 +14,6 @@ namespace AquaLearn.Data.Helpers
         private static AquaLearnIMDbContext _db = new AquaLearnIMDbContext();
         public static AquaLearnDbContext _dbn = new AquaLearnDbContext();
 
-
-
         public AquaLearnDbContext _dbb { get; set; }
         public AquaLearnIMDbContext _idb { get; set; }
 
@@ -96,16 +94,5 @@ namespace AquaLearn.Data.Helpers
         }
         #endregion
 
-        public AquaLearnIMDbContext _idb { get; set; }
-
-        public QuizHelper()
-        {
-          _dbn = new AquaLearnDbContext();
-        }
-
-        public QuizHelper(AquaLearnIMDbContext idb)
-        {
-          _idb = idb;
-        }
   }
 }
