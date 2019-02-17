@@ -12,8 +12,8 @@ namespace AquaLearn.Data.Helpers
     {
         public static MapperConfiguration nameMapper = new MapperConfiguration(mc =>
         {
-            mc.CreateMap<Role, adm.Role>();
-            mc.CreateMap<User, adm.User>();
+            //mc.CreateMap<Role, adm.Role>();
+            //mc.CreateMap<User, adm.User>();
         });
     }
 }
