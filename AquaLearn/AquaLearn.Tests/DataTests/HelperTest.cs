@@ -37,6 +37,9 @@ namespace AquaLearn.Tests.DataTests
         public UserHelper Sutu { get; set; }
         public User user { get; set; }
 
+        public QuizHelper Sutq { get; set; }
+        public Quiz quiz { get; set; }
+
         public HelperTest()
         {
             Sutr = new RoleHelper(new AquaLearnIMDbContext());
@@ -46,7 +49,7 @@ namespace AquaLearn.Tests.DataTests
             Suth = new HazardHelper(new AquaLearnIMDbContext());
             Sute = new ExhibitHelper(new AquaLearnIMDbContext());
             Sutu = new UserHelper(new AquaLearnIMDbContext());
-
+            Sutq = new QuizHelper(new AquaLearnIMDbContext());
 
 
             role = new Role()
@@ -108,6 +111,11 @@ namespace AquaLearn.Tests.DataTests
                 Password = "Andy",
                 ClassroomId = 22
 
+            };
+
+            quiz = new Quiz()
+            {
+                Name="Quiz"
             };
 
 
@@ -239,11 +247,12 @@ namespace AquaLearn.Tests.DataTests
         }
 
         [Fact]
-        public void Test_GetUsers()
+        public void Test_GetgUsers()
         {
             var db = Sutu._idb;
             db.User.Add(user);
             db.SaveChanges();
+
             var actual = Sutu.GetUserTest();
 
             Assert.NotNull(actual);
@@ -255,9 +264,29 @@ namespace AquaLearn.Tests.DataTests
             Assert.True(actual[0].Password == "Andy");
             Assert.True(actual[0].ClassroomId == 22);
 
-            //Assert.NotNull(actual.Username == "Spkr");
+       
         }
 
+
+        [Fact]
+        public void Test_GethQuizzes()
+        {
+            var db = Sutq._idb;
+            db.Quiz.Add(quiz);
+            db.SaveChanges();
+
+            var actual = Sutq.GetQuizTest();
+
+            Assert.NotNull(actual);
+            Assert.True(actual.Count > 0);
+            //Assert.True(actual[0].Description == "Algae are very diverse and found almost everywhere on the planet. They play an important role in many ecosystems, including providing the foundation for the aquatic food chains supporting all fisheries in the oceans and inland, as well as producing about 70 percent of all the air we breathe.");
+            Assert.True(actual[0].Name == "Quiz");
+            Assert.True(Sutq.GetScoresByStudent(1).Count >= 0);
+
+
+
+
+        }
 
 
 
