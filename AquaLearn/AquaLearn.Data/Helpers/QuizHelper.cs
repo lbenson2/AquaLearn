@@ -42,31 +42,24 @@ namespace AquaLearn.Data.Helpers
         }
 
 
-        //private readonly MapperConfiguration quizMap = new MapperConfiguration(mc =>
-        //{
-        //    mc.Mappers.Add(DomainHelper.nameMapper.GetMappers().FirstOrDefault());
-
-        //    mc.CreateMap<Quiz, adm.Quiz>()
-        //      .ForMember(m => m.QuizId, u => u.MapFrom(s => s.QuizId))
-        //      .ForAllOtherMembers(m => m.Ignore());
-        //});
+        
 
         #region Get
-        public List<adm.Quiz> GetQuizzes()
-        {
-            var du = new List<adm.Quiz>();
+        //public List<adm.Quiz> GetQuizzes()
+        //{
+        //    var du = new List<adm.Quiz>();
 
-            foreach (var item in _db.Quiz.ToList())
-            {
-                du.Add(new adm.Quiz()
-                {
-                    UserId = item.UserId,
-                    QuizId = item.QuizId,
-                    Name = item.Name
-                });
-            }
-            return du;
-        }
+        //    foreach (var item in _db.Quiz.ToList())
+        //    {
+        //        du.Add(new adm.Quiz()
+        //        {
+        //            UserId = item.UserId,
+        //            QuizId = item.QuizId,
+        //            Name = item.Name
+        //        });
+        //    }
+        //    return du;
+        //}
 
         public List<adm.Quiz> GetScoresByStudent(int userId)
         {
