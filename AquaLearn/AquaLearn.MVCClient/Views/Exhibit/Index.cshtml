@@ -79,10 +79,14 @@
 
     var trashNames = [];
     var trashDescriptions = [];
+    var trashSchooling = [];
+    var trashWaterType = [];
     @foreach (var trash in Model.Trash)
     {
         @:trashNames.push("@trash.Name");
         @:trashDescriptions.push("@trash.Description");
+        @:trashSchooling.push("@trash.Schooling");
+        @:trashWaterType.push("@trash.TrashId");
     }
 
     // Fish per exhibit
@@ -108,7 +112,6 @@
                 fishExDeepDescSingle.push(fishDescriptions[i]);
             }
             else {
-                console.log(fishNames[i]);
                 fishExDeepNameSchool.push(fishNames[i]);
                 fishExDeepDescSchool.push(fishDescriptions[i]);
             }
@@ -123,15 +126,27 @@
                 fishExCoralDescSchool.push(fishDescriptions[i]);
             }
         }
-        else // fishWaterType == "Pollution"
-        {
+    }
+
+    for (var i = 0; i < trashWaterType; i++) {
+        if (trashWaterType[i] == 1) {
             if (fishSchooling[i] == "False") {
-                fishExPollNameSingle.push(fishNames[i]);
-                fishExPollDescSingle.push(fishDescriptions[i]);
+                fishExPollNameSingle.push(trashNames[i]);
+                fishExPollDescSingle.push(trashDescriptions[i]);
             }
             else {
-                fishExPollNameSchool.push(fishNames[i]);
-                fishExPollDescSchool.push(fishDescriptions[i]);
+                fishExPollNameSchool.push(trashNames[i]);
+                fishExPollDescSchool.push(trashDescriptions[i]);
+            }
+        }
+        else {
+            if (fishSchooling[i] == "False") {
+                fishExPollNameSingle.push(trashNames[i]);
+                fishExPollDescSingle.push(trashDescriptions[i]);
+            }
+            else {
+                fishExPollNameSchool.push(trashNames[i]);
+                fishExPollDescSchool.push(trashDescriptions[i]);
             }
         }
     }
@@ -141,13 +156,16 @@
     fishSpriteSheet.src = "@Url.Content("~/images/fishSpriteSheet.png")";
     var vector3Destinations = [];
     var vector3Current = [0, 0, 0];
-    var numFish = getRandomIntRange(3, 15);
+    var numFish = getRandomIntRange(3, 7);
     var numPlants = getRandomIntRange(5, 10);
+    var numTrash = getRandomIntRange(5, 10);
     var currFishSingle = [];
     var currFishSchool = [];
     var fishes = [];
     var fishesMove = [];
     var trash = [];
+    var trashSingle = [];
+    var trashSchool = [];
     var school = [];
     var plants = [];
     var schooling = getRandomIntRange(0, 2);
@@ -171,7 +189,7 @@
     function init() {
         // Init Fish
         for (var i = 0; i <= numFish; i++) {
-            schooling = getRandomIntRange(0, 2);
+            schooling = getRandomIntRange(0, 4);
             // add fish to fishes
             if (schooling == 0) {
                 vector3Current = setRndVector3();
@@ -240,7 +258,40 @@
             destPos = i + fishes.length;
             // currFish setup [name, startx, startyl, startyr, width, height]
             var currFish = getFishSprite(currFishSchool[i], false);
-            console.log(currFish[0]);
+            school[i] = swimTogether(currFish, destPos, school[i][0], school[i][1], school[i][2]);
+
+            var yPos;
+            if (fishesMove[i + fishes.length] == 'l') {
+                yPos = currFish[2];
+            }
+            else {
+                yPos = currFish[3];
+            }
+
+            drawImage(fishSpriteSheet, currFish[1], yPos, currFish[4], currFish[5], school[i][0], school[i][1], currFish[4], currFish[5]);
+        }
+
+        // Trash
+
+        for (var i = 0; i < trashSingle.length; i++) {
+            // currFish setup [name, startx, startyl, startyr, width, height]
+            var currFish = getFishSprite(currTrashSingle[i], true);
+            fishes[i] = swim(currFish, i, fishes[i][0], fishes[i][1], fishes[i][2]);
+            var yPos;
+            if (fishesMove[i] == 'l') {
+                yPos = currFish[2];
+            }
+            else {
+                yPos = currFish[3];
+            }
+
+            drawImage(fishSpriteSheet, currFish[1], yPos, currFish[4], currFish[5], fishes[i][0], fishes[i][1], currFish[4], currFish[5]);
+        }
+
+        for (var i = 0; i < trashSchool.length; i++) {
+            destPos = i + fishes.length;
+            // currFish setup [name, startx, startyl, startyr, width, height]
+            var currFish = getFishSprite(currFishSchool[i], false);
             school[i] = swimTogether(currFish, destPos, school[i][0], school[i][1], school[i][2]);
 
             var yPos;
@@ -270,7 +321,7 @@
         currFishSchool = [];
         schoolingVector3 = [];
 
-        numFish = getRandomIntRange(3, 15);
+        numFish = getRandomIntRange(3, 7);
         numPlants = getRandomIntRange(5, 10);
         init();
     }
@@ -392,10 +443,17 @@
             || name == "Ocotopus"
             || name == "Seahorse") {
             // swim floor
+            if (y < canvasHeight * 0.8
+                || y > canvasHeight * 0.9) {
+                y = getRandomIntRange(canvasHeight * 0.8, canvasHeight * 0.9);
+            }
             vector3 = swimFloor(i, x, y, z);
         }
         else {
             // Swim None
+            if (y < canvasHeight * 0.8) {
+                y = canvasHeight * 0.8;
+            }
             vector3 = swimNone(i, x, y, z);
         }
 
@@ -588,7 +646,7 @@
     }
 
     function setRndVector3() {
-        var vector3 = [getRandomIntRange(0, canvasWidth), getRandomIntRange(0, canvasHeight), getRandomIntRange(-15, -1)];
+        var vector3 = [getRandomIntRange(0, canvasWidth - (canvasWidth * 0.1)), getRandomIntRange(0, canvasHeight - (canvasHeight * 0.2)), getRandomIntRange(-15, -1)];
 
         return vector3;
     }
