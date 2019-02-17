@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace AquaLearn.Data.Helpers
 {
-    class QuizHelper
+    public class QuizHelper
     {
         private static AquaLearnIMDbContext _db = new AquaLearnIMDbContext();
         public static AquaLearnDbContext _dbn = new AquaLearnDbContext();
@@ -24,7 +24,7 @@ namespace AquaLearn.Data.Helpers
         });
 
         #region Get
-        private List<adm.Quiz> GetQuizzes()
+        public List<adm.Quiz> GetQuizzes()
         {
             var du = new List<adm.Quiz>();
 
