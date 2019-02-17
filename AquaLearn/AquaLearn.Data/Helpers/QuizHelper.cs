@@ -14,6 +14,10 @@ namespace AquaLearn.Data.Helpers
         private static AquaLearnIMDbContext _db = new AquaLearnIMDbContext();
         public static AquaLearnDbContext _dbn = new AquaLearnDbContext();
 
+        public AquaLearnDbContext _dbb { get; set; }
+
+        public AquaLearnIMDbContext _idb { get; set; }
+
         private readonly MapperConfiguration quizMap = new MapperConfiguration(mc =>
         {
             mc.Mappers.Add(DomainHelper.nameMapper.GetMappers().FirstOrDefault());
@@ -66,11 +70,9 @@ namespace AquaLearn.Data.Helpers
         }
         #endregion
 
-        public AquaLearnIMDbContext _idb { get; set; }
-
         public QuizHelper()
         {
-          _dbn = new AquaLearnDbContext();
+          _dbb = new AquaLearnDbContext();
         }
 
         public QuizHelper(AquaLearnIMDbContext idb)
