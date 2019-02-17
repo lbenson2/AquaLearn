@@ -28,12 +28,10 @@ namespace AquaLearn.Data.Helpers
             return df;
         }
 
-
         public List<adm.Fish> GettheFishes2()
         {
             return _dbn.Fish.Include(x => x.WaterType).ToList();
         }
-
 
         public AquaLearnDbContext _dbn { get; set; }
         public AquaLearnIMDbContext _idb { get; set; }

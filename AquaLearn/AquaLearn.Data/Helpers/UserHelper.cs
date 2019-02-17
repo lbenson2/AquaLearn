@@ -39,6 +39,36 @@ namespace AquaLearn.Data.Helpers
             return du;
         }
 
+        public List<adm.User> GetUsers2()
+        {
+            var userList = new List<adm.User>();
+            var mapper = userMap.CreateMapper();
+            var mapper2 = DomainHelper.nameMapper.CreateMapper();
+
+            foreach (var item in _db.User.ToList())
+            {
+                var u = mapper.Map<adm.User>(item);
+
+                // u.Username = mapper2.Map<adm.User.Username>(item);
+                userList.Add(u);
+            }
+
+            return userList;
+        }
+
+        //public AquaLearnDbContext _dbn { get; set; }
+        public AquaLearnIMDbContext _idb { get; set; }
+
+        public UserHelper()
+        {
+            _dbn = new AquaLearnDbContext();
+        }
+
+        public UserHelper(AquaLearnIMDbContext idb)
+        {
+            _idb = idb;
+        }
+
         public List<adm.User> GetUserTest()
         {
             if (_dbn != null)
@@ -55,7 +85,38 @@ namespace AquaLearn.Data.Helpers
 
         public static adm.User GetUserByUserName(string username)
         {
-            return _db.User.FirstOrDefault(m => m.Username == username);
+            return _dbn.User.FirstOrDefault(m => m.Username == username);
+        }
+
+
+        public static adm.Classroom GetUserByClassroomName(string classname)
+        {
+            return _dbn.Classroom.FirstOrDefault(m => m.Name == classname);
+        }
+
+        public static bool GetLogin(string username, string password)
+        {
+            var logged = GetUserByUserName(username);
+
+            // user exists if not null
+            if (logged != null)
+            {
+                // check password
+                // password correct
+                if (logged.Password == password)
+                {
+                    return true;
+                }
+                // password incorrect
+                else
+                {
+                    return false;
+                }
+            }
+            else
+            {
+                return false;
+            }
         }
 
         public List<adm.User> GetStudentByClassroomId(int classroomId)

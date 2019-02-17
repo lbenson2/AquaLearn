@@ -14,8 +14,7 @@ namespace AquaLearn.Domain.Models
         public Classroom()
         {
             Name = "ClassroomName";
-            Students = new List<User>();
-            Teacher = new User();
+      
         }
         
     }
