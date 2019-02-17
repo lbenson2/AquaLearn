@@ -25,12 +25,17 @@ namespace AquaLearn.Tests.DataTests
         public Fish fish { get; set; }
 
 
-
         public PlantHelper Sutp { get; set; }
         public Plant plant { get; set; }
 
         public HazardHelper Suth { get; set; }
         public Hazard hazard { get; set; }
+
+        public ExhibitHelper Sute { get; set; }
+        public Exhibit exhibit { get; set; }
+
+        public UserHelper Sutu { get; set; }
+        public User user { get; set; }
 
         public HelperTest()
         {
@@ -39,6 +44,8 @@ namespace AquaLearn.Tests.DataTests
             Sutf = new FishHelper(new AquaLearnIMDbContext());
             Sutp = new PlantHelper(new AquaLearnIMDbContext());
             Suth = new HazardHelper(new AquaLearnIMDbContext());
+            Sute = new ExhibitHelper(new AquaLearnIMDbContext());
+            Sutu = new UserHelper(new AquaLearnIMDbContext());
 
 
 
@@ -86,6 +93,23 @@ namespace AquaLearn.Tests.DataTests
                 Description = "Pollution"
 
             };
+
+            exhibit = new Exhibit()
+            {
+                //ExhibitId=22,
+                Name = "Deep Sea",
+
+            };
+
+            user = new User()
+            {
+                //UserId = 22,
+                Username = "Andy",
+                Password = "Andy",
+                ClassroomId = 22
+
+            };
+
 
 
 
@@ -194,6 +218,44 @@ namespace AquaLearn.Tests.DataTests
             Assert.True(actual[0].HazardId == 1);
             Assert.True(actual[0].Description == "Pollution");
             Assert.True(actual[0].Name == "Plastic");
+        }
+
+        [Fact]
+        public void Test_GetfExhibits()
+        {
+            //var db = Sut._idb;
+            //db.Exhibit.Add(Exhibit);
+            //db.SaveChanges();
+            Sute.SetExhibit(exhibit);
+
+            var actual = Sute.GetExhibits();
+
+            Assert.NotNull(actual[0]);
+            Assert.True(actual.Count > 0);
+            Assert.True(actual[0].ExhibitId == 1);
+            Assert.True(actual[0].Name == "Deep Sea");
+
+
+        }
+
+        [Fact]
+        public void Test_GetUsers()
+        {
+            var db = Sutu._idb;
+            db.User.Add(user);
+            db.SaveChanges();
+            var actual = Sutu.GetUserTest();
+
+            Assert.NotNull(actual);
+            Assert.True(actual.Count > 0);
+            Assert.True(actual[0].UserId == 1);
+            //Assert.IsType<string>(actual[0].Description);
+            //Assert.True(actual[0].Description == "Algae are very diverse and found almost everywhere on the planet. They play an important role in many ecosystems, including providing the foundation for the aquatic food chains supporting all fisheries in the oceans and inland, as well as producing about 70 percent of all the air we breathe.");
+            Assert.True(actual[0].Username == "Andy");
+            Assert.True(actual[0].Password == "Andy");
+            Assert.True(actual[0].ClassroomId == 22);
+
+            //Assert.NotNull(actual.Username == "Spkr");
         }
 
 
