@@ -37,6 +37,9 @@ namespace AquaLearn.Tests.DataTests
         public UserHelper Sutu { get; set; }
         public User user { get; set; }
 
+        public QuizHelper Sutq { get; set; }
+        public Quiz quiz { get; set; }
+
         public HelperTest()
         {
             Sutr = new RoleHelper(new AquaLearnIMDbContext());
@@ -46,7 +49,7 @@ namespace AquaLearn.Tests.DataTests
             Suth = new HazardHelper(new AquaLearnIMDbContext());
             Sute = new ExhibitHelper(new AquaLearnIMDbContext());
             Sutu = new UserHelper(new AquaLearnIMDbContext());
-
+            Sutq = new QuizHelper(new AquaLearnIMDbContext());
 
 
             role = new Role()
@@ -110,20 +113,21 @@ namespace AquaLearn.Tests.DataTests
 
             };
 
+            quiz = new Quiz()
+            {
+              Name = "Quiz",
+              QuizId = 1,
+              UserId = 1
+            };
 
 
 
-
-
+            Sutq.SetQuiz(quiz);
             Sutr.SetRole(role);
             Sutt.SetTrash(trash);
            // Sutf.SetFish(fish);
 
            // Sutp.SetPlant(plant);
-           
-           
-            
-
         }
 
 
@@ -258,7 +262,17 @@ namespace AquaLearn.Tests.DataTests
             //Assert.NotNull(actual.Username == "Spkr");
         }
 
+    [Fact]
+    public void Test_GetQuizzes()
+    {
+      var actual = Sutq.GetQuizzes();
 
+      Assert.NotNull(actual);
+      Assert.True(actual.Count > 0);
+      Assert.True(actual[0].QuizId == 1);
+      Assert.True(actual[0].UserId == 1);
+      Assert.True(actual[0].Name == "Quiz");
+    }
 
 
 
