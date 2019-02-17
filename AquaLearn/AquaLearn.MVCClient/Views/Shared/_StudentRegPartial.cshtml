@@ -1,0 +1,21 @@
+﻿@model AquaLearn.MVCClient.Models.ClassroomViewModel
+@using ald= AquaLearn.Domain.Models
+
+
+
+@using (@Html.BeginForm("Register", "Home"))
+{
+   
+
+    <p>Choose your instructors classroom</p>
+
+    List<ald.Classroom> Classrooms = new List<ald.Classroom>();
+
+    foreach (var cla in ClassroomViewModel.GetClassrooms())
+    {
+        Classrooms.Add(cla);
+
+        @Html.RadioButtonFor(m => m.ClassroomId, loc.LocationID)
+        @Html.LabelFor(m => m.LocationId, loc.Address)
+        <br />
+    }
