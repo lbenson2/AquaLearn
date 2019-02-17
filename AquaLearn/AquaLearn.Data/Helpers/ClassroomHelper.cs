@@ -17,7 +17,7 @@ namespace AquaLearn.Data.Helpers
         {
             var classr = new List<adm.Classroom>();
 
-            foreach (var csr in _db.Classroom.ToList())
+            foreach (var csr in _dbn.Classroom.ToList())
             {
                 classr.Add(new adm.Classroom()
                 {

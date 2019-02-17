@@ -49,8 +49,6 @@ namespace AquaLearn.Data
             builder.Entity<Role>().HasKey(e => e.RoleId);
             builder.Entity<Classroom>().HasKey(e => e.ClassroomId);
             builder.Entity<Quiz>().HasKey(e => e.QuizId);
-
         }
-
     }
 }

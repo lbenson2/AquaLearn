@@ -34,8 +34,7 @@ namespace AquaLearn.MVCClient.Models
         {
             var usr = new ald.User()
             {
-
-                UserRole = role,
+                RoleId = role.RoleId,
                 Username = username,
                 Password = password,
                 ClassroomId = classroom.ClassroomId

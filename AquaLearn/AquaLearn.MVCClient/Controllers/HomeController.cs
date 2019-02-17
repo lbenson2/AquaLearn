@@ -8,6 +8,7 @@ using AquaLearn.MVCClient.Models;
 
 namespace AquaLearn.MVCClient.Controllers
 {
+ 
     public class HomeController : Controller
     {
         public IActionResult Index()

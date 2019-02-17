@@ -1,0 +1,43 @@
+﻿@using ald = AquaLearn.Domain.Models;
+@using avm= AquaLearn.MVCClient.ViewModels;
+@model  AquaLearn.MVCClient.Models.UserModel;
+
+@using (@Html.BeginForm("RegisterTeacher", "User"))
+{
+
+@*<h2>Click button to Confirm you are a :</h2>
+
+    List<ald.Role> Roles  = new List<ald.Role>();
+
+    foreach (var rol in avm.RoleViewModel.GetRoles())
+    {
+        Roles.Add(rol);
+
+@Html.RadioButtonFor(m => m.RoleId, rol.RoleId)
+@Html.LabelFor(m => m.RoleId, cla.Name);
+
+<br />*@
+    
+
+
+<h2>Create a Classroom Name: </h2>
+
+<div class="form">
+
+    @Html.LabelFor(m => m.Name, "Classroom Name")
+    @Html.TextBoxFor(m => m.Name)
+
+</div>
+
+<br />
+
+@*<div class="regbutton">
+        <button type="submit" class="buttons" id="regbutton">Register</button>
+    </div>*@
+
+@Html.HiddenFor(m => m.RoleId , 1);
+
+<br />
+}
+
+

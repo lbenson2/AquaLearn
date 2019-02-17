@@ -9,8 +9,10 @@ using Microsoft.AspNetCore.Http;
 
 namespace AquaLearn.MVCClient.Controllers
 {
+   
     public class UserController : Controller
     {
+      
         public IActionResult LoginTeacher()
         {
           var user = new User();
@@ -43,18 +45,41 @@ namespace AquaLearn.MVCClient.Controllers
           return RedirectToAction("Index", "Home");
         }
 
-        public IActionResult Register(User us)
+        public IActionResult RegisterStudent(User us)
         {
+            us.RoleId = 2;
+            
           if (UserHelper.SetUser(us))
-          {
-            var user = UserHelper.GetUsers().Where(u => u.Username == us.Username).FirstOrDefault();
-
-            HttpContext.Session.SetString("Username", user.Username);
-            return View("Index", "Home");
+          {   
+            HttpContext.Session.SetString("Username", us.Username);
+            HttpContext.Session.SetInt32("Classroom", us.ClassroomId);
+            HttpContext.Session.SetInt32("Role", us.RoleId);
+          
+            return RedirectToAction("Index", "Home");
           }
 
-          return View("Register", "Home");
+          return RedirectToAction("Register", "User");
         }
+
+
+
+        public IActionResult RegisterTeacher(User us,Classroom classname)
+        {
+            if (UserHelper.SetUser(us))
+            {
+
+                HttpContext.Session.SetString("Username", us.Username);
+                HttpContext.Session.SetString("ClassroomName", classname.Name);
+
+
+
+                return RedirectToAction("Index", "Home");
+            }
+
+            return RedirectToAction("Register", "User");
+        }
+
+
 
         public IActionResult Logout()
         {

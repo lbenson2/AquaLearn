@@ -15,9 +15,12 @@ namespace AquaLearn.MVCClient.Models
 
         public List<ald.User> Students { get; set; }
 
-        
-    
-        public Role UserRole { get; set; }
+        public int ClassroomId { get; set; }
+
+        public string Name { get; set; }
+
+        [Required]
+        public int RoleId { get; set; }
 
         [Required]
         [MinLength(6, ErrorMessage = "Please make sure username is at lesat 5 characters")]
@@ -31,9 +34,6 @@ namespace AquaLearn.MVCClient.Models
 
         public string Password { get; set; }
 
-        public int ClassroomId { get; set; }
-
-        public string Name { get; set; }
 
         public List<Quiz> Quizzes { get; set; }
 

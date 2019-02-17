@@ -127,7 +127,7 @@ namespace AquaLearn.Data.Helpers
             foreach (var user in allUsers)
             {
                 if (user.ClassroomId == classroomId
-                    && user.UserRole.RoleId != 1)
+                    && user.RoleId != 1)
                 {
                     studentsInClass.Add(user);
                 }
@@ -150,8 +150,8 @@ namespace AquaLearn.Data.Helpers
             }
             else
             {
-                _db.User.Add(user);
-                return _db.SaveChanges() > 0;
+                _dbn.User.Add(user);
+                return _dbn.SaveChanges() > 0;
             }
         }
       

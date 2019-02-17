@@ -14,8 +14,6 @@ namespace AquaLearn.Domain.Models
         public Classroom()
         {
             Name = "ClassroomName";
-      
         }
-        
     }
 }
