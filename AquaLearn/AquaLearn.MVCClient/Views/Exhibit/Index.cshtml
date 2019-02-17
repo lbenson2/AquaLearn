@@ -272,8 +272,13 @@
             obj = getAtLocation(mouseX, mouseY);
             clicked = false;
         }
-        console.log(obj);
-        return obj;
+
+        var nameDesc = document.getElementById("nameOfObj");
+        var descDesc = document.getElementById("descOfObj");
+        if (obj != "") {
+            nameDesc.innerText = obj;
+            descDesc.innerText = getDescription(obj);
+        }
     }
 
     function place() {
@@ -622,7 +627,6 @@
                 break;
             default:
                 sprite = ["Clownfish", 850, 350, 100, 100, 50];
-                console.log(name);
                 break;
         }
 
@@ -673,14 +677,33 @@
                 && mouseX <= currObjLocation[i][1] + currObjLocation[i][3]
                 && mouseY >= currObjLocation[i][2]
                 && mouseY <= currObjLocation[i][2] + currObjLocation[i][4]) {
-                objectsAtLocation.push(name);
-
-                if (objectsAtLocation.length >= 1) {
-                    obj = objectsAtLocation[0][0];
-                }
+                return currObjLocation[i][0];
             }
         }
         return obj;
+    }
+
+    function getDescription(name) {
+        var desc;
+        for (var i = 0; i < fishNames.length; i++) {
+            if (fishNames[i] == name) {
+                desc = fishDescriptions[i];
+            }
+        }
+
+        for (var i = 0; i < trashNames.length; i++) {
+            if (trashNames[i] == name) {
+                desc = trashDescriptions[i];
+            }
+        }
+
+        for (var i = 0; i < plantNames.length; i++) {
+            if (plantNames[i] == name) {
+                desc = plantDescriptions[i];
+            }
+        }
+
+        return desc;
     }
 
     // SET
