@@ -8,6 +8,7 @@ namespace AquaLearn.Domain.Models
     {
         public int QuizId { get; set; }
         public string Name { get; set; }
+        public int UserId { get; set; }
 
         public Quiz()
         {

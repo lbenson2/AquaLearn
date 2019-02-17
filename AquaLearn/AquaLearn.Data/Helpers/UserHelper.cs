@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
@@ -78,7 +78,7 @@ namespace AquaLearn.Data.Helpers
             }
             else
             {
-                var y = _idb.User.ToList();
+                var y = _db.User.ToList();
                 return y;
             }
         }
@@ -119,6 +119,23 @@ namespace AquaLearn.Data.Helpers
             }
         }
 
+        public List<adm.User> GetStudentByClassroomId(int classroomId)
+        {
+            var allUsers = GetUsers();
+            var studentsInClass = new List<adm.User>();
+
+            foreach (var user in allUsers)
+            {
+                if (user.ClassroomId == classroomId
+                    && user.UserRole.RoleId != 1)
+                {
+                    studentsInClass.Add(user);
+                }
+            }
+
+            return studentsInClass;
+        }
+
         #endregion
 
         #region Set
@@ -137,20 +154,7 @@ namespace AquaLearn.Data.Helpers
                 return _db.SaveChanges() > 0;
             }
         }
-
-        public static bool SetUser2(adm.User user)
-        {
-            var newUser = new adm.User()
-            {
-                Username = user.Username,
-                Password = user.Password
-            };
-
-            _db.User.Add(newUser);
-
-            return _db.SaveChanges() == 1;
-        }
-
+      
         #endregion
     }
 }
