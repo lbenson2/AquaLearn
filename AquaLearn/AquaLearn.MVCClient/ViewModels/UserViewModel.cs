@@ -44,8 +44,7 @@ namespace AquaLearn.MVCClient.Models
             return UserHelper.SetUser(usr);
         }
 
-       
-
+ 
 
     }
 }

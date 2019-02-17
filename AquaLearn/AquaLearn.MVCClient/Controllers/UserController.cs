@@ -48,7 +48,7 @@ namespace AquaLearn.MVCClient.Controllers
           if (UserHelper.SetUser(us))
           {
             var user = UserHelper.GetUsers().Where(u => u.Username == us.Username).FirstOrDefault();
-            HttpContext.Session.SetInt32("UserId", user.UserId);
+
             HttpContext.Session.SetString("Username", user.Username);
             return View("Index", "Home");
           }
@@ -61,5 +61,7 @@ namespace AquaLearn.MVCClient.Controllers
           HttpContext.Session.Clear();
           return RedirectToAction("Index", "Home");
         }
+
+
     }
 }

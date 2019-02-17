@@ -8,9 +8,9 @@
 </style>
 <body>
     <div class="box" style="background: rgba(255, 255, 255, 0.3);">
-    @using (Html.BeginForm("Register", "User"))
+        @using (Html.BeginForm("Register", "User"))
 
-    {
+        {
             @Html.LabelFor(m => m.Username, "Username")
             @Html.TextBoxFor(m => m.Username)
 
@@ -19,21 +19,18 @@
 
             <h2 style="font-family:'Fredoka One', cursive;">Are you a student or a teacher?</h2>
 
-              <div class="placeholder">
-                 <button type="button" onclick="chooseStudent(this.id)" id="_StudentRegPartial">Student</button>
+            <div class="placeholder">
+                <button type="button" onclick="chooseStudent(this.id)" id="_StudentRegPartial">Student</button>
 
-                 <button type="button" onclick="chooseTeacher(this.id)" id="_TeacherLogin">Teacher</button>
+                <button type="button" onclick="chooseTeacher(this.id)" id="_TeacherLogin">Teacher</button>
 
-               <div class="regbutton">
-                   <button type="submit" class="buttons" id="regbutton">Log in</button>
-               </div>
+                <div class="regbutton">
+                    <button type="submit" class="buttons" id="regbutton">Log in</button>
+                </div>
 
-              </div>
-            }
-        </div>
-   
-        </body>
-        <script>
+            </div>
+
+            <script>
 
         function chooseStudent(partialViewToInsert)
 
@@ -77,9 +74,15 @@
 
         }
 
-        </script>
+            </script>
 
-Message Input
+        }
+
+        </div>
+
+        </body>
+
+        Message Input
 
 
 
