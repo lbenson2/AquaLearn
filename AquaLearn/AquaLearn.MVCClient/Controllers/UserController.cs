@@ -50,10 +50,10 @@ namespace AquaLearn.MVCClient.Controllers
             var user = UserHelper.GetUsers().Where(u => u.Username == us.Username).FirstOrDefault();
 
             HttpContext.Session.SetString("Username", user.Username);
-            return View("Index", "Home");
+            return RedirectToAction("Index", "Home");
           }
 
-          return View("Register", "Home");
+          return RedirectToAction("Register", "Home");
         }
 
         public IActionResult Logout()

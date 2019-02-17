@@ -19,5 +19,22 @@ namespace AquaLearn.MVCTest.Tests
       var actual = sut.Validation(user) as ViewResult;
       Assert.AreEqual("Login", actual.ViewName);
     }
+
+    [TestMethod]
+    public void Test_Register()
+    {
+      var user = new User();
+      var sut = new UserController();
+      var actual = sut.Register(user) as ViewResult;
+      Assert.AreEqual("Register", actual.ViewName);
+    }
+
+    [TestMethod]
+    public void Test_Logout()
+    {
+      var sut = new UserController();
+      var actual = sut.Logout() as ViewResult;
+      Assert.AreEqual("Index", actual.ViewName);
+    }
   }
 }
