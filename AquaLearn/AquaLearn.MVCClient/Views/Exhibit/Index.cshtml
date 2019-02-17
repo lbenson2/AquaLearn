@@ -104,6 +104,9 @@
     var fishExPollNameSchool = [];
     var fishExPollDescSchool = [];
 
+    var mouseX;
+    var mouseY;
+
     for (var i = 0; i < fishWaterType.length; i++) {
         if (fishWaterType[i] == 1) {
             if (fishSchooling[i] == "False") {
@@ -162,6 +165,7 @@
     var trashMove = [];
 
     var plants = [];
+    var clicked = false;
 
     var schooling = getRandomIntRange(0, 4);
     var direction = ['l', 'r'];
@@ -254,10 +258,22 @@
     function update() {
         clear();
         place();
+        checkClick();
+        currObjLocation = [];
     }
 
     function clear() {
         ctx.clearRect(0, 0, 720, 480);
+    }
+
+    function checkClick() {
+        var obj = "";
+        if (clicked) {
+            obj = getAtLocation(mouseX, mouseY);
+            clicked = false;
+        }
+        console.log(obj);
+        return obj;
     }
 
     function place() {
@@ -279,7 +295,7 @@
                 }
 
                 drawImage(fishSpriteSheet, currFish[1], yPos, currFish[4], currFish[5], fishes[i][0], fishes[i][1], currFish[4], currFish[5]);
-                setAtLocation(currFish[0], trashSchool[i][0], trashSchool[i][1], currFish[4], currFish[5]);
+                setAtLocation(currFish[0], fishes[i][0], fishes[i][1], currFish[4], currFish[5]);
             }
 
             // School Fish
@@ -299,7 +315,7 @@
                 }
 
                 drawImage(fishSpriteSheet, currFish[1], yPos, currFish[4], currFish[5], school[i][0], school[i][1], currFish[4], currFish[5]);
-                setAtLocation(currFish[0], trashSchool[i][0], trashSchool[i][1], currFish[4], currFish[5]);
+                setAtLocation(currFish[0], school[i][0], school[i][1], currFish[4], currFish[5]);
             }
         }
         else {
@@ -360,7 +376,6 @@
         currTrashSchool = [];
         schoolingVector3 = [];
         objectsAtLocation = [];
-        currObjLocation = [];
 
         numFish = getRandomIntRange(3, 7);
         numPlants = getRandomIntRange(5, 10);
@@ -427,14 +442,14 @@
         if (name == "Tuna"
             || name == "Clownfish"
             || name == "Jellyfish"
-            || name == "Seals"
-            || name == "Walruses"
-            || name == "Dolphins"
+            || name == "Seal"
+            || name == "Walruse"
+            || name == "Dolphin"
             || name == "Shark"
             || name == "Whale"
             || name == "Swordfish"
-            || name == "Manatees"
-            || name == "Giant Squid"
+            || name == "Manatee"
+            || name == "Squid"
             || name == "Plastic Bags"
             || name == "Straws") {
             needVertical = true;
@@ -467,10 +482,10 @@
     function getSwimType(name, i, x, y, z) {
         var vector3 = [x, y, z];
         if (name == "Shark"
-            || name == "Whales"
+            || name == "Whale"
             || name == "Swordfish"
-            || name == "Manatees"
-            || name == "Giant Squid"
+            || name == "Manatee"
+            || name == "Squid"
             || name == "Plastic Bags"
             || name == "Straws") {
             // swim
@@ -479,14 +494,14 @@
         else if (name == "Tuna"
             || name == "Clownfish"
             || name == "Jellyfish"
-            || name == "Seals"
-            || name == "Walruses"
-            || name == "Dolphins") {
+            || name == "Seal"
+            || name == "Walruse"
+            || name == "Dolphin") {
             // swim together
             vector3 = swimBasic(i, x, y, z);
         }
         else if (name == "Stingray"
-            || name == "Ocotopus"
+            || name == "Octopus"
             || name == "Seahorse") {
             // swim floor
             if (y < canvasHeight * 0.8
@@ -563,35 +578,35 @@
             case "Jellyfish":
                 sprite = ["Jellyfish", 450, 400, 150, 100, 100];
                 break;
-            case "Eels":
-                sprite = ["Eels", 950, 350, 100, 100, 50];
+            case "Eel":
+                sprite = ["Eel", 950, 350, 100, 100, 50];
                 break;
             case "Seahorse":
                 sprite = ["Seahorse", 950, 400, 150, 100, 100];
                 break;
-            case "Whales":
-                sprite = ["Whales", 0, 250, 0, 250, 150];
+            case "Whale":
+                sprite = ["Whale", 0, 250, 0, 250, 150];
                 break;
-            case "Seals":
-                sprite = ["Seals", 650, 350, 100, 200, 50];
+            case "Seal":
+                sprite = ["Seal", 650, 350, 100, 200, 50];
                 break;
-            case "Walruses":
-                sprite = ["Walruses", 500, 250, 0, 200, 100];
+            case "Walruse":
+                sprite = ["Walruse", 500, 250, 0, 200, 100];
                 break;
-            case "Dolphins":
-                sprite = ["Dolphins", 950, 250, 0, 250, 100];
+            case "Dolphin":
+                sprite = ["Dolphin", 950, 250, 0, 250, 100];
                 break;
-            case "Manatees":
-                sprite = ["Manatees", 150, 400, 150, 200, 100];
+            case "Manatee":
+                sprite = ["Manatee", 150, 400, 150, 200, 100];
                 break;
-            case "Ocotopus":
-                sprite = ["Ocotopus", 0, 400, 150, 150, 100];
+            case "Octopus":
+                sprite = ["Octopus", 0, 400, 150, 150, 100];
                 break;
-            case "Giant Squid":
-                sprite = ["Giant Squid", 850, 400, 150, 100, 100];
+            case "Squid":
+                sprite = ["Squid", 850, 400, 150, 100, 100];
                 break;
-            case "Oysters":
-                sprite = ["Oysters", 550, 400, 150, 100, 100];
+            case "Oyster":
+                sprite = ["Oyster", 550, 400, 150, 100, 100];
                 break;
             case "Beverage Cans":
                 sprite = ["Beverage Cans", 1050, 350, 100, 50, 50];
@@ -607,6 +622,7 @@
                 break;
             default:
                 sprite = ["Clownfish", 850, 350, 100, 100, 50];
+                console.log(name);
                 break;
         }
 
@@ -658,14 +674,13 @@
                 && mouseY >= currObjLocation[i][2]
                 && mouseY <= currObjLocation[i][2] + currObjLocation[i][4]) {
                 objectsAtLocation.push(name);
-            }
 
-            if (objectsAtLocation.length >= 1) {
-                obj = objectsAtLocation[0][0];
+                if (objectsAtLocation.length >= 1) {
+                    obj = objectsAtLocation[0][0];
+                }
             }
-
-            return obj;
         }
+        return obj;
     }
 
     // SET
@@ -854,9 +869,6 @@
     // *******************
 
     myGameArea.addEventListener("click", (e) => {
-        var mouseX;
-        var mouseY;
-
         if (e.pageX != undefined && e.pageY != undefined) {
             mouseX = e.pageX;
             mouseY = e.pageY;
@@ -870,15 +882,7 @@
         mouseX -= myGameArea.offsetLeft;
         mouseY -= myGameArea.offsetTop;
 
-        var obj = getAtLocation(mouseX, mouseY);
-
-        if (obj != "") {
-            console.log("clicked something");
-        }
-        else {
-            console.log("clicked noghting");
-        }
-
+        clicked = true;
     }, false);
 
 </script>
