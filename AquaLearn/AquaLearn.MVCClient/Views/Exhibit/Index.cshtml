@@ -177,7 +177,9 @@
     var myGameArea = draw();
     var ctx = getContext();
     var schoolingVector3 = [];
-    var exhibitType = "_DeepOcean"
+    var exhibitType = "_DeepOcean";
+    var objectsAtLocation = [];
+    var currObjLocation = [];
 
     init();
     setInterval(function () { update(); }, 17);
@@ -277,6 +279,7 @@
                 }
 
                 drawImage(fishSpriteSheet, currFish[1], yPos, currFish[4], currFish[5], fishes[i][0], fishes[i][1], currFish[4], currFish[5]);
+                setAtLocation(currFish[0], trashSchool[i][0], trashSchool[i][1], currFish[4], currFish[5]);
             }
 
             // School Fish
@@ -296,6 +299,7 @@
                 }
 
                 drawImage(fishSpriteSheet, currFish[1], yPos, currFish[4], currFish[5], school[i][0], school[i][1], currFish[4], currFish[5]);
+                setAtLocation(currFish[0], trashSchool[i][0], trashSchool[i][1], currFish[4], currFish[5]);
             }
         }
         else {
@@ -314,6 +318,7 @@
                 }
 
                 drawImage(fishSpriteSheet, currTrash[1], yPos, currTrash[4], currTrash[5], trash[i][0], trash[i][1], currTrash[4], currTrash[5]);
+                setAtLocation(currTrash[0], trashSchool[i][0], trashSchool[i][1], currTrash[4], currTrash[5]);
             }
 
             for (var i = 0; i < trashSchool.length; i++) {
@@ -331,6 +336,7 @@
                 }
 
                 drawImage(fishSpriteSheet, currTrash[1], yPos, currTrash[4], currTrash[5], trashSchool[i][0], trashSchool[i][1], currTrash[4], currTrash[5]);
+                setAtLocation(currTrash[0], trashSchool[i][0], trashSchool[i][1], currTrash[4], currTrash[5]);
             }
         }
         //// Plants
@@ -338,7 +344,7 @@
         //for (var i = 0; i < plants.length; i++) {
         //    ctx.fillStyle = plantColor;
         //    drawRectangles(plants[i][0], plants[i][1], plants[i][2]);
-        //}
+        //}        
     }
 
     function refresh() {
@@ -353,6 +359,8 @@
         currTrashSingle = [];
         currTrashSchool = [];
         schoolingVector3 = [];
+        objectsAtLocation = [];
+        currObjLocation = [];
 
         numFish = getRandomIntRange(3, 7);
         numPlants = getRandomIntRange(5, 10);
@@ -367,8 +375,8 @@
         return myGameArea;
     }
 
-    function drawImage(img, sx, sy, sw, sh, dx, dy, dw, dh) {
-        ctx.drawImage(img, sx, sy, sw, sh, dx, dy, dw, dh);
+    function drawImage(img, startX, startY, sw, sh, dx, dy, width, height) {
+        ctx.drawImage(img, startX, startY, sw, sh, dx, dy, width, height);
     }
 
     function drawBackground() {
@@ -641,7 +649,30 @@
         return name;
     }
 
+    function getAtLocation(mouseX, mouseY) {
+        // name, startX, startY, width, height
+        var obj = "";
+        for (var i = 0; i < currObjLocation.length; i++) {
+            if (mouseX >= currObjLocation[i][1]
+                && mouseX <= currObjLocation[i][1] + currObjLocation[i][3]
+                && mouseY >= currObjLocation[i][2]
+                && mouseY <= currObjLocation[i][2] + currObjLocation[i][4]) {
+                objectsAtLocation.push(name);
+            }
+
+            if (objectsAtLocation.length >= 1) {
+                obj = objectsAtLocation[0][0];
+            }
+
+            return obj;
+        }
+    }
+
     // SET
+
+    function setAtLocation(name, startX, startY, width, height) {
+        currObjLocation.push([name, startX, startY, width, height]);
+    }
 
     function setDestination(name, schooling) {
         vector3Dest = [0, 0, 0];
@@ -817,4 +848,37 @@
         }
         return vector3Current;
     }
+
+    // *******************
+    // CLICK EVENT HANDLING
+    // *******************
+
+    myGameArea.addEventListener("click", (e) => {
+        var mouseX;
+        var mouseY;
+
+        if (e.pageX != undefined && e.pageY != undefined) {
+            mouseX = e.pageX;
+            mouseY = e.pageY;
+        }
+        else {
+            mouseX = e.clientX + document.body.scrollLeft +
+                document.documentElement.scrollLeft;
+            mouseY = e.clientY + document.body.scrollTop +
+                document.documentElement.scrollTop;
+        }
+        mouseX -= myGameArea.offsetLeft;
+        mouseY -= myGameArea.offsetTop;
+
+        var obj = getAtLocation(mouseX, mouseY);
+
+        if (obj != "") {
+            console.log("clicked something");
+        }
+        else {
+            console.log("clicked noghting");
+        }
+
+    }, false);
+
 </script>
