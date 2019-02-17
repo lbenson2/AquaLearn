@@ -42,14 +42,14 @@ namespace AquaLearn.Data.Helpers
         }
 
 
-        private readonly MapperConfiguration quizMap = new MapperConfiguration(mc =>
-        {
-            mc.Mappers.Add(DomainHelper.nameMapper.GetMappers().FirstOrDefault());
+        //private readonly MapperConfiguration quizMap = new MapperConfiguration(mc =>
+        //{
+        //    mc.Mappers.Add(DomainHelper.nameMapper.GetMappers().FirstOrDefault());
 
-            mc.CreateMap<Quiz, adm.Quiz>()
-              .ForMember(m => m.QuizId, u => u.MapFrom(s => s.QuizId))
-              .ForAllOtherMembers(m => m.Ignore());
-        });
+        //    mc.CreateMap<Quiz, adm.Quiz>()
+        //      .ForMember(m => m.QuizId, u => u.MapFrom(s => s.QuizId))
+        //      .ForAllOtherMembers(m => m.Ignore());
+        //});
 
         #region Get
         public List<adm.Quiz> GetQuizzes()

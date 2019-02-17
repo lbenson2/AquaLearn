@@ -1,15 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿//using System;
+//using System.Collections.Generic;
+//using System.Text;
 
-namespace AquaLearn.Data.Entities
-{
-    public partial class Role
-    {
-        public Role()
-        {
+//namespace AquaLearn.Data.Entities
+//{
+//    public partial class Role
+//    {
+//        public Role()
+//        {
 
-        }
-        public int RoleId { get; set; }
-    }
-}
+//        }
+//        public int RoleId { get; set; }
+//    }
+//}
