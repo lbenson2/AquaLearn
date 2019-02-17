@@ -159,8 +159,7 @@
     var currTrashSchool = [];
 
     var fishesMove = [];
-
-
+    var trashMove = [];
 
     var plants = [];
 
@@ -209,7 +208,8 @@
             }
 
             fishesMove.push(direction[0]);
-            vector3Destinations.push([0,0,0]);
+            vector3Destinations.push([0, 0, 0]);
+            schoolingVector3 = [];
         }
 
         // Init Trash
@@ -236,8 +236,9 @@
                 trashSchool.push(vector3Current);
             }
 
-            fishesMove.push(direction[0]);
+            trashMove.push(direction[0]);
             vector3Destinations.push([0, 0, 0]);
+            schoolingVector3 = [];
         }
 
         //// Init Plants
@@ -281,7 +282,7 @@
             // School Fish
 
             for (var i = 0; i < school.length; i++) {
-                destPos = i + fishes.length;
+                var destPos = i + fishes.length;
                 // currFish setup [name, startx, startyl, startyr, width, height]
                 var currFish = getFishSprite(currFishSchool[i], false);
                 school[i] = swimTogether(currFish, destPos, school[i][0], school[i][1], school[i][2]);
@@ -305,7 +306,7 @@
                 var currTrash = getFishSprite(currTrashSingle[i], true);
                 trash[i] = swim(currTrash, i, trash[i][0], trash[i][1], trash[i][2]);
                 var yPos;
-                if (fishesMove[i] == 'l') {
+                if (trashMove[i] == 'l') {
                     yPos = currTrash[2];
                 }
                 else {
@@ -316,17 +317,17 @@
             }
 
             for (var i = 0; i < trashSchool.length; i++) {
-                destPos = i + fishes.length;
+                var destPos = i + trash.length;
                 // currTrash setup [name, startx, startyl, startyr, width, height]
-                var currTrash = getFishSprite(currFishSchool[i], false);
+                var currTrash = getFishSprite(currTrashSchool[i], false);
                 trashSchool[i] = swimTogether(currTrash, destPos, trashSchool[i][0], trashSchool[i][1], trashSchool[i][2]);
 
                 var yPos;
-                if (fishesMove[i + trash.length] == 'l') {
-                    yPos = currFish[2];
+                if (trashMove[i + trash.length] == 'l') {
+                    yPos = currTrash[2];
                 }
                 else {
-                    yPos = currFish[3];
+                    yPos = currTrash[3];
                 }
 
                 drawImage(fishSpriteSheet, currTrash[1], yPos, currTrash[4], currTrash[5], trashSchool[i][0], trashSchool[i][1], currTrash[4], currTrash[5]);
@@ -345,6 +346,8 @@
         school = [];
         plants = [];
         trash = [];
+        trashSchool = [];
+
         currFishSingle = [];
         currFishSchool = [];
         currTrashSingle = [];
@@ -353,6 +356,7 @@
 
         numFish = getRandomIntRange(3, 7);
         numPlants = getRandomIntRange(5, 10);
+        numTrash = getRandomIntRange(5, 10);
         init();
     }
 
@@ -512,25 +516,24 @@
     }
 
     function GetFishSchoolInEx() {
-        var fishSingle = 0;
+        var fishSchool = 0;
         switch (exhibitType) {
             case "_CoralReef":
-                fishSingle = fishExCoralNameSchool.length;
+                fishSchool = fishExCoralNameSchool.length;
                 break;
             case "_DeepOcean":
-                fishSingle = fishExDeepNameSchool.length;
+                fishSchool = fishExDeepNameSchool.length;
                 break;
             default:
-                fishSingle = fishExPollNameSchool.length;
+                fishSchool = fishExPollNameSchool.length;
                 break;
         }
 
-        return getRandomIntRange(0, fishSingle);
+        return getRandomIntRange(0, fishSchool);
     }
 
     function getFishSprite(i, single) {
         var name = getName(i, single);
-        console.log(name);
         var sprite;
         switch (name) {
             // [name, startx, startyl, startyr, width, height]
