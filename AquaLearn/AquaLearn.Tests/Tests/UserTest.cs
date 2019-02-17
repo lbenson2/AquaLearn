@@ -26,7 +26,7 @@ namespace AquaLearn.Tests.Tests
         [Fact]
         public void Test_UserProperties()
         {
-            Assert.IsType<Role>(sut.UserRole);
+            Assert.IsType<int>(sut.RoleId);
             Assert.IsType<string>(sut.Username);
             Assert.IsType<string>(sut.Password);
             
