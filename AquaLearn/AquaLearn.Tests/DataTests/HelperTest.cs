@@ -115,19 +115,11 @@ namespace AquaLearn.Tests.DataTests
 
             quiz = new Quiz()
             {
-              Name = "Quiz",
-              QuizId = 1,
-              UserId = 1
+               Name="Quiz"
             };
 
-
-
-            Sutq.SetQuiz(quiz);
             Sutr.SetRole(role);
             Sutt.SetTrash(trash);
-           // Sutf.SetFish(fish);
-
-           // Sutp.SetPlant(plant);
         }
 
 
@@ -135,11 +127,7 @@ namespace AquaLearn.Tests.DataTests
         [Fact]
         public void Test_GetaRoles()
         {
-            //var db = Sut._idb;
-            //db.Role.Add(Role);
-            //db.SaveChanges();
             var actual = Sutr.GetRoles();
-
 
             Assert.NotNull(actual);
             Assert.True(actual.Count > 0);
@@ -243,11 +231,12 @@ namespace AquaLearn.Tests.DataTests
         }
 
         [Fact]
-        public void Test_GetUsers()
+        public void Test_GetgUsers()
         {
             var db = Sutu._idb;
             db.User.Add(user);
             db.SaveChanges();
+
             var actual = Sutu.GetUserTest();
 
             Assert.NotNull(actual);
@@ -259,31 +248,23 @@ namespace AquaLearn.Tests.DataTests
             Assert.True(actual[0].Password == "Andy");
             Assert.True(actual[0].ClassroomId == 22);
 
-            //Assert.NotNull(actual.Username == "Spkr");
+       
         }
 
-    [Fact]
-    public void Test_GetQuizzes()
-    {
-      var actual = Sutq.GetQuizzes();
+        [Fact]
+        public void Test_GethQuizzes()
+        {
+            var db = Sutq._idb;
+            db.Quiz.Add(quiz);
+            db.SaveChanges();
 
-      Assert.NotNull(actual);
-      Assert.True(actual.Count > 0);
-      Assert.True(actual[0].QuizId == 1);
-      Assert.True(actual[0].UserId == 1);
-      Assert.True(actual[0].Name == "Quiz");
-    }
+            var actual = Sutq.GetQuizTest();
 
-
-
-
-
-
-
-
-
-
-
-
+            Assert.NotNull(actual);
+            Assert.True(actual.Count > 0);
+            //Assert.True(actual[0].Description == "Algae are very diverse and found almost everywhere on the planet. They play an important role in many ecosystems, including providing the foundation for the aquatic food chains supporting all fisheries in the oceans and inland, as well as producing about 70 percent of all the air we breathe.");
+            Assert.True(actual[0].Name == "Quiz");
+            Assert.True(Sutq.GetScoresByStudent(1).Count >= 0);
+        }
     }
 }

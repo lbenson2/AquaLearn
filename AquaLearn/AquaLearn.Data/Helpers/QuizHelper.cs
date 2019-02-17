@@ -14,9 +14,35 @@ namespace AquaLearn.Data.Helpers
         private static AquaLearnIMDbContext _db = new AquaLearnIMDbContext();
         public static AquaLearnDbContext _dbn = new AquaLearnDbContext();
 
-        public AquaLearnDbContext _dbb { get; set; }
 
+
+        public AquaLearnDbContext _dbb { get; set; }
         public AquaLearnIMDbContext _idb { get; set; }
+
+        public QuizHelper()
+        {
+            _dbb = new AquaLearnDbContext();
+        }
+
+        public QuizHelper(AquaLearnIMDbContext idb)
+        {
+            _idb = idb;
+        }
+
+        public List<adm.Quiz> GetQuizTest()
+        {
+            if (_dbb != null)
+            {
+                var z = _dbb.Quiz.ToList();
+                return z;
+            }
+            else
+            {
+                var y = _idb.Quiz.ToList();
+                return y;
+            }
+        }
+
 
         private readonly MapperConfiguration quizMap = new MapperConfiguration(mc =>
         {
@@ -46,7 +72,7 @@ namespace AquaLearn.Data.Helpers
 
         public List<adm.Quiz> GetScoresByStudent(int userId)
         {
-            var quizzes = GetQuizzes();
+            var quizzes = GetQuizTest();
             var quizzesForStudent = new List<adm.Quiz>();
             
             foreach(var quiz in quizzes)
@@ -70,9 +96,11 @@ namespace AquaLearn.Data.Helpers
         }
         #endregion
 
+        public AquaLearnIMDbContext _idb { get; set; }
+
         public QuizHelper()
         {
-          _dbb = new AquaLearnDbContext();
+          _dbn = new AquaLearnDbContext();
         }
 
         public QuizHelper(AquaLearnIMDbContext idb)
