@@ -89,23 +89,23 @@ namespace AquaLearn.Data.Helpers
         #endregion
 
         #region Set
-        public static bool SetQuiz(adm.Quiz quiz)
+        public bool SetQuiz(adm.Quiz quiz)
         {
             _db.Quiz.Add(quiz);
             return _db.SaveChanges() == 1;
         }
         #endregion
 
+        public AquaLearnIMDbContext _idb { get; set; }
 
+        public QuizHelper()
+        {
+          _dbn = new AquaLearnDbContext();
+        }
 
-
-
-        
-
-
-
-
-
-
-    }
+        public QuizHelper(AquaLearnIMDbContext idb)
+        {
+          _idb = idb;
+        }
+  }
 }

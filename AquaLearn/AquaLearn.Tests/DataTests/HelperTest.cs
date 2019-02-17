@@ -115,23 +115,11 @@ namespace AquaLearn.Tests.DataTests
 
             quiz = new Quiz()
             {
-                Name="Quiz"
+               Name="Quiz"
             };
-
-
-
-
-
 
             Sutr.SetRole(role);
             Sutt.SetTrash(trash);
-           // Sutf.SetFish(fish);
-
-           // Sutp.SetPlant(plant);
-           
-           
-            
-
         }
 
 
@@ -139,11 +127,7 @@ namespace AquaLearn.Tests.DataTests
         [Fact]
         public void Test_GetaRoles()
         {
-            //var db = Sut._idb;
-            //db.Role.Add(Role);
-            //db.SaveChanges();
             var actual = Sutr.GetRoles();
-
 
             Assert.NotNull(actual);
             Assert.True(actual.Count > 0);
@@ -267,7 +251,6 @@ namespace AquaLearn.Tests.DataTests
        
         }
 
-
         [Fact]
         public void Test_GethQuizzes()
         {
@@ -282,23 +265,6 @@ namespace AquaLearn.Tests.DataTests
             //Assert.True(actual[0].Description == "Algae are very diverse and found almost everywhere on the planet. They play an important role in many ecosystems, including providing the foundation for the aquatic food chains supporting all fisheries in the oceans and inland, as well as producing about 70 percent of all the air we breathe.");
             Assert.True(actual[0].Name == "Quiz");
             Assert.True(Sutq.GetScoresByStudent(1).Count >= 0);
-
-
-
-
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
     }
 }
