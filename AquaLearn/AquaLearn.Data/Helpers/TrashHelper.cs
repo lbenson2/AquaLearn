@@ -23,6 +23,21 @@ namespace AquaLearn.Data.Helpers
             _idb = idb;
         }
 
+        public long SetTrash(Trash trash)
+        {
+            if (_db != null)
+            {
+                _db.Trash.Add(trash);
+                return _db.SaveChanges();
+            }
+            else
+            {
+                _idb.Trash.Add(trash);
+                return _idb.SaveChanges();
+            }
+
+        }
+
 
 
         public List<Trash> GetTrash()

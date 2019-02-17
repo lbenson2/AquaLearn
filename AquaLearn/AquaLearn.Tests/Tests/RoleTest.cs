@@ -13,7 +13,7 @@ namespace AquaLearn.Tests.Tests
         {
             sut = new Role()
             {
-
+                Name="Teacher"
             };
         }
 
