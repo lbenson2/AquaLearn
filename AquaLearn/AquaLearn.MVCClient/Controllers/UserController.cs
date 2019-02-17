@@ -25,34 +25,35 @@ namespace AquaLearn.MVCClient.Controllers
 
         public IActionResult Validation(User us)
         {
-          var user = UserHelper.GetUsers().Where(u => u.Username == us.Username).FirstOrDefault();
+          var user = UserHelper.GetUserByUserName(us.Username);
 
-          if (user == null)
-          {
-            RedirectToAction("../Home/Login");
-          }
+            if (user == null)
+            {
+                return RedirectToAction("Login", "Home");
+            }
+            else
+            {
+                if (user.Password != us.Password)
+                {
+                    return RedirectToAction("Login", "Home");
+                }
+            }
 
-          if (user.Password != us.Password)
-          {
-            RedirectToAction("../Home/Login");
-          }
-
-          HttpContext.Session.SetInt32("UserId", user.UserId);
-          HttpContext.Session.SetString("Username", user.Username);
-          return View("../Home/Index");
+         // HttpContext.Session.SetString("Username", user.Username);
+          return RedirectToAction("Index", "Home");
         }
 
-        public IActionResult Post(User us)
+        public IActionResult Register(User us)
         {
           if (UserHelper.SetUser(us))
           {
             var user = UserHelper.GetUsers().Where(u => u.Username == us.Username).FirstOrDefault();
-            HttpContext.Session.SetInt32("UserId", user.UserId);
+
             HttpContext.Session.SetString("Username", user.Username);
-            return View("../Home/Index");
+            return View("Index", "Home");
           }
 
-          return View("../Home/Register");
+          return View("Register", "Home");
         }
 
         public IActionResult Logout()
@@ -60,5 +61,7 @@ namespace AquaLearn.MVCClient.Controllers
           HttpContext.Session.Clear();
           return RedirectToAction("Index", "Home");
         }
+
+
     }
 }
