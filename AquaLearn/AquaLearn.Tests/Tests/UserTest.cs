@@ -14,6 +14,10 @@ namespace AquaLearn.Tests.Tests
         {
             sut = new User()
             {
+                //UserId = 22,
+                Username = "Andy",
+                Password = "Andy",
+                ClassroomId = 22
 
             };
 
