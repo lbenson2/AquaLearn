@@ -14,7 +14,7 @@ namespace AquaLearn.Data.Helpers
         private static AquaLearnIMDbContext _db = new AquaLearnIMDbContext();
         private static AquaLearnDbContext _dbn = new AquaLearnDbContext();
 
-        public AquaLearnDbContext _dbb { get; set; }
+        private AquaLearnDbContext _dbb { get; set; }
         public AquaLearnIMDbContext _idb { get; set; }
 
         public QuizHelper()
@@ -40,16 +40,6 @@ namespace AquaLearn.Data.Helpers
                 return y;
             }
         }
-
-
-        //private readonly MapperConfiguration quizMap = new MapperConfiguration(mc =>
-        //{
-        //    mc.Mappers.Add(DomainHelper.nameMapper.GetMappers().FirstOrDefault());
-
-        //    mc.CreateMap<Quiz, adm.Quiz>()
-        //      .ForMember(m => m.QuizId, u => u.MapFrom(s => s.QuizId))
-        //      .ForAllOtherMembers(m => m.Ignore());
-        //});
 
         #region Get
         public List<adm.Quiz> GetQuizzes()

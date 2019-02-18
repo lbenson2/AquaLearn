@@ -13,6 +13,9 @@ namespace AquaLearn.Data.Helpers
     {
         private static AquaLearnIMDbContext _db = new AquaLearnIMDbContext();
         private static AquaLearnDbContext _dbb = new AquaLearnDbContext();
+    
+        private AquaLearnDbContext _dbn { get; set; }
+        public AquaLearnIMDbContext _idb { get; set; }
 
         private readonly MapperConfiguration userMap = new MapperConfiguration(mc =>
         {
@@ -48,16 +51,12 @@ namespace AquaLearn.Data.Helpers
             foreach (var item in _db.User.ToList())
             {
                 var u = mapper.Map<adm.User>(item);
-
-                // u.Username = mapper2.Map<adm.User.Username>(item);
+        
                 userList.Add(u);
             }
 
             return userList;
         }
-
-        public AquaLearnDbContext _dbn { get; set; }
-        public AquaLearnIMDbContext _idb { get; set; }
 
         public UserHelper()
         {

@@ -10,8 +10,8 @@ namespace AquaLearn.Data.Helpers
 {
     public class ExhibitHelper
     {
-        public AquaLearnDbContext _db { get; set; }
-        public AquaLearnIMDbContext _idb { get; set; }
+        private AquaLearnDbContext _db { get; set; }
+        private AquaLearnIMDbContext _idb { get; set; }
 
         public ExhibitHelper()
         {
@@ -22,8 +22,7 @@ namespace AquaLearn.Data.Helpers
         {
             _idb = idb;
         }
-
-
+    
         public long SetExhibit(Exhibit exhibit)
         {
             if (_db != null)
@@ -38,9 +37,7 @@ namespace AquaLearn.Data.Helpers
             }
 
         }
-
-
-
+    
         public List<Exhibit> GetExhibits()
         {
             if (_db != null)
@@ -54,7 +51,6 @@ namespace AquaLearn.Data.Helpers
                 var y = _idb.Exhibit.ToList();
                 return y;
             }
-
         }
     }
 }

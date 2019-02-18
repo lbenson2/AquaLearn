@@ -5,14 +5,12 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using AquaLearn.Domain.Models;
 
-
-
 namespace AquaLearn.Data.Helpers
 {
     public class PlantHelper
     {
-        public AquaLearnDbContext _db { get; set; }
-        public AquaLearnIMDbContext _idb { get; set; }
+        private AquaLearnDbContext _db { get; set; }
+        private AquaLearnIMDbContext _idb { get; set; }
 
         public PlantHelper()
         {
@@ -38,9 +36,7 @@ namespace AquaLearn.Data.Helpers
             }
 
         }
-
-
-
+    
         public List<Plant> GetPlants()
         {
             if (_db != null)
@@ -54,7 +50,6 @@ namespace AquaLearn.Data.Helpers
                 var y = _idb.Plant.ToList();
                 return y;
             }
-
         }
     }
 }

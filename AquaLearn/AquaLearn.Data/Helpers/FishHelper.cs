@@ -22,7 +22,6 @@ namespace AquaLearn.Data.Helpers
                 df.Add(new adm.Fish()
                 {
                     Name = item.Name
-
                 });
             }
             return df;
@@ -33,8 +32,8 @@ namespace AquaLearn.Data.Helpers
             return _dbn.Fish.Include(x => x.WaterType).ToList();
         }
 
-        public AquaLearnDbContext _dbn { get; set; }
-        public AquaLearnIMDbContext _idb { get; set; }
+        private AquaLearnDbContext _dbn { get; set; }
+        private AquaLearnIMDbContext _idb { get; set; }
 
         public FishHelper()
         {
@@ -61,22 +60,18 @@ namespace AquaLearn.Data.Helpers
 
         }
 
-
-
         public List<adm.Fish> GetFishes()
         {
             if (_dbn != null)
             {
                 var z = _dbn.Fish.ToList();
                 return z;
-
             }
             else
             {
                 var y = _idb.Fish.ToList();
                 return y;
             }
-
         }
     }
 }
