@@ -31,16 +31,16 @@ namespace AquaLearn.Data.Helpers
 
         public long SetTrash(Trash trash)
         {
-            //if (_db != null)
-            //{
-            //    _db.Trash.Add(trash);
-            //    return _db.SaveChanges();
-            //}
-            //else
-            //{
+            if (_db != null)
+            {
+                _db.Trash.Add(trash);
+                return _db.SaveChanges();
+            }
+            else
+            {
                 _idb.Trash.Add(trash);
                 return _idb.SaveChanges();
-            //}
+            }
 
         }
 
@@ -48,17 +48,17 @@ namespace AquaLearn.Data.Helpers
 
         public List<Trash> GetTrash()
         {
-            //if (_db != null)
-            //{
-            //    var z = _db.Trash.ToList();
-            //    return z;
+            if (_db != null)
+            {
+                var z = _db.Trash.ToList();
+                return z;
 
-            //}
-            //else
-            //{
+            }
+            else
+            {
                 var y = _idb.Trash.ToList();
                 return y;
-            //}
+            }
 
         }
     }

@@ -29,16 +29,16 @@ namespace AquaLearn.Data.Helpers
 
         public List<adm.Quiz> GetQuizTest()
         {
-            //if (_dbb != null)
-            //{
-            //    var z = _dbb.Quiz.ToList();
-            //    return z;
-            //}
-            //else
-            //{
+            if (_dbb != null)
+            {
+                var z = _dbb.Quiz.ToList();
+                return z;
+            }
+            else
+            {
                 var y = _idb.Quiz.ToList();
                 return y;
-            //}
+            }
         }
 
 
