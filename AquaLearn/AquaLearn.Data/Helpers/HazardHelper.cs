@@ -10,8 +10,8 @@ namespace AquaLearn.Data.Helpers
 {
     public class HazardHelper
     {
-        private AquaLearnDbContext _db { get; set; }
-        private AquaLearnIMDbContext _idb { get; set; }
+        public AquaLearnDbContext _db { get; set; }
+        public AquaLearnIMDbContext _idb { get; set; }
 
         public HazardHelper()
         {
@@ -38,12 +38,15 @@ namespace AquaLearn.Data.Helpers
 
         }
 
+
+
         public List<Hazard> GetHazards()
         {
             if (_db != null)
             {
                 var z = _db.Hazard.ToList();
                 return z;
+
             }
             else
             {

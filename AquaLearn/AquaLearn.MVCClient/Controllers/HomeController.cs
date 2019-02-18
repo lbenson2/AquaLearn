@@ -5,7 +5,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using AquaLearn.MVCClient.Models;
-using AquaLearn.MVCClient.ViewModels;
 
 namespace AquaLearn.MVCClient.Controllers
 {
@@ -23,16 +22,7 @@ namespace AquaLearn.MVCClient.Controllers
 
         public IActionResult Quiz()
         {
-            var ex = new ExhibitModel();
-            var fishVM = new FishViewModel();
-            var plantVM = new PlantViewModel();
-            var trashVM = new TrashViewModel();
-
-            ex.Fishes = fishVM.GetFishes();
-            ex.Plants = plantVM.GetPlants();
-            ex.Trash = trashVM.GetTrash();
-
-            return View("Quiz", ex);
+            return View("Quiz");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

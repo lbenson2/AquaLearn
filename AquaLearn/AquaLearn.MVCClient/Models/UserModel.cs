@@ -14,6 +14,8 @@ namespace AquaLearn.MVCClient.Models
         public int UserId { get; set; }
 
         public List<ald.User> Students { get; set; }
+
+        
     
         public Role UserRole { get; set; }
 
@@ -21,7 +23,8 @@ namespace AquaLearn.MVCClient.Models
         [MinLength(6, ErrorMessage = "Please make sure username is at lesat 5 characters")]
         [MaxLength(40, ErrorMessage = "This username is too long. Use less than 40 characters")]
         public string Username { get; set; }
-    
+
+
         [Required]
         [MinLength(6, ErrorMessage = "Password is to short")]
         [MaxLength(50, ErrorMessage = "Password is to long")]
@@ -33,5 +36,8 @@ namespace AquaLearn.MVCClient.Models
         public string Name { get; set; }
 
         public List<Quiz> Quizzes { get; set; }
+
+
+       
     }
 }

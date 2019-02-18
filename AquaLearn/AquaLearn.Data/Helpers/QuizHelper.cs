@@ -12,9 +12,9 @@ namespace AquaLearn.Data.Helpers
     public class QuizHelper
     {
         private static AquaLearnIMDbContext _db = new AquaLearnIMDbContext();
-        private static AquaLearnDbContext _dbn = new AquaLearnDbContext();
+        public static AquaLearnDbContext _dbn = new AquaLearnDbContext();
 
-        private AquaLearnDbContext _dbb { get; set; }
+        public AquaLearnDbContext _dbb { get; set; }
         public AquaLearnIMDbContext _idb { get; set; }
 
         public QuizHelper()
@@ -41,22 +41,25 @@ namespace AquaLearn.Data.Helpers
             }
         }
 
-        #region Get
-        public List<adm.Quiz> GetQuizzes()
-        {
-            var du = new List<adm.Quiz>();
 
-            foreach (var item in _db.Quiz.ToList())
-            {
-                du.Add(new adm.Quiz()
-                {
-                    UserId = item.UserId,
-                    QuizId = item.QuizId,
-                    Name = item.Name
-                });
-            }
-            return du;
-        }
+        
+
+        #region Get
+        //public List<adm.Quiz> GetQuizzes()
+        //{
+        //    var du = new List<adm.Quiz>();
+
+        //    foreach (var item in _db.Quiz.ToList())
+        //    {
+        //        du.Add(new adm.Quiz()
+        //        {
+        //            UserId = item.UserId,
+        //            QuizId = item.QuizId,
+        //            Name = item.Name
+        //        });
+        //    }
+        //    return du;
+        //}
 
         public List<adm.Quiz> GetScoresByStudent(int userId)
         {
