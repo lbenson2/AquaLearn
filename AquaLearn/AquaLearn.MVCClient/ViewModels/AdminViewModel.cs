@@ -9,6 +9,10 @@ namespace AquaLearn.MVCClient.ViewModels
 {
     public static class AdminViewModel
     {
-     
+        public static List<ald.User> GetStudentsByClassroomId(int id)
+        {
+            return UserHelper.GetStudentsByClassroomId(id);
+        }
+
     }
 }

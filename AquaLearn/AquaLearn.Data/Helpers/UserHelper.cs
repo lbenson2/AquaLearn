@@ -93,7 +93,7 @@ namespace AquaLearn.Data.Helpers
             }
         }
 
-        public List<adm.User> GetStudentByClassroomId(int classroomId)
+        public static List<adm.User> GetStudentsByClassroomId(int classroomId)
         {
             var allUsers = GetUsers();
             var studentsInClass = new List<adm.User>();
