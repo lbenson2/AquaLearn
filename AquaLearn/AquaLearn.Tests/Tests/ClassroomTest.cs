@@ -14,15 +14,12 @@ namespace AquaLearn.Tests.Tests
             sut = new Classroom()
             {
                 Students = new List<User>(),
-
             };
-
         }
 
         [Fact]
         public void Test_ClassroomProperties()
         {
-
             Assert.IsType<string>(sut.Name);
             Assert.IsType<int>(sut.ClassroomId);
             Assert.IsType<List<User>>(sut.Students);

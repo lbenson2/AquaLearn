@@ -11,7 +11,7 @@ namespace AquaLearn.Data.Helpers
     public class ClassroomHelper
     {
         private static AquaLearnIMDbContext _db = new AquaLearnIMDbContext();
-        public static AquaLearnDbContext _dbn = new AquaLearnDbContext();
+        private static AquaLearnDbContext _dbn = new AquaLearnDbContext();
 
         public static List<adm.Classroom> GetClassroom()
         {
@@ -36,18 +36,17 @@ namespace AquaLearn.Data.Helpers
 
         public static bool SetClassroom(adm.Classroom classn)
         {
-                var checkclass = GetClassroomByName(classn.Name);
+            var checkclass = GetClassroomByName(classn.Name);
 
-                if (checkclass != null && checkclass.Name == classn.Name)
-                {
-                    return false;
-                }
-                else
-                {        
-                    _dbn.Classroom.Add(classn);
-                    return _db.SaveChanges() > 0;
-                }
-
+            if (checkclass != null && checkclass.Name == classn.Name)
+            {
+                return false;
+            }
+            else
+            {        
+                _dbn.Classroom.Add(classn);
+                return _db.SaveChanges() > 0;
             }
         }
+    }
 }

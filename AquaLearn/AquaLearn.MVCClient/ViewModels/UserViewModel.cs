@@ -9,10 +9,7 @@ using AquaLearn.Data.Helpers;
 
 namespace AquaLearn.MVCClient.Models
 {
-  
-
     public class UserViewModel
-
     {
         public List<ald.User> GetUsers()
         {
@@ -29,7 +26,6 @@ namespace AquaLearn.MVCClient.Models
             return UserHelper.GetLogin(username, password);
         }
      
-
         internal bool Register(Role role, string username, string password,Classroom classroom)
         {
             var usr = new ald.User()
@@ -41,8 +37,5 @@ namespace AquaLearn.MVCClient.Models
 
             return UserHelper.SetUser(usr);
         }
-
- 
-
     }
 }

@@ -71,16 +71,16 @@ namespace AquaLearn.Data.Helpers
 
         public List<adm.User> GetUserTest()
         {
-            //if (_dbn != null)
-            //{
-            //    var z = _dbn.User.ToList();
-            //    return z;
-            //}
-            //else
-            //{
+            if (_dbn != null)
+            {
+                var z = _dbn.User.ToList();
+                return z;
+            }
+            else
+            {
                 var y = _idb.User.ToList();
                 return y;
-            //}
+            }
         }
 
         public static adm.User GetUserByUserName(string username)

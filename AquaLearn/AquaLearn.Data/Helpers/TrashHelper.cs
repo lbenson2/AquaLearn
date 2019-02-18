@@ -5,13 +5,12 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using AquaLearn.Domain.Models;
 
-
 namespace AquaLearn.Data.Helpers
 {
     public class TrashHelper
     {
-        public AquaLearnDbContext _db { get; set; }
-        public AquaLearnIMDbContext _idb { get; set; }
+        private AquaLearnDbContext _db { get; set; }
+        private AquaLearnIMDbContext _idb { get; set; }
 
 
         public List<Trash> GettheTrash2()
@@ -31,19 +30,19 @@ namespace AquaLearn.Data.Helpers
 
         public long SetTrash(Trash trash)
         {
-            //if (_db != null)
-            //{
-            //    _db.Trash.Add(trash);
-            //    return _db.SaveChanges();
-            //}
-            //else
-            //{
+            if (_db != null)
+            {
+                _db.Trash.Add(trash);
+                return _db.SaveChanges();
+            }
+            else
+            {
                 _idb.Trash.Add(trash);
                 return _idb.SaveChanges();
-            //}
+            }
 
         }
-
+      
         public List<Trash> GetTrash()
         {
             if (_db != null)
@@ -57,7 +56,6 @@ namespace AquaLearn.Data.Helpers
                 var y = _idb.Trash.ToList();
                 return y;
             }
-
         }
     }
 }
