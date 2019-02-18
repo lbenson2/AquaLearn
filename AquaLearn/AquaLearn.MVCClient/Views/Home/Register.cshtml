@@ -1,94 +1,58 @@
 ﻿@model AquaLearn.MVCClient.Models.UserModel
 @{
-    ViewData["Title"] = "Register";
+  ViewData["Title"] = "Register";
 }
 
 <style>
-    @@import url('https://fonts.googleapis.com/css?family=Fredoka+One');
+  @@import url('https://fonts.googleapis.com/css?family=Fredoka+One');
 </style>
 <body>
-    <div class="box" style="background: rgba(255, 255, 255, 0.3);">
-        @using (Html.BeginForm("Register", "User"))
+  <div class="box" style="background: rgba(255, 255, 255, 0.3);">
+    @using (Html.BeginForm("Register", "User"))
+    {
+        @Html.LabelFor(m => m.Username, "Username")
+        @Html.TextBoxFor(m => m.Username)
 
-        {
-            @Html.LabelFor(m => m.Username, "Username")
-            @Html.TextBoxFor(m => m.Username)
+        @Html.LabelFor(m => m.Password, "Password")
+        @Html.PasswordFor(m => m.Password)
 
-            @Html.LabelFor(m => m.Password, "Password")
-            @Html.PasswordFor(m => m.Password)
+        <h2 style="font-family:'Fredoka One', cursive;">Are you a student or a teacher?</h2>
 
-            <h2 style="font-family:'Fredoka One', cursive;">Are you a student or a teacher?</h2>
+        <div class="placeholder">
+          <button type="button" onclick="chooseStudent(this.id)" id="_StudentRegPartial">Student</button>
 
-            <div class="placeholder">
-                <button type="button" onclick="chooseStudent(this.id)" id="_StudentRegPartial">Student</button>
+          <button type="button" onclick="chooseTeacher(this.id)" id="_TeacherLogin">Teacher</button>
 
-                <button type="button" onclick="chooseTeacher(this.id)" id="_TeacherLogin">Teacher</button>
-
-                <div class="regbutton">
-                    <button type="submit" class="buttons" id="regbutton">Log in</button>
-                </div>
-
+          <div class="regbutton">
+            <button type="submit" class="buttons" id="regbutton">Log in</button>
             </div>
-
-            <script>
-
-        function chooseStudent(partialViewToInsert)
-
-            {
-
-        $.ajax({
-
-                url: '@Url.Action("AddPartialToView", "Home")',
-
-        data: { id: partialViewToInsert },
-
-        type: "Post",
-
-        success: function(data) {
-
-        $('#placeholder').html(data);
-
-                    }
-
-                });
-        }
-        function chooseTeacher(partialViewToInsert)
-
-        {
-
-        $.ajax({
-
-            url: '@Url.Action("AddPartialToView", "Home")',
-
-        data: { id: partialViewToInsert },
-
-        type: "Post",
-
-        success: function(data) {
-
-        $('#placeholder').html(data);
-
-                }
-
-            });
-
-        }
-
-            </script>
-
-        }
-
         </div>
+     }
+  </div>
 
-        </body>
+</body>
+<script>
+  function chooseStudent(partialViewToInsert) {
+    $.ajax({
+      url: '@Url.Action("AddPartialToView", "Home")',
+      data: { id: partialViewToInsert },
+      type: "Post",
+      success: function (data) {
+        $('#placeholder').html(data);
+      }
+    });
+  }    
 
-        Message Input
-
-
-
-
-
-
-
-
-
+  function chooseTeacher(partialViewToInsert)
+  {
+    $.ajax({
+      url: '@Url.Action("AddPartialToView", "Home")',
+      data: { id: partialViewToInsert },
+      type: "Post",
+      success: function(data) {
+        $('#placeholder').html(data);
+      }
+    });
+  }
+    
+</script>
