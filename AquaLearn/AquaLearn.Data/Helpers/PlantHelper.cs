@@ -48,18 +48,17 @@ namespace AquaLearn.Data.Helpers
 
         public List<Plant> GetPlants()
         {
-            //if (_db != null)
-            //{
-            //    var z = _db.Plant.ToList();
-            //    return z;
+            if (_db != null)
+            {
+                var z = _db.Plant.ToList();
+                return z;
 
-            //}
-            //else
-            //{
+            }
+            else
+            {
                 var y = _idb.Plant.ToList();
                 return y;
-            //}
-
+            }
         }
     }
 }

@@ -44,21 +44,19 @@ namespace AquaLearn.Data.Helpers
 
         }
 
-
-
         public List<Trash> GetTrash()
         {
-            //if (_db != null)
-            //{
-            //    var z = _db.Trash.ToList();
-            //    return z;
+            if (_db != null)
+            {
+                var z = _db.Trash.ToList();
+                return z;
 
-            //}
-            //else
-            //{
+            }
+            else
+            {
                 var y = _idb.Trash.ToList();
                 return y;
-            //}
+            }
 
         }
     }
