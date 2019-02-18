@@ -12,7 +12,7 @@ namespace AquaLearn.MVCClient.ViewModels
         public List<ald.Plant> GetPlants()
         {
             var helper = new PlantHelper();
-            return helper.GetPlants();
+            return helper.GetthePlants2();
         }
     }
 }

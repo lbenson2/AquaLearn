@@ -36,16 +36,16 @@ namespace AquaLearn.Data.Helpers
 
         public long SetFish(adm.Fish fish)
         {
-            //if (_dbn != null)
-            //{
-            //    _dbn.Fish.Add(fish);
-            //    return _dbn.SaveChanges();
-            //}
-            //else
-            //{
+            if (_dbn != null)
+            {
+                _dbn.Fish.Add(fish);
+                return _dbn.SaveChanges();
+            }
+            else
+            {
                 _idb.Fish.Add(fish);
                 return _idb.SaveChanges();
-            //}
+            }
 
         }
 
@@ -53,17 +53,17 @@ namespace AquaLearn.Data.Helpers
 
         public List<adm.Fish> GetFishes()
         {
-            //if (_dbn != null)
-            //{
-            //    var z = _dbn.Fish.ToList();
-            //    return z;
+            if (_dbn != null)
+            {
+                var z = _dbn.Fish.ToList();
+                return z;
 
-            //}
-            //else
-            //{
+            }
+            else
+            {
                 var y = _idb.Fish.ToList();
                 return y;
-            //}
+            }
 
         }
     }

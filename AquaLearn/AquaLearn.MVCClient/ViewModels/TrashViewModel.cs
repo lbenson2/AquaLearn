@@ -12,7 +12,7 @@ namespace AquaLearn.MVCClient.ViewModels
         public List<ald.Trash> GetTrash()
         {
             var helper = new TrashHelper();
-            return helper.GetTrash();
+            return helper.GettheTrash2();
         }
     }
 }

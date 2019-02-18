@@ -27,11 +27,16 @@ namespace AquaLearn.Data.Helpers
 
         public long SetExhibit(Exhibit exhibit)
         {
-            
-            
-            
+            if (_db != null)
+            {
+                _db.Exhibit.Add(exhibit);
+                return _db.SaveChanges();
+            }
+            else
+            {
                 _idb.Exhibit.Add(exhibit);
                 return _idb.SaveChanges();
+            }
             
 
         }
@@ -40,11 +45,17 @@ namespace AquaLearn.Data.Helpers
 
         public List<Exhibit> GetExhibits()
         {
-            
+            if (_db != null)
+            {
+                var z = _db.Exhibit.ToList();
+                return z;
+            }
+            else
+            {
                 var y = _idb.Exhibit.ToList();
                 return y;
+            }
             
-
         }
     }
 }
