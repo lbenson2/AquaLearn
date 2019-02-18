@@ -25,16 +25,16 @@ namespace AquaLearn.Data.Helpers
 
         public long SetHazard(Hazard hazard)
         {
-            if (_db != null)
-            {
-                _db.Hazard.Add(hazard);
-                return _db.SaveChanges();
-            }
-            else
-            {
+            //if (_db != null)
+            //{
+            //    _db.Hazard.Add(hazard);
+            //    return _db.SaveChanges();
+            //}
+            //else
+            //{
                 _idb.Hazard.Add(hazard);
                 return _idb.SaveChanges();
-            }
+            //}
 
         }
 
@@ -42,17 +42,17 @@ namespace AquaLearn.Data.Helpers
 
         public List<Hazard> GetHazards()
         {
-            if (_db != null)
-            {
-                var z = _db.Hazard.ToList();
-                return z;
+            //if (_db != null)
+            //{
+            //    var z = _db.Hazard.ToList();
+            //    return z;
 
-            }
-            else
-            {
+            //}
+            //else
+            //{
                 var y = _idb.Hazard.ToList();
                 return y;
-            }
+            //}
 
         }
     }
