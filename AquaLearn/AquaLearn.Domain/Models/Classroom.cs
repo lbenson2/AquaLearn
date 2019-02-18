@@ -8,12 +8,11 @@ namespace AquaLearn.Domain.Models
     {
         public int ClassroomId { get; set; }
         public string Name { get; set; }
-        public User Teacher { get; set; }
-        public List<User> Students { get; set; }
 
         public Classroom()
         {
             Name = "ClassroomName";
         }
+
     }
 }

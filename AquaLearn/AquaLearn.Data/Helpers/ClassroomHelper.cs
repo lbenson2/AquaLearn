@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using adm = AquaLearn.Domain.Models;
+using AquaLearn.Data.Helpers;
+
 
 
 namespace AquaLearn.Data.Helpers
@@ -47,7 +49,6 @@ namespace AquaLearn.Data.Helpers
                     _dbn.Classroom.Add(classn);
                     return _db.SaveChanges() > 0;
                 }
-
             }
         }
 }

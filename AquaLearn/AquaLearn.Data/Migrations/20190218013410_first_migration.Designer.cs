@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AquaLearn.Data.Migrations
 {
     [DbContext(typeof(AquaLearnDbContext))]
-    [Migration("20190217193342_first_migration")]
+    [Migration("20190218013410_first_migration")]
     partial class first_migration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -29,11 +29,7 @@ namespace AquaLearn.Data.Migrations
 
                     b.Property<string>("Name");
 
-                    b.Property<int?>("TeacherUserId");
-
                     b.HasKey("ClassroomId");
-
-                    b.HasIndex("TeacherUserId");
 
                     b.ToTable("Classroom");
                 });
@@ -197,8 +193,6 @@ namespace AquaLearn.Data.Migrations
 
                     b.HasKey("UserId");
 
-                    b.HasIndex("ClassroomId");
-
                     b.ToTable("User");
                 });
 
@@ -213,13 +207,6 @@ namespace AquaLearn.Data.Migrations
                     b.HasKey("WaterTypeId");
 
                     b.ToTable("WaterType");
-                });
-
-            modelBuilder.Entity("AquaLearn.Domain.Models.Classroom", b =>
-                {
-                    b.HasOne("AquaLearn.Domain.Models.User", "Teacher")
-                        .WithMany()
-                        .HasForeignKey("TeacherUserId");
                 });
 
             modelBuilder.Entity("AquaLearn.Domain.Models.Exhibit", b =>
@@ -280,14 +267,6 @@ namespace AquaLearn.Data.Migrations
                     b.HasOne("AquaLearn.Domain.Models.WaterType", "WaterType")
                         .WithMany()
                         .HasForeignKey("WaterTypeId");
-                });
-
-            modelBuilder.Entity("AquaLearn.Domain.Models.User", b =>
-                {
-                    b.HasOne("AquaLearn.Domain.Models.Classroom")
-                        .WithMany("Students")
-                        .HasForeignKey("ClassroomId")
-                        .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
         }

@@ -16,17 +16,14 @@ namespace AquaLearn.MVCClient.ViewModels
 
         }
 
-        public static bool CreateClassroom(string classname)
+        public static bool SetClassroom(ald.Classroom classname)
         {
-            var clr = new ald.Classroom()
-            {
-                Name = classname
-            };
-
-
-            return ClassroomHelper.SetClassroom(clr);
+            return ClassroomHelper.SetClassroom(classname);
         }
 
-
+        public static ald.Classroom GetClassroomByName(string name)
+        {
+            return ClassroomHelper.GetClassroomByName(name);
+        }
     }
 }

@@ -4,8 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using AquaLearn.Domain.Models;
-using AquaLearn.Data.Helpers;
 using Microsoft.AspNetCore.Http;
+using mo = AquaLearn.MVCClient.Models;
+using AquaLearn.MVCClient.ViewModels;
+using AquaLearn.MVCClient.Models;
 
 namespace AquaLearn.MVCClient.Controllers
 {
@@ -27,7 +29,7 @@ namespace AquaLearn.MVCClient.Controllers
 
         public IActionResult Validation(User us)
         {
-          var user = UserHelper.GetUserByUserName(us.Username);
+          var user = UserViewModel.GetUserByUserName(us.Username);
 
             if (user == null)
             {
@@ -49,7 +51,7 @@ namespace AquaLearn.MVCClient.Controllers
         {
             us.RoleId = 2;
             
-          if (UserHelper.SetUser(us))
+          if (UserViewModel.SetUser(us))
           {   
             HttpContext.Session.SetString("Username", us.Username);
             HttpContext.Session.SetInt32("Classroom", us.ClassroomId);
@@ -61,22 +63,44 @@ namespace AquaLearn.MVCClient.Controllers
           return RedirectToAction("Register", "User");
         }
 
-
-
-        public IActionResult RegisterTeacher(User us,Classroom classname)
+        public IActionResult RegisterTeacher(mo.UserModel us)
         {
-            if (UserHelper.SetUser(us))
+            us.RoleId = 1;
+
+            var classroom = new Classroom()
             {
+                Name = us.Name,
+             
+            };
 
-                HttpContext.Session.SetString("Username", us.Username);
-                HttpContext.Session.SetString("ClassroomName", classname.Name);
+            if (ClassroomViewModel.SetClassroom(classroom))
+            {
+                classroom = ClassroomViewModel.GetClassroomByName(classroom.Name);
 
+                var user = new User()
+                {
+                    Username = us.Username,
+                    RoleId = us.RoleId,
+                    Quizzes = us.Quizzes,
+                    Password = us.Password,
+                    ClassroomId = classroom.ClassroomId
+                };
 
+                if (UserViewModel.SetUser(user))
+                {
+                    HttpContext.Session.SetString("Username", us.Username);
+                    HttpContext.Session.SetInt32("Classroom", us.ClassroomId);
+                    HttpContext.Session.SetInt32("Role", us.RoleId);
 
-                return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "Home");
+                }
+                else
+                {
+                    return RedirectToAction("Register", "Home");
+                }
             }
 
-            return RedirectToAction("Register", "User");
+            return RedirectToAction("Register", "Home");
         }
 
 
