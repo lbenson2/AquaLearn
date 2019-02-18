@@ -12,7 +12,7 @@ namespace AquaLearn.Data.Helpers
     public class UserHelper
     {
         private static AquaLearnIMDbContext _db = new AquaLearnIMDbContext();
-        public static AquaLearnDbContext _dbb = new AquaLearnDbContext();
+        private static AquaLearnDbContext _dbb = new AquaLearnDbContext();
 
         private readonly MapperConfiguration userMap = new MapperConfiguration(mc =>
         {

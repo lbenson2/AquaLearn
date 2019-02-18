@@ -11,7 +11,7 @@ namespace AquaLearn.Data.Helpers
     public class ClassroomHelper
     {
         private static AquaLearnIMDbContext _db = new AquaLearnIMDbContext();
-        public static AquaLearnDbContext _dbn = new AquaLearnDbContext();
+        private static AquaLearnDbContext _dbn = new AquaLearnDbContext();
 
         public static List<adm.Classroom> GetClassroom()
         {

@@ -12,7 +12,7 @@ namespace AquaLearn.Data.Helpers
     public class QuizHelper
     {
         private static AquaLearnIMDbContext _db = new AquaLearnIMDbContext();
-        public static AquaLearnDbContext _dbn = new AquaLearnDbContext();
+        private static AquaLearnDbContext _dbn = new AquaLearnDbContext();
 
         public AquaLearnDbContext _dbb { get; set; }
         public AquaLearnIMDbContext _idb { get; set; }
