@@ -11,8 +11,13 @@
         <ol>
             @foreach (var stu in Students)
             {
-                <li>
-                    <p>@stu.Username</p>
+            <li>
+                <p>@stu.Username</p>
+                    @foreach (var quiz in stu.Quizzes)
+                    {
+                        <p>@quiz.Name</p>
+                        <br />
+                    }
                     <br />
                 </li>
             }

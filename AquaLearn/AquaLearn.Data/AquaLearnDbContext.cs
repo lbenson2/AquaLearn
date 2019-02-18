@@ -18,7 +18,6 @@ namespace AquaLearn.Data
         {
         }
 
-
         public static IConfiguration Configuration { get; set; }
         public DbSet<Role> Role { get; set; }
         public DbSet<Fish> Fish { get; set; }
@@ -34,7 +33,7 @@ namespace AquaLearn.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder builder)
         {
-            builder.UseSqlServer("data source = ajdotnet2019.database.windows.net; database = AquaLearnDB; user id = sqladmin;password = Florida2019;");
+            builder.UseSqlServer(Configuration.GetConnectionString("AquaLearnDb"));
         }
 
         protected override void OnModelCreating(ModelBuilder builder)

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using AquaLearn.Domain.Models;
 using AquaLearn.Data.Helpers;
 
-namespace AquaLearn.MVCClient.Models
+namespace AquaLearn.MVCClient.ViewModels
 {
     public static class UserViewModel
     {
