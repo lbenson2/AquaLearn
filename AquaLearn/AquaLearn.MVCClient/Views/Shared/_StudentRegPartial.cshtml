@@ -12,16 +12,10 @@
 
     <h2>Choose your instructors classroom: </h2>
 
-    List<ald.Classroom> Classrooms = new List<ald.Classroom>();
-
     foreach (var cla in avm.ClassroomViewModel.GetClassrooms())
     {
-        Classrooms.Add(cla);
-
-        @Html.HiddenFor(m => m.RoleId, 2)
         @Html.RadioButtonFor(m => m.ClassroomId, cla.ClassroomId)
         @Html.LabelFor(m => m.ClassroomId, cla.Name);
-
         <br />
     }
 

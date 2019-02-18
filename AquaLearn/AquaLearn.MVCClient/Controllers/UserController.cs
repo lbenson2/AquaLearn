@@ -11,20 +11,19 @@ using AquaLearn.MVCClient.Models;
 
 namespace AquaLearn.MVCClient.Controllers
 {
-   
     public class UserController : Controller
-    {      
+    {
         public IActionResult LoginTeacher()
         {
           var user = new User();
           return View(user);
         }
 
-        //public IActionResult LoginStudent()
-        //{
-        //  var user = new User();
-        //  return View(user);
-        //}
+        public IActionResult LoginStudent()
+        {
+          var user = new User();
+          return View(user);
+        }
 
         public IActionResult Validation(User us)
         {
@@ -42,7 +41,6 @@ namespace AquaLearn.MVCClient.Controllers
                 }
             }
 
-         // HttpContext.Session.SetString("Username", user.Username);
           return RedirectToAction("Index", "Home");
         }
 
@@ -100,8 +98,6 @@ namespace AquaLearn.MVCClient.Controllers
 
             return RedirectToAction("Register", "Home");
         }
-
-
 
         public IActionResult Logout()
         {

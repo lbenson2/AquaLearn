@@ -10,9 +10,5 @@ namespace AquaLearn.MVCClient.ViewModels
     public static class AdminViewModel
     {
      
-      //public static List<ald.User> GetStudentByClassroomId(int classid)
-      //  {
-      //      return UserHelper.GetStudentByClassroomId(classid);
-      //  }
     }
 }

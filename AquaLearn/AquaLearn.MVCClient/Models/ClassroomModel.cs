@@ -10,6 +10,5 @@ namespace AquaLearn.MVCClient.Models
         public int ClassroomId { get; set; }
 
         public string Name { get; set; }
-
     }
 }
