@@ -42,7 +42,7 @@ namespace AquaLearn.Data.Helpers
             }
 
         }
-    
+      
         public List<Trash> GetTrash()
         {
             if (_db != null)
