@@ -5,40 +5,26 @@
 
 <h1>Welcome @Model.Username !</h1>
 
-
-
 <div>
     <h2></h2>
-
-
     <div>
         <a onclick="adminPartial(this.id)" id="_ClassroomPartial">View Students In Your Class</a>
         <div id="placeholder">
+        </div>
     </div>
-</div>
 
     <div>
         <a onclick="adminPartial(this.id)" id="_StudentsQuizzesPartial">View Students Quiz Grades</a>
         <div id="placeholder"></div>
-
     </div>
-
-
-
 </div>
 
 <script>
-
     function adminPartial(partialViewToInsert) {
-
         $.ajax({
-
             url: '@Url.Action("AddPartialToView", "Admin")',
-
             data: { id: partialViewToInsert },
-
             type: "Post",
-
             success: function (data) {
                 $('#placeholder').html(data);
             }

@@ -25,7 +25,5 @@ namespace AquaLearn.MVCClient.Controllers
         {
             return PartialView(id);
         }
-
-
     }
 }

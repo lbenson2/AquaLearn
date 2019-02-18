@@ -1,6 +1,6 @@
 ﻿using AquaLearn.Data.Helpers;
 using System;
-using ald= AquaLearn.Domain.Models;
+using ald = AquaLearn.Domain.Models;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,7 +11,7 @@ namespace AquaLearn.MVCClient.ViewModels
     {
         public static List<ald.Classroom> GetClassrooms()
         {
-            return ClassroomHelper.GetClassroom();
+            return ClassroomHelper.GetClassrooms();
         }
 
         public static bool SetClassroom(ald.Classroom classname)

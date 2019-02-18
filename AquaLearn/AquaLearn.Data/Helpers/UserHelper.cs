@@ -13,15 +13,8 @@ namespace AquaLearn.Data.Helpers
     {
         private static AquaLearnIMDbContext _db = new AquaLearnIMDbContext();
         public static AquaLearnDbContext _dbb = new AquaLearnDbContext();
-
-        //private readonly MapperConfiguration userMap = new MapperConfiguration(mc =>
-        //{
-        //    mc.Mappers.Add(DomainHelper.nameMapper.GetMappers().FirstOrDefault());
-
-        //    mc.CreateMap<User, adm.User>()
-        //      .ForMember(m => m.UserId, u => u.MapFrom(s => s.UserId))
-        //      .ForAllOtherMembers(m => m.Ignore());
-        //});
+        private static AquaLearnDbContext _dbn { get; set; }
+        public AquaLearnIMDbContext _idb { get; set; }
 
         #region Get
         public static List<adm.User> GetUsers()
@@ -39,25 +32,6 @@ namespace AquaLearn.Data.Helpers
             return du;
         }
 
-        //public List<adm.User> GetUsers2()
-        //{
-        //    var userList = new List<adm.User>();
-        //    var mapper = userMap.CreateMapper();
-        //    var mapper2 = DomainHelper.nameMapper.CreateMapper();
-
-        //    foreach (var item in _db.User.ToList())
-        //    {
-        //        var u = mapper.Map<adm.User>(item);
-
-        //        // u.Username = mapper2.Map<adm.User.Username>(item);
-        //        userList.Add(u);
-        //    }
-
-        //    return userList;
-        //}
-
-        private static AquaLearnDbContext _dbn { get; set; }
-        public AquaLearnIMDbContext _idb { get; set; }
 
         public UserHelper()
         {
@@ -150,8 +124,8 @@ namespace AquaLearn.Data.Helpers
             }
             else
             {
-                _dbn.User.Add(user);
-                return _dbn.SaveChanges() > 0;
+                _dbb.User.Add(user);
+                return _dbb.SaveChanges() > 0;
             }
         }
       

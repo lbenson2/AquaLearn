@@ -6,8 +6,6 @@ using System.Text;
 using adm = AquaLearn.Domain.Models;
 using AquaLearn.Data.Helpers;
 
-
-
 namespace AquaLearn.Data.Helpers
 {
     public static class ClassroomHelper
@@ -15,19 +13,10 @@ namespace AquaLearn.Data.Helpers
         private static AquaLearnIMDbContext _db = new AquaLearnIMDbContext();
         public static AquaLearnDbContext _dbn = new AquaLearnDbContext();
 
-        public static List<adm.Classroom> GetClassroom()
+        public static List<adm.Classroom> GetClassrooms()
         {
-            var classr = new List<adm.Classroom>();
+            var classr = _dbn.Classroom.ToList();
 
-            foreach (var csr in _dbn.Classroom.ToList())
-            {
-                classr.Add(new adm.Classroom()
-                {
-                    ClassroomId = csr.ClassroomId,
-                    Name = csr.Name
-
-                });
-            }
             return classr;
         }
 
@@ -38,17 +27,17 @@ namespace AquaLearn.Data.Helpers
 
         public static bool SetClassroom(adm.Classroom classroom)
         {
-                var checkclass = GetClassroomByName(classroom.Name);
+            var checkclass = GetClassroomByName(classroom.Name);
 
-                if (checkclass != null && checkclass.Name == classroom.Name)
-                {
-                    return false;
-                }
-                else
-                {        
-                    _dbn.Classroom.Add(classroom);
-                    return _dbn.SaveChanges() > 0;
-                }
+            if (checkclass != null && checkclass.Name == classroom.Name)
+            {
+                return false;
+            }
+            else
+            {
+                _dbn.Classroom.Add(classroom);
+                return _dbn.SaveChanges() > 0;
             }
         }
+    }
 }
