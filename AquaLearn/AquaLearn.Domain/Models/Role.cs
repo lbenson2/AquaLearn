@@ -12,7 +12,6 @@ namespace AquaLearn.Domain.Models
 
         public Role()
         {
-            RoleId = 0;
             Name = "Student";
         }
     }

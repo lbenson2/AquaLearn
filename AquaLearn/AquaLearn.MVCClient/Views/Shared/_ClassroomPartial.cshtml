@@ -1,0 +1,30 @@
+﻿@using ald = AquaLearn.Domain.Models;
+@using avm = AquaLearn.MVCClient.ViewModels;
+@model AquaLearn.MVCClient.Models.UserModel;
+
+<div>
+    @using (@Html.BeginForm("GetStudents", "Admin"))
+    {
+        @Html.LabelFor(m => m.ClassroomId, "Insert Classroom ID")
+        @Html.TextBoxFor(m => m.ClassroomId)
+
+        <div class="">
+            <button type="submit" class="buttons" id="Findstudents">Search Students</button>
+        </div>
+
+
+    <h2>Students in Your Class</h2>
+
+        List<ald.User> Students = new List<ald.User>();
+
+        @*foreach (var stu in avm.AdminViewModel.GetStudentByClassroomId(int classid))
+        {
+            Students.Add(stu);
+
+
+            @Html.Display(m => m.User, stu.Username);
+            @Html.LabelFor(m => m.UserId, stu.Username);
+        }*@
+            <br />
+            }
+</div>

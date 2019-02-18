@@ -8,39 +8,40 @@
 
 
 <div>
-    <h2>
-         Your Classroom
-    </h2>
-    
+    <h2></h2>
 
- </div>
 
-        @*@foreach (var student in Model.Students)
-        {
-            if (student.ClassroomId == this.User)
-            {
-                var arr = @student.ClassroomId;
+    <div>
+        <a onclick="adminPartial(this.id)" id="_ClassroomPartial">View Students In Your Class</a>
+        <div id="placeholder">
+    </div>
+</div>
 
-                pizza.PizzaType.PizzaName = arr[0];
+    <div>
+        <a onclick="adminPartial(this.id)" id="_StudentsQuizzesPartial">View Students Quiz Grades</a>
+        <div id="placeholder"></div>
 
-                decimal mult = 0;
+    </div>
 
-                if (pizza.Size == "Basic")
-                {
-                    mult = 1;
-                }
-                else { mult = 1.75M; }
 
-            </div>
-        </div>*@
-
-<div>
-@using (Html.BeginForm("AddStudent", "user"))
-{
-    @Html.LabelFor(u => u.Username, "Add Student")<br />
-    @Html.TextBoxFor(u => u.Username)<br />
-
-    <button type="submit"> Add</button>
-}
 
 </div>
+
+<script>
+
+    function adminPartial(partialViewToInsert) {
+
+        $.ajax({
+
+            url: '@Url.Action("AddPartialToView", "Admin")',
+
+            data: { id: partialViewToInsert },
+
+            type: "Post",
+
+            success: function (data) {
+                $('#placeholder').html(data);
+            }
+        });
+    }
+</script>

@@ -1,19 +1,31 @@
 ﻿@using ald = AquaLearn.Domain.Models;
-@using av = AquaLearn.MVCClient.ViewModels;
-@model AquaLearn.MVCClient.Models.UserModel
+@using avm = AquaLearn.MVCClient.ViewModels;
+@model AquaLearn.MVCClient.Models.UserModel;
 
-@using (@Html.BeginForm("Register", "Home"))
+@using (@Html.BeginForm("RegisterStudent", "User"))
 {
-    <p>Choose your instructors classroom: </p>
+    @Html.LabelFor(m => m.Username, "Username")
+    @Html.TextBoxFor(m => m.Username)
+
+    @Html.LabelFor(m => m.Password, "Password")
+    @Html.PasswordFor(m => m.Password)
+
+    <h2>Choose your instructors classroom: </h2>
 
     List<ald.Classroom> Classrooms = new List<ald.Classroom>();
 
-    foreach (var cla in av.ClassroomViewModel.GetClassrooms())
+    foreach (var cla in avm.ClassroomViewModel.GetClassrooms())
     {
         Classrooms.Add(cla);
 
+        @Html.HiddenFor(m => m.RoleId, 2)
         @Html.RadioButtonFor(m => m.ClassroomId, cla.ClassroomId)
-        @Html.LabelFor(m => m.ClassroomId, cla.Name)
+        @Html.LabelFor(m => m.ClassroomId, cla.Name);
+
         <br />
     }
+
+    <div class="regbutton">
+        <button type="submit" class="buttons" id="regbutton">Register</button>
+    </div>
 }

@@ -9,10 +9,8 @@ namespace AquaLearn.Data
 {
     public class AquaLearnIMDbContext : DbContext
     {
-      
         public AquaLearnIMDbContext()
         {
-
         }
 
         public DbSet<Role> Role { get; set; }
@@ -46,6 +44,5 @@ namespace AquaLearn.Data
             builder.Entity<Quiz>().HasKey(e => e.QuizId);
 
         }
-
     }
 }

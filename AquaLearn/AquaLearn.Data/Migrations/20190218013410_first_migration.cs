@@ -8,6 +8,19 @@ namespace AquaLearn.Data.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "Classroom",
+                columns: table => new
+                {
+                    ClassroomId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Classroom", x => x.ClassroomId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Role",
                 columns: table => new
                 {
@@ -21,6 +34,22 @@ namespace AquaLearn.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "User",
+                columns: table => new
+                {
+                    UserId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    RoleId = table.Column<int>(nullable: false),
+                    Username = table.Column<string>(nullable: true),
+                    Password = table.Column<string>(nullable: true),
+                    ClassroomId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_User", x => x.UserId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "WaterType",
                 columns: table => new
                 {
@@ -31,6 +60,26 @@ namespace AquaLearn.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_WaterType", x => x.WaterTypeId);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Quiz",
+                columns: table => new
+                {
+                    QuizId = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
+                    Name = table.Column<string>(nullable: true),
+                    UserId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Quiz", x => x.QuizId);
+                    table.ForeignKey(
+                        name: "FK_Quiz_User_UserId",
+                        column: x => x.UserId,
+                        principalTable: "User",
+                        principalColumn: "UserId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -63,7 +112,7 @@ namespace AquaLearn.Data.Migrations
                     Schooling = table.Column<bool>(nullable: false),
                     WaterTypeId = table.Column<int>(nullable: true),
                     Description = table.Column<string>(nullable: true),
-                    ExhibitId = table.Column<int>(nullable: true)
+                    ExhibitId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -73,7 +122,7 @@ namespace AquaLearn.Data.Migrations
                         column: x => x.ExhibitId,
                         principalTable: "Exhibit",
                         principalColumn: "ExhibitId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Fish_WaterType_WaterTypeId",
                         column: x => x.WaterTypeId,
@@ -167,73 +216,6 @@ namespace AquaLearn.Data.Migrations
                         onDelete: ReferentialAction.Restrict);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "User",
-                columns: table => new
-                {
-                    UserId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    UserRoleRoleId = table.Column<int>(nullable: true),
-                    Username = table.Column<string>(nullable: true),
-                    Password = table.Column<string>(nullable: true),
-                    ClassroomId = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_User", x => x.UserId);
-                    table.ForeignKey(
-                        name: "FK_User_Role_UserRoleRoleId",
-                        column: x => x.UserRoleRoleId,
-                        principalTable: "Role",
-                        principalColumn: "RoleId",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Classroom",
-                columns: table => new
-                {
-                    ClassroomId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(nullable: true),
-                    TeacherUserId = table.Column<int>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Classroom", x => x.ClassroomId);
-                    table.ForeignKey(
-                        name: "FK_Classroom_User_TeacherUserId",
-                        column: x => x.TeacherUserId,
-                        principalTable: "User",
-                        principalColumn: "UserId",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Quiz",
-                columns: table => new
-                {
-                    QuizId = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn),
-                    Name = table.Column<string>(nullable: true),
-                    UserId = table.Column<int>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Quiz", x => x.QuizId);
-                    table.ForeignKey(
-                        name: "FK_Quiz_User_UserId",
-                        column: x => x.UserId,
-                        principalTable: "User",
-                        principalColumn: "UserId",
-                        onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Classroom_TeacherUserId",
-                table: "Classroom",
-                column: "TeacherUserId");
-
             migrationBuilder.CreateIndex(
                 name: "IX_Exhibit_WaterTypeId",
                 table: "Exhibit",
@@ -283,31 +265,12 @@ namespace AquaLearn.Data.Migrations
                 name: "IX_Trash_WaterTypeId",
                 table: "Trash",
                 column: "WaterTypeId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_User_ClassroomId",
-                table: "User",
-                column: "ClassroomId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_User_UserRoleRoleId",
-                table: "User",
-                column: "UserRoleRoleId");
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_User_Classroom_ClassroomId",
-                table: "User",
-                column: "ClassroomId",
-                principalTable: "Classroom",
-                principalColumn: "ClassroomId",
-                onDelete: ReferentialAction.Cascade);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_Classroom_User_TeacherUserId",
-                table: "Classroom");
+            migrationBuilder.DropTable(
+                name: "Classroom");
 
             migrationBuilder.DropTable(
                 name: "Fish");
@@ -322,22 +285,19 @@ namespace AquaLearn.Data.Migrations
                 name: "Quiz");
 
             migrationBuilder.DropTable(
+                name: "Role");
+
+            migrationBuilder.DropTable(
                 name: "Trash");
+
+            migrationBuilder.DropTable(
+                name: "User");
 
             migrationBuilder.DropTable(
                 name: "Exhibit");
 
             migrationBuilder.DropTable(
                 name: "WaterType");
-
-            migrationBuilder.DropTable(
-                name: "User");
-
-            migrationBuilder.DropTable(
-                name: "Classroom");
-
-            migrationBuilder.DropTable(
-                name: "Role");
         }
     }
 }

@@ -27,11 +27,7 @@ namespace AquaLearn.Data.Migrations
 
                     b.Property<string>("Name");
 
-                    b.Property<int?>("TeacherUserId");
-
                     b.HasKey("ClassroomId");
-
-                    b.HasIndex("TeacherUserId");
 
                     b.ToTable("Classroom");
                 });
@@ -61,7 +57,7 @@ namespace AquaLearn.Data.Migrations
 
                     b.Property<string>("Description");
 
-                    b.Property<int?>("ExhibitId");
+                    b.Property<int>("ExhibitId");
 
                     b.Property<string>("Name");
 
@@ -132,7 +128,7 @@ namespace AquaLearn.Data.Migrations
 
                     b.Property<string>("Name");
 
-                    b.Property<int?>("UserId");
+                    b.Property<int>("UserId");
 
                     b.HasKey("QuizId");
 
@@ -189,15 +185,11 @@ namespace AquaLearn.Data.Migrations
 
                     b.Property<string>("Password");
 
-                    b.Property<int?>("UserRoleRoleId");
+                    b.Property<int>("RoleId");
 
                     b.Property<string>("Username");
 
                     b.HasKey("UserId");
-
-                    b.HasIndex("ClassroomId");
-
-                    b.HasIndex("UserRoleRoleId");
 
                     b.ToTable("User");
                 });
@@ -215,13 +207,6 @@ namespace AquaLearn.Data.Migrations
                     b.ToTable("WaterType");
                 });
 
-            modelBuilder.Entity("AquaLearn.Domain.Models.Classroom", b =>
-                {
-                    b.HasOne("AquaLearn.Domain.Models.User", "Teacher")
-                        .WithMany()
-                        .HasForeignKey("TeacherUserId");
-                });
-
             modelBuilder.Entity("AquaLearn.Domain.Models.Exhibit", b =>
                 {
                     b.HasOne("AquaLearn.Domain.Models.WaterType", "WaterType")
@@ -233,7 +218,8 @@ namespace AquaLearn.Data.Migrations
                 {
                     b.HasOne("AquaLearn.Domain.Models.Exhibit")
                         .WithMany("Fishes")
-                        .HasForeignKey("ExhibitId");
+                        .HasForeignKey("ExhibitId")
+                        .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("AquaLearn.Domain.Models.WaterType", "WaterType")
                         .WithMany()
@@ -266,7 +252,8 @@ namespace AquaLearn.Data.Migrations
                 {
                     b.HasOne("AquaLearn.Domain.Models.User")
                         .WithMany("Quizzes")
-                        .HasForeignKey("UserId");
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("AquaLearn.Domain.Models.Trash", b =>
@@ -278,18 +265,6 @@ namespace AquaLearn.Data.Migrations
                     b.HasOne("AquaLearn.Domain.Models.WaterType", "WaterType")
                         .WithMany()
                         .HasForeignKey("WaterTypeId");
-                });
-
-            modelBuilder.Entity("AquaLearn.Domain.Models.User", b =>
-                {
-                    b.HasOne("AquaLearn.Domain.Models.Classroom")
-                        .WithMany("Students")
-                        .HasForeignKey("ClassroomId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("AquaLearn.Domain.Models.Role", "UserRole")
-                        .WithMany()
-                        .HasForeignKey("UserRoleRoleId");
                 });
 #pragma warning restore 612, 618
         }

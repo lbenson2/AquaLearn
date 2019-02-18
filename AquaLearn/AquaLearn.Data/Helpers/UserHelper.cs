@@ -150,8 +150,8 @@ namespace AquaLearn.Data.Helpers
             }
             else
             {
-                _db.User.Add(user);
-                return _db.SaveChanges() > 0;
+                _dbn.User.Add(user);
+                return _dbn.SaveChanges() > 0;
             }
         }
       

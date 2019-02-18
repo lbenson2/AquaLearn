@@ -15,7 +15,7 @@ namespace AquaLearn.Data
         }
 
         public AquaLearnDbContext()
-        { 
+        {
         }
 
 
@@ -34,7 +34,7 @@ namespace AquaLearn.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder builder)
         {
-            builder.UseSqlServer(Configuration.GetConnectionString("AquaLearnDb"));
+            builder.UseSqlServer("data source = ajdotnet2019.database.windows.net; database = AquaLearnDB; user id = sqladmin;password = Florida2019;");
         }
 
         protected override void OnModelCreating(ModelBuilder builder)
@@ -49,8 +49,6 @@ namespace AquaLearn.Data
             builder.Entity<Role>().HasKey(e => e.RoleId);
             builder.Entity<Classroom>().HasKey(e => e.ClassroomId);
             builder.Entity<Quiz>().HasKey(e => e.QuizId);
-
         }
-
     }
 }
