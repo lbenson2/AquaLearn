@@ -69,7 +69,7 @@ namespace AquaLearn.Tests.MvcTests
             //Assert.IsType<string>(sut.Name);
             //Assert.IsType<int>(sut.UserId);
             Assert.IsType<bool>(sutr.ShowRequestId);
-            //Assert.IsType<List<Quiz>>(sut.Quizzes);
+            
         }
 
     }
