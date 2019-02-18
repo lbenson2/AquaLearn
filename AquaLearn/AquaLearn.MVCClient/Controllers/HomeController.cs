@@ -13,17 +13,17 @@ namespace AquaLearn.MVCClient.Controllers
     {
         public IActionResult Index()
         {
-            return View();
+            return View("Index");
         }
 
         public IActionResult Privacy()
         {
-            return View();
+            return View("Privacy");
         }
 
         public IActionResult Quiz()
         {
-            return View();
+            return View("Quiz");
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
@@ -42,7 +42,7 @@ namespace AquaLearn.MVCClient.Controllers
           return View("Register");
         }
 
-    [HttpPost]
+        [HttpPost]
         public PartialViewResult AddPartialToView(string id)
         {
           return PartialView(id);

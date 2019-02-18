@@ -11,10 +11,6 @@ namespace AquaLearn.Tests.DataTests
 {
     public class HelperTest
     {
-
-
-        //private readonly Fish sut;
-
         public RoleHelper Sutr { get; set; }
         public Role role { get; set; }
 
@@ -23,8 +19,7 @@ namespace AquaLearn.Tests.DataTests
 
         public FishHelper Sutf { get; set; }
         public Fish fish { get; set; }
-
-
+    
         public PlantHelper Sutp { get; set; }
         public Plant plant { get; set; }
 
@@ -37,6 +32,9 @@ namespace AquaLearn.Tests.DataTests
         public UserHelper Sutu { get; set; }
         public User user { get; set; }
 
+        public QuizHelper Sutq { get; set; }
+        public Quiz quiz { get; set; }
+
         public HelperTest()
         {
             Sutr = new RoleHelper(new AquaLearnIMDbContext());
@@ -46,14 +44,11 @@ namespace AquaLearn.Tests.DataTests
             Suth = new HazardHelper(new AquaLearnIMDbContext());
             Sute = new ExhibitHelper(new AquaLearnIMDbContext());
             Sutu = new UserHelper(new AquaLearnIMDbContext());
-
-
-
+            Sutq = new QuizHelper(new AquaLearnIMDbContext());
+      
             role = new Role()
             {
-
                 Name = "Teacher"
-
             };
 
             trash = new Trash()
@@ -61,8 +56,6 @@ namespace AquaLearn.Tests.DataTests
                 Name = "Plastic Bottles",
                 Schooling = true,
                 Description = "Americans throw away 35 billion plastic water bottles every year.Making the ocean inhabitable for sea creatures."
-
-
             };
 
             fish = new Fish()
@@ -75,84 +68,56 @@ namespace AquaLearn.Tests.DataTests
                     WaterTypeId = 4,
                     Name = "Ocean Salt Water"
                 }
-
             };
-
-
+      
             plant = new Plant()
             {
                 Name = "Algae",
                 Description = "Algae are very diverse and found almost everywhere on the planet. They play an important role in many ecosystems, including providing the foundation for the aquatic food chains supporting all fisheries in the oceans and inland, as well as producing about 70 percent of all the air we breathe."
-
-
             };
 
             hazard = new Hazard()
             {
                 Name = "Plastic",
                 Description = "Pollution"
-
             };
 
             exhibit = new Exhibit()
             {
-                //ExhibitId=22,
                 Name = "Deep Sea",
-
             };
 
             user = new User()
             {
-                //UserId = 22,
                 Username = "Andy",
                 Password = "Andy",
                 ClassroomId = 22
-
             };
 
-
-
-
-
+            quiz = new Quiz()
+            {
+               Name="Quiz"
+            };
 
             Sutr.SetRole(role);
             Sutt.SetTrash(trash);
-           // Sutf.SetFish(fish);
-
-           // Sutp.SetPlant(plant);
-           
-           
-            
-
         }
-
-
-
+    
         [Fact]
         public void Test_GetaRoles()
         {
-            //var db = Sut._idb;
-            //db.Role.Add(Role);
-            //db.SaveChanges();
             var actual = Sutr.GetRoles();
-
 
             Assert.NotNull(actual);
             Assert.True(actual.Count > 0);
             Assert.NotNull(actual[0].Name);
             Assert.True(actual[0].RoleId == 1);
             Assert.True(actual[0].Name == "Teacher");
-           
         }
-
-
+    
         [Fact]
         public void Test_GetbTrash()
         {
-           
-            //var db = Sutt._idb;
-            //db.Trash.Add(trash);
-            //db.SaveChanges();
             var actual = Sutt.GetTrash();
 
             Assert.NotNull(actual);
@@ -161,8 +126,6 @@ namespace AquaLearn.Tests.DataTests
             Assert.True(actual[0].Name == "Plastic Bottles");
             Assert.True(actual[0].Schooling == true);
             Assert.IsType<string>(actual[0].Description);
-            //Assert.True(actual[0].Description == "Americans throw away 35 billion plastic water bottles every year. Making the ocean inhabitable for sea creatures.");
-
         }
 
 
@@ -170,46 +133,31 @@ namespace AquaLearn.Tests.DataTests
         public void Test_GetcFishes()
         {
             Sutf.SetFish(fish);
-            //var db = Sut._idb;
-            //db.Fish.Add(Fish);
-            //db.SaveChanges();
             var actual = Sutf.GetFishes();
 
             Assert.NotNull(actual[0]);
             Assert.True(actual.Count > 0);
             Assert.True(actual[0].FishId == 1);
-            //Assert.True(actual[0].Name == "Shark");
             Assert.True(actual[0].Schooling == false);
             Assert.IsType<string>(actual[0].Description);
             Assert.True(actual[0].WaterType.WaterTypeId == 4);
             Assert.True(actual[0].WaterType.Name == "Ocean Salt Water");
-            // Assert.True(actual[0].Description == "Sharks are the most threatening predators in the ocean.");
-
         }
 
         [Fact]
         public void Test_GetdPlants()
         {
             Sutp.SetPlant(plant);
-            //var db = Sut._idb;
-            //db.Plant.Add(Plant);
-            //db.SaveChanges();
             var actual = Sutp.GetPlants();
 
             Assert.NotNull(actual);
             Assert.True(actual.Count > 0);
             Assert.True(actual[0].PlantId == 1);
-            //Assert.IsType<string>(actual[0].Description);
-            //Assert.True(actual[0].Description == "Algae are very diverse and found almost everywhere on the planet. They play an important role in many ecosystems, including providing the foundation for the aquatic food chains supporting all fisheries in the oceans and inland, as well as producing about 70 percent of all the air we breathe.");
-            //Assert.True(actual[0].Name == "Algae");
         }
 
         [Fact]
         public void Test_GeteHazards()
         {
-            //var db = Sut._idb;
-            //db.Hazard.Add(Hazard);
-            //db.SaveChanges();
             Suth.SetHazard(hazard);
             var actual = Suth.GetHazards();
 
@@ -223,9 +171,6 @@ namespace AquaLearn.Tests.DataTests
         [Fact]
         public void Test_GetfExhibits()
         {
-            //var db = Sut._idb;
-            //db.Exhibit.Add(Exhibit);
-            //db.SaveChanges();
             Sute.SetExhibit(exhibit);
 
             var actual = Sute.GetExhibits();
@@ -234,42 +179,38 @@ namespace AquaLearn.Tests.DataTests
             Assert.True(actual.Count > 0);
             Assert.True(actual[0].ExhibitId == 1);
             Assert.True(actual[0].Name == "Deep Sea");
-
-
         }
 
         [Fact]
-        public void Test_GetUsers()
+        public void Test_GetgUsers()
         {
             var db = Sutu._idb;
             db.User.Add(user);
             db.SaveChanges();
+
             var actual = Sutu.GetUserTest();
 
             Assert.NotNull(actual);
             Assert.True(actual.Count > 0);
             Assert.True(actual[0].UserId == 1);
-            //Assert.IsType<string>(actual[0].Description);
-            //Assert.True(actual[0].Description == "Algae are very diverse and found almost everywhere on the planet. They play an important role in many ecosystems, including providing the foundation for the aquatic food chains supporting all fisheries in the oceans and inland, as well as producing about 70 percent of all the air we breathe.");
             Assert.True(actual[0].Username == "Andy");
             Assert.True(actual[0].Password == "Andy");
             Assert.True(actual[0].ClassroomId == 22);
-
-            //Assert.NotNull(actual.Username == "Spkr");
         }
 
+        [Fact]
+        public void Test_GethQuizzes()
+        {
+            var db = Sutq._idb;
+            db.Quiz.Add(quiz);
+            db.SaveChanges();
 
+            var actual = Sutq.GetQuizTest();
 
-
-
-
-
-
-
-
-
-
-
-
+            Assert.NotNull(actual);
+            Assert.True(actual.Count > 0);
+            Assert.True(actual[0].Name == "Quiz");
+            Assert.True(Sutq.GetScoresByStudent(1).Count >= 0);
+        }
     }
 }

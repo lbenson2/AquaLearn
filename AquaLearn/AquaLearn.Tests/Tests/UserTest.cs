@@ -14,6 +14,10 @@ namespace AquaLearn.Tests.Tests
         {
             sut = new User()
             {
+                //UserId = 22,
+                Username = "Andy",
+                Password = "Andy",
+                ClassroomId = 22
 
             };
 
@@ -22,7 +26,7 @@ namespace AquaLearn.Tests.Tests
         [Fact]
         public void Test_UserProperties()
         {
-            //Assert.IsType<Role>(sut.UserRole);
+            Assert.IsType<int>(sut.RoleId);
             Assert.IsType<string>(sut.Username);
             Assert.IsType<string>(sut.Password);
             

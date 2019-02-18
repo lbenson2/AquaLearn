@@ -13,28 +13,16 @@ namespace AquaLearn.Data.Helpers
     {
         private static AquaLearnDbContext _db = new AquaLearnDbContext();
 
-        public static List<adm.Fish> GettheFishes()
-        {
-            var df = new List<adm.Fish>();
-
-            foreach (var item in _db.Fish.ToList())
-            {
-                df.Add(new adm.Fish()
-                {
-                    Name = item.Name
-
-                });
-            }
-            return df;
-        }
+        public AquaLearnDbContext _dbn { get; set; }
+        public AquaLearnIMDbContext _idb { get; set; }
+      
 
         public List<adm.Fish> GettheFishes2()
         {
             return _dbn.Fish.Include(x => x.WaterType).ToList();
         }
 
-        public AquaLearnDbContext _dbn { get; set; }
-        public AquaLearnIMDbContext _idb { get; set; }
+
 
         public FishHelper()
         {

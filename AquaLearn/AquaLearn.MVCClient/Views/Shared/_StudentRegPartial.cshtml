@@ -2,8 +2,6 @@
 @using avm = AquaLearn.MVCClient.ViewModels;
 @model AquaLearn.MVCClient.Models.UserModel;
 
-
-
 @using (@Html.BeginForm("RegisterStudent", "User"))
 {
     @Html.LabelFor(m => m.Username, "Username")
@@ -30,5 +28,4 @@
     <div class="regbutton">
         <button type="submit" class="buttons" id="regbutton">Register</button>
     </div>
-
 }

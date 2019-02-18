@@ -14,6 +14,11 @@ namespace AquaLearn.Data.Helpers
         public AquaLearnDbContext _db { get; set; }
         public AquaLearnIMDbContext _idb { get; set; }
 
+        public List<Plant> GetthePlants2()
+        {
+            return _db.Plant.Include(x => x.WaterType).ToList();
+        }
+
         public PlantHelper()
         {
             _db = new AquaLearnDbContext();

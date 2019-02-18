@@ -13,6 +13,12 @@ namespace AquaLearn.Data.Helpers
         public AquaLearnDbContext _db { get; set; }
         public AquaLearnIMDbContext _idb { get; set; }
 
+
+        public List<Trash> GettheTrash2()
+        {
+            return _db.Trash.Include(x => x.WaterType).ToList();
+        }
+
         public TrashHelper()
         {
             _db = new AquaLearnDbContext();

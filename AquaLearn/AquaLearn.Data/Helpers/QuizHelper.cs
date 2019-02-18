@@ -14,35 +14,56 @@ namespace AquaLearn.Data.Helpers
         private static AquaLearnIMDbContext _db = new AquaLearnIMDbContext();
         public static AquaLearnDbContext _dbn = new AquaLearnDbContext();
 
-        private readonly MapperConfiguration quizMap = new MapperConfiguration(mc =>
-        {
-            mc.Mappers.Add(DomainHelper.nameMapper.GetMappers().FirstOrDefault());
+        public AquaLearnDbContext _dbb { get; set; }
+        public AquaLearnIMDbContext _idb { get; set; }
 
-            mc.CreateMap<Quiz, adm.Quiz>()
-              .ForMember(m => m.QuizId, u => u.MapFrom(s => s.QuizId))
-              .ForAllOtherMembers(m => m.Ignore());
-        });
+        public QuizHelper()
+        {
+            _dbb = new AquaLearnDbContext();
+        }
+
+        public QuizHelper(AquaLearnIMDbContext idb)
+        {
+            _idb = idb;
+        }
+
+        public List<adm.Quiz> GetQuizTest()
+        {
+            if (_dbb != null)
+            {
+                var z = _dbb.Quiz.ToList();
+                return z;
+            }
+            else
+            {
+                var y = _idb.Quiz.ToList();
+                return y;
+            }
+        }
+
+
+        
 
         #region Get
-        public List<adm.Quiz> GetQuizzes()
-        {
-            var du = new List<adm.Quiz>();
+        //public List<adm.Quiz> GetQuizzes()
+        //{
+        //    var du = new List<adm.Quiz>();
 
-            foreach (var item in _db.Quiz.ToList())
-            {
-                du.Add(new adm.Quiz()
-                {
-                    UserId = item.UserId,
-                    QuizId = item.QuizId,
-                    Name = item.Name
-                });
-            }
-            return du;
-        }
+        //    foreach (var item in _db.Quiz.ToList())
+        //    {
+        //        du.Add(new adm.Quiz()
+        //        {
+        //            UserId = item.UserId,
+        //            QuizId = item.QuizId,
+        //            Name = item.Name
+        //        });
+        //    }
+        //    return du;
+        //}
 
         public List<adm.Quiz> GetScoresByStudent(int userId)
         {
-            var quizzes = GetQuizzes();
+            var quizzes = GetQuizTest();
             var quizzesForStudent = new List<adm.Quiz>();
             
             foreach(var quiz in quizzes)
@@ -59,11 +80,12 @@ namespace AquaLearn.Data.Helpers
         #endregion
 
         #region Set
-        public static bool SetQuiz(adm.Quiz quiz)
+        public bool SetQuiz(adm.Quiz quiz)
         {
             _db.Quiz.Add(quiz);
             return _db.SaveChanges() == 1;
         }
         #endregion
-    }
+
+  }
 }

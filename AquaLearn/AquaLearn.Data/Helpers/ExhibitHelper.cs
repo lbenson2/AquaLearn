@@ -18,6 +18,7 @@ namespace AquaLearn.Data.Helpers
             _db = new AquaLearnDbContext();
         }
 
+
         public ExhibitHelper(AquaLearnIMDbContext idb)
         {
             _idb = idb;
@@ -36,6 +37,7 @@ namespace AquaLearn.Data.Helpers
                 _idb.Exhibit.Add(exhibit);
                 return _idb.SaveChanges();
             }
+            
 
         }
 
@@ -47,14 +49,13 @@ namespace AquaLearn.Data.Helpers
             {
                 var z = _db.Exhibit.ToList();
                 return z;
-
             }
             else
             {
                 var y = _idb.Exhibit.ToList();
                 return y;
             }
-
+            
         }
     }
 }
