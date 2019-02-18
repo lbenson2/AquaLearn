@@ -28,7 +28,7 @@
             </div>
 
             <div class="col" style="margin-right:0; margin-left:1em;">
-                <canvas id="myCanvas" width="480" height="480" style="border:1px solid #000000;"></canvas>
+                <canvas id="myCanvas" width="300" height="250" style="border:1px solid #000000;"></canvas>
             </div>
         </div>
     </div>
@@ -91,7 +91,6 @@
 
 @section Scripts {
     <script type="text/javascript">
-        // INITIALIZE
         // INITIALIZE
         var myGameArea = document.getElementById("myCanvas");
         var ctx = myGameArea.getContext('2d');
@@ -256,7 +255,7 @@
                 {
                     question: "Who is that Mammal?",
                     answers: {
-                        a: "Blue Whale",
+                        a: "Whale",
                         b: "Seal",
                         c: "Walrus",
                         d: "Dolphin"
@@ -266,7 +265,7 @@
                 {
                     question: "Who is that Mammal?",
                     answers: {
-                        a: "Blue Whale",
+                        a: "Whale",
                         b: "Walruse",
                         c: "Seal",
                         d: "Dolphin"
@@ -276,7 +275,7 @@
                 {
                     question: "Who is that Mammal?",
                     answers: {
-                        a: "Blue Whale",
+                        a: "Whale",
                         b: "Seal",
                         c: "Walrus",
                         d: "Dolphin"
@@ -286,7 +285,7 @@
                 {
                     question: "Who is that Mammal?",
                     answers: {
-                        a: "Blue Whale",
+                        a: "Whale",
                         b: "Seal",
                         c: "Walrus",
                         d: "Dolphin"
@@ -395,13 +394,19 @@
             }
 
             function showSlide(n) {
+                canvasWidth = 300;
+                canvasHeight = 250;
                 exhibitType = answerKey[n][2];
                 var currFish = getFishSprite(answerKey[n][0], answerKey[n][1]);
 
                 clear();
                 drawBackground();
-                drawImage(fishSpriteSheet, currFish[1], currFish[2], currFish[4], currFish[5], 0, 0, currFish[4], currFish[5]);
-
+                if (currFish[0] != "Eel") {
+                    drawImage(fishSpriteSheet, currFish[1], currFish[2], currFish[4], currFish[5], canvasWidth / 2 - currFish[4] / 2, canvasHeight / 2 - currFish[5] / 2, currFish[4], currFish[5]);
+                }
+                else {
+                    drawImage(fishSpriteSheet, currFish[1], currFish[2], currFish[4], currFish[5], canvasWidth / 2 - currFish[4] / 2, canvasHeight - (currFish[5] + 20), currFish[4], currFish[5]);
+                }
                 slides[currentSlide].classList.remove("active-slide");
                 slides[n].classList.add("active-slide");
                 currentSlide = n;
