@@ -1,87 +1,112 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Http;
+@using Newtonsoft.Json;
+@using adm = AquaLearn.Domain.Models;
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HCA
+@{
+  bool Valid = (HCA.HttpContext.Session.Keys.Contains("Username"));
+}
+
+<!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - AquaLearn.MVCClient</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>@ViewData["Title"] - AquaLearn.MVCClient</title>
 
-    <environment include="Development">
-        <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
-    </environment>
-    <environment exclude="Development">
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css"
-              asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
-              asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute"
-              crossorigin="anonymous"
-              integrity="sha256-eSi1q2PG6J7g7ib17yAaWMcrr5GrtohYChqibrV7PBE=" />
-    </environment>
-    <link rel="stylesheet" href="~/css/site.css" />
-    <style>
-      @@import url('https://fonts.googleapis.com/css?family=Fredoka+One');
-    </style>
+  <environment include="Development">
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
+  </environment>
+  <environment exclude="Development">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.min.css"
+          asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
+          asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute"
+          crossorigin="anonymous"
+          integrity="sha256-eSi1q2PG6J7g7ib17yAaWMcrr5GrtohYChqibrV7PBE=" />
+  </environment>
+  <link rel="stylesheet" href="~/css/site.css" />
+  <style>
+    @@import url('https://fonts.googleapis.com/css?family=Fredoka+One');
+  </style>
 </head>
 
 <body style="background-image:linear-gradient(#00ffcc,#000033);">
-    <header style="width:100%; background: rgba(255, 255, 255, 0.3); margin-bottom:0;">
-        <nav class="navbar navbar-expand-lg navbar-toggleable-sm navbar-light border-bottom box-shadow mb-3 flex-column flex-md-row" style="margin: 0em;">
-            <div class="container" style="font-size: 2em; text-shadow: 0.025em 0.025em white;">
-                <a class="navbar-brand d-sm-inline-flex" asp-area="" asp-controller="Home" asp-action="Index" style="font-size: 1.5em; font-family:'Fredoka One', cursive;">AquaLearn</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="collapse navbar-collapse" id="navbarNav">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li>
-                            <a class="nav-link nav-item text-dark" asp-area="" asp-controller="Home" asp-action="Quiz">Quiz</a>
-                        </li>
-                        <li>
-                            <a class="nav-link nav-item text-dark" asp-area="" asp-controller="Exhibit" asp-action="Index">Exhibit</a>
-                        </li>
-                    </ul>
-                    <ul class="navbar-nav flex-grow-0">
-                        <li>
-                            <a class="nav-link nav-item text-dark" asp-area="" asp-controller="Home" asp-action="Register">Register</a>
-                        </li>
-                        <li>
-                            <a class="nav-link nav-item text-dark" asp-area="" asp-controller="Home" asp-action="Login">Login</a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-    </header>
-    <div style="background: rgba(255, 255, 255, 0.3); margin-top:0; padding-top:25px; padding-bottom:20px;" class="container">
-        <main role="main">
-            @RenderBody()
-        </main>
-    </div>
+  <header style="width:100%; background: rgba(255, 255, 255, 0.3); margin-bottom:0;">
+    <nav class="navbar navbar-expand-lg navbar-toggleable-sm navbar-light border-bottom box-shadow mb-3 flex-column flex-md-row" style="margin: 0em;">
+      <div class="container" style="font-size: 2em; text-shadow: 0.025em 0.025em white;">
+        <a class="navbar-brand d-sm-inline-flex" asp-area="" asp-controller="Home" asp-action="Index" style="font-size: 1.5em; font-family:'Fredoka One', cursive;">AquaLearn</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav flex-grow-1">
+            @if (Valid)
+            {
+              <li>
+                <a class="nav-link nav-item text-dark" asp-area="" asp-controller="Home" asp-action="Quiz">Quiz</a>
+              </li>
+              <li>
+                <a class="nav-link nav-item text-dark" asp-area="" asp-controller="Exhibit" asp-action="Index">Exhibit</a>
+              </li>
+            }
+          </ul>
+          <ul class="navbar-nav flex-grow-0">
+            @if (Valid)
+            {
+              var User = JsonConvert.DeserializeObject<adm.User>(HCA.HttpContext.Session.GetString("Username"));
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2019 - AquaLearn.MVCClient - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+              <li>
+                <a class="nav-link nav-item text-dark" asp-area="">Welcome @User.Username</a>
+              </li>
+              <li>
+                <a class="nav-link nav-item text-dark" asp-area="" asp-controller="User" asp-action="Logout">Logout</a>
+              </li>
+            }
+            else
+            {
+              <li>
+                <a class="nav-link nav-item text-dark" asp-area="" asp-controller="Home" asp-action="Register">Register</a>
+              </li>
+              <li>
+                <a class="nav-link nav-item text-dark" asp-area="" asp-controller="Home" asp-action="Login">Login</a>
+              </li>
+            }
+          </ul>
         </div>
-    </footer>
-    <environment include="Development">
-        <script src="~/lib/jquery/dist/jquery.js"></script>
-        <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
-    </environment>
-    <environment exclude="Development">
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"
-                asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
-                asp-fallback-test="window.jQuery"
-                crossorigin="anonymous"
-                integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=">
-        </script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.bundle.min.js"
-                asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"
-                asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
-                crossorigin="anonymous"
-                integrity="sha256-E/V4cWE4qvAeO5MOhjtGtqDzPndRO1LBk8lJ/PR7CA4=">
-        </script>
-    </environment>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+      </div>
+    </nav>
+  </header>
+  <div style="background: rgba(255, 255, 255, 0.3); margin-top:0; padding-top:25px; padding-bottom:20px;" class="container">
+    <main role="main">
+      @RenderBody()
+    </main>
+  </div>
 
-    @RenderSection("Scripts", required: false)
+  <footer class="border-top footer text-muted">
+    <div class="container">
+      &copy; 2019 - AquaLearn.MVCClient - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+    </div>
+  </footer>
+  <environment include="Development">
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.js"></script>
+  </environment>
+  <environment exclude="Development">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"
+            asp-fallback-src="~/lib/jquery/dist/jquery.min.js"
+            asp-fallback-test="window.jQuery"
+            crossorigin="anonymous"
+            integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/js/bootstrap.bundle.min.js"
+            asp-fallback-src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"
+            asp-fallback-test="window.jQuery && window.jQuery.fn && window.jQuery.fn.modal"
+            crossorigin="anonymous"
+            integrity="sha256-E/V4cWE4qvAeO5MOhjtGtqDzPndRO1LBk8lJ/PR7CA4=">
+    </script>
+  </environment>
+  <script src="~/js/site.js" asp-append-version="true"></script>
+
+  @RenderSection("Scripts", required: false)
 </body>
 </html>

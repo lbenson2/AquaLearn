@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Http;
 using mo = AquaLearn.MVCClient.Models;
 using AquaLearn.MVCClient.ViewModels;
 using AquaLearn.MVCClient.Models;
+using Newtonsoft.Json;
 
 namespace AquaLearn.MVCClient.Controllers
 {
@@ -40,8 +41,8 @@ namespace AquaLearn.MVCClient.Controllers
                     return RedirectToAction("Login", "Home");
                 }
             }
-
-          return RedirectToAction("Index", "Home");
+            HttpContext.Session.SetString("Username", JsonConvert.SerializeObject(user));
+            return RedirectToAction("Index", "Home");
         }
 
         public IActionResult RegisterStudent(User us)
