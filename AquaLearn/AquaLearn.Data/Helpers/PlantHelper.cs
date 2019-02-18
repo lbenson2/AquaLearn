@@ -34,7 +34,6 @@ namespace AquaLearn.Data.Helpers
                 _idb.Plant.Add(plant);
                 return _idb.SaveChanges();
             }
-
         }
     
         public List<Plant> GetPlants()
@@ -43,7 +42,6 @@ namespace AquaLearn.Data.Helpers
             {
                 var z = _db.Plant.ToList();
                 return z;
-
             }
             else
             {
