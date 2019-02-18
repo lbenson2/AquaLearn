@@ -56,7 +56,7 @@ namespace AquaLearn.Data.Helpers
         //    return userList;
         //}
 
-        public AquaLearnDbContext _dbn { get; set; }
+        private static AquaLearnDbContext _dbn { get; set; }
         public AquaLearnIMDbContext _idb { get; set; }
 
         public UserHelper()
