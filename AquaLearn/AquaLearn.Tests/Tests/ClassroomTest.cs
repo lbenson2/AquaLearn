@@ -13,7 +13,7 @@ namespace AquaLearn.Tests.Tests
         {
             sut = new Classroom()
             {
-                Students = new List<User>(),
+              Name = "class name"
             };
         }
 
