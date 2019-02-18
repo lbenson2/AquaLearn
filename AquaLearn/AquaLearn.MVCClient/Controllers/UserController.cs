@@ -69,8 +69,7 @@ namespace AquaLearn.MVCClient.Controllers
 
             var classroom = new Classroom()
             {
-                Name = us.Name,
-             
+                Name = us.Name
             };
 
             if (ClassroomViewModel.SetClassroom(classroom))

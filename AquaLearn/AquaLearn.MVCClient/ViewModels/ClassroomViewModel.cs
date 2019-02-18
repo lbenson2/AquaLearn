@@ -7,13 +7,11 @@ using System.Threading.Tasks;
 
 namespace AquaLearn.MVCClient.ViewModels
 {
-    public class ClassroomViewModel
+    public static class ClassroomViewModel
     {
-
         public static List<ald.Classroom> GetClassrooms()
         {
             return ClassroomHelper.GetClassroom();
-
         }
 
         public static bool SetClassroom(ald.Classroom classname)

@@ -10,7 +10,7 @@ using AquaLearn.Data.Helpers;
 
 namespace AquaLearn.Data.Helpers
 {
-    public class ClassroomHelper
+    public static class ClassroomHelper
     {
         private static AquaLearnIMDbContext _db = new AquaLearnIMDbContext();
         public static AquaLearnDbContext _dbn = new AquaLearnDbContext();
@@ -36,18 +36,18 @@ namespace AquaLearn.Data.Helpers
             return _dbn.Classroom.FirstOrDefault(m => m.Name == clname);
         }
 
-        public static bool SetClassroom(adm.Classroom classn)
+        public static bool SetClassroom(adm.Classroom classroom)
         {
-                var checkclass = GetClassroomByName(classn.Name);
+                var checkclass = GetClassroomByName(classroom.Name);
 
-                if (checkclass != null && checkclass.Name == classn.Name)
+                if (checkclass != null && checkclass.Name == classroom.Name)
                 {
                     return false;
                 }
                 else
                 {        
-                    _dbn.Classroom.Add(classn);
-                    return _db.SaveChanges() > 0;
+                    _dbn.Classroom.Add(classroom);
+                    return _dbn.SaveChanges() > 0;
                 }
             }
         }
