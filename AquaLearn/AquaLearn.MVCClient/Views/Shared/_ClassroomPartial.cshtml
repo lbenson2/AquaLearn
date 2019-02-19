@@ -4,19 +4,26 @@
 
 <div>
     <h2>Students in Your Class</h2>
-
+    <h2>@Model.Username</h2>
     @{
-        List<ald.User> Students = avm.AdminViewModel.GetStudentsByClassroomId(Model.UserId);
+        List<ald.User> Students = avm.AdminViewModel.GetStudentsByClassroomId(Model.ClassroomId);
 
-        <ol>
-            @foreach (var stu in Students)
-            {
-                <li>
-                    <p>@stu.Username</p>
-                    <br />
-                </li>
-            }
-        </ol>
+        if (Students.Count > 0)
+        {
+            <ol>
+                @foreach (var stu in Students)
+                {
+                    <li>
+                        <p>@stu.Username</p>
+                        <br />
+                    </li>
+                }
+            </ol>
+        }
+        else
+        {
+            <p>There are no students in your class.</p>
+        }
     }
     <br />
 </div>

@@ -17,6 +17,8 @@ namespace AquaLearn.MVCClient.Models
 
         public int ClassroomId { get; set; }
 
+        public string ClassroomName { get; set; }
+
         public string Name { get; set; }
 
         [Required]
@@ -34,10 +36,6 @@ namespace AquaLearn.MVCClient.Models
 
         public string Password { get; set; }
 
-
         public List<Quiz> Quizzes { get; set; }
-
-
-       
     }
 }

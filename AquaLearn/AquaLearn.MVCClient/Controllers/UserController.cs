@@ -51,9 +51,7 @@ namespace AquaLearn.MVCClient.Controllers
             
           if (UserViewModel.SetUser(us))
           {   
-            HttpContext.Session.SetString("Username", us.Username);
-            HttpContext.Session.SetInt32("Classroom", us.ClassroomId);
-            HttpContext.Session.SetInt32("Role", us.RoleId);
+            //HttpContext.Session.SetString("Username", us.Username);
           
             return RedirectToAction("Index", "Home");
           }
@@ -85,9 +83,7 @@ namespace AquaLearn.MVCClient.Controllers
 
                 if (UserViewModel.SetUser(user))
                 {
-                    HttpContext.Session.SetString("Username", us.Username);
-                    HttpContext.Session.SetInt32("Classroom", us.ClassroomId);
-                    HttpContext.Session.SetInt32("Role", us.RoleId);
+                    //HttpContext.Session.SetString("Username", us.Username);
 
                     return RedirectToAction("Index", "Home");
                 }

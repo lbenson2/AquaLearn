@@ -41,9 +41,6 @@ namespace AquaLearn.Data.Helpers
             }
         }
 
-
-        
-
         #region Get
         //public List<adm.Quiz> GetQuizzes()
         //{
@@ -86,6 +83,5 @@ namespace AquaLearn.Data.Helpers
             return _db.SaveChanges() == 1;
         }
         #endregion
-
   }
 }
