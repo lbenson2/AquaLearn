@@ -28,13 +28,13 @@ namespace AquaLearn.MVCTest.Tests
             Assert.AreEqual("Privacy", presult.ViewName);
         }
 
-        [TestMethod]
-        public void Test_Quiz()
-        {
-            var qcontroller = new HomeController();
-            var qresult = qcontroller.Quiz() as ViewResult;
-            Assert.AreEqual("Quiz", qresult.ViewName);
-        }
+        //[TestMethod]
+        //public void Test_Quiz()
+        //{
+        //    var qcontroller = new HomeController();
+        //    var qresult = qcontroller.Quiz() as ViewResult;
+        //    Assert.AreEqual("Quiz", qresult.ViewName);
+        //}
 
         [TestMethod]
         public void Test_Login()
