@@ -13,7 +13,8 @@ namespace AquaLearn.MVCClient.ViewModels
     {
         public static List<ald.User> GetUsers()
         {
-            return UserHelper.GetUsers();
+            var helper = new UserHelper();
+            return helper.GetUserTest();
         }
 
         public static User GetUserByUserName(string username)

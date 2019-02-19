@@ -17,22 +17,6 @@ namespace AquaLearn.Data.Helpers
         public AquaLearnIMDbContext _idb { get; set; }
 
         #region Get
-        public static List<adm.User> GetUsers()
-        {
-            var du = new List<adm.User>();
-
-            foreach (var item in _db.User.ToList())
-            {
-                du.Add(new adm.User()
-                {
-                    UserId = item.UserId
-
-                });
-            }
-            return du;
-        }
-
-
         public UserHelper()
         {
             _dbn = new AquaLearnDbContext();
@@ -95,7 +79,8 @@ namespace AquaLearn.Data.Helpers
 
         public static List<adm.User> GetStudentsByClassroomId(int classroomId)
         {
-            var allUsers = GetUsers();
+            var helper = new UserHelper();
+            var allUsers = helper.GetUserTest();
             var studentsInClass = new List<adm.User>();
 
             foreach (var user in allUsers)

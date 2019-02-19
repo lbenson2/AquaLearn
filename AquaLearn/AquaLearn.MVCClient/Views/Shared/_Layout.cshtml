@@ -56,7 +56,7 @@
               var User = JsonConvert.DeserializeObject<adm.User>(HCA.HttpContext.Session.GetString("Username"));
 
               <li>
-                <a class="nav-link nav-item text-dark" asp-area="">Welcome @User.Username</a>
+                <a class="nav-link nav-item text-dark" asp-area="" asp-controller="Admin" asp-action="Index">Welcome @User.Username</a>
               </li>
               <li>
                 <a class="nav-link nav-item text-dark" asp-area="" asp-controller="User" asp-action="Logout">Logout</a>
