@@ -33,7 +33,8 @@ namespace AquaLearn.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder builder)
         {
-            builder.UseSqlServer(Configuration.GetConnectionString("AquaLearnDb"));
+            //builder.UseSqlServer(Configuration.GetConnectionString("AquaLearnDb"));
+            builder.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=AdminContext-79652c4a-1874-47b8-944a-36d7d4e35b12;Trusted_Connection=True;MultipleActiveResultSets=true");
         }
 
         protected override void OnModelCreating(ModelBuilder builder)
