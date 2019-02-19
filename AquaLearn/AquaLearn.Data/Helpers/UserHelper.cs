@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Linq;
 using AutoMapper;
-using AquaLearn.Data.Entities;
+//using AquaLearn.Data.Entities;
 using adm = AquaLearn.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -17,6 +17,12 @@ namespace AquaLearn.Data.Helpers
         public AquaLearnIMDbContext _idb { get; set; }
 
         #region Get
+
+        public List<adm.User> GettheUsers2()
+        {
+            return _dbn.User.ToList();
+        }
+
         public UserHelper()
         {
             _dbn = new AquaLearnDbContext();

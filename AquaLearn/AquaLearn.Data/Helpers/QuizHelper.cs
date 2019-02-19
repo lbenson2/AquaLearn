@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Linq;
 using AutoMapper;
-using AquaLearn.Data.Entities;
+//using AquaLearn.Data.Entities;
 using adm = AquaLearn.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 
