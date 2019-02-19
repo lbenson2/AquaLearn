@@ -1,25 +1,35 @@
 ﻿@using ald = AquaLearn.Domain.Models;
 @using avm = AquaLearn.MVCClient.ViewModels;
-@model AquaLearn.MVCClient.Models.UserModel;
+@model AquaLearn.MVCClient.Models.UserModel
 
 @using (@Html.BeginForm("RegisterStudent", "User"))
 {
-    @Html.LabelFor(m => m.Username, "Username")
-    @Html.TextBoxFor(m => m.Username)
-
-    @Html.LabelFor(m => m.Password, "Password")
-    @Html.PasswordFor(m => m.Password)
-
-    <h2>Choose your instructors classroom: </h2>
-
-    foreach (var cla in avm.ClassroomViewModel.GetClassrooms())
-    {
-        @Html.RadioButtonFor(m => m.ClassroomId, cla.ClassroomId)
-        @Html.LabelFor(m => m.ClassroomId, cla.Name);
-        <br />
-    }
-
+    <div class="row">
+        <div class="col-sm-6" style="padding:10px;">
+            @Html.LabelFor(m => m.Username, "Create Username")
+            @Html.TextBoxFor(m => m.Username)
+        </div>
+        <div class="col-sm-6" style="padding:10px;">
+            @Html.LabelFor(m => m.Password, "Create Password")
+            @Html.PasswordFor(m => m.Password)
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12" style="padding:10px;">
+            <h3>Choose your instructors classroom:</h3>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12" style="padding:10px;">
+        @foreach (var cla in avm.ClassroomViewModel.GetClassrooms())
+        {
+            @Html.RadioButtonFor(m => m.ClassroomId, cla.ClassroomId)
+            @Html.LabelFor(m => m.ClassroomId, cla.Name);
+            <br />
+        }
+        </div>
+    </div>
     <div class="regbutton">
-        <button type="submit" class="buttons" id="regbutton">Register</button>
+        <button type="submit" class="btn btn-dark waves-effect" id="regbutton">Register</button>
     </div>
 }
