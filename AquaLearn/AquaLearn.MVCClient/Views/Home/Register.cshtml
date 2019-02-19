@@ -7,24 +7,28 @@
   @@import url('https://fonts.googleapis.com/css?family=Fredoka+One');
 </style>
 
-    <div class="box" style="background: rgba(255, 255, 255, 0.3);">
-        <h2 style="font-family:'Fredoka One', cursive;">Are you a student or a teacher?</h2>
-
-        <div>
-            <button type="button" onclick="choosePartial(this.id)" id="_StudentRegPartial">Student</button>
-
-            <button type="button" onclick="choosePartial(this.id)" id="_TeacherRegPartial">Teacher</button>
-            <div id="placeholder"></div>
-
+<div class="row" style="background: rgba(255, 255, 255, 0.3); padding:10px;">
+    <h2 style="font-family:'Fredoka One', cursive;">Are you a student or a teacher?</h2>
+    <div class="row container-fluid" style="padding:10px;">
+        <div class="col-sm-3 justify-content-center">
+            <button type="button" class="btn btn-dark waves-effect" onclick="choosePartial(this.id)" id="_StudentRegPartial">Student</button>
+        </div>
+        <div class="col-sm-3 justify-content-center">
+            <button type="button" class="btn btn-dark waves-effect" onclick="choosePartial(this.id)" id="_TeacherRegPartial">Teacher</button>
         </div>
     </div>
+    <div class="col-12" style="padding:10px;" id="placeholder"></div>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <small class="">Already have an account? <a class="" style="color:white;" asp-controller="Home" asp-action="Login">Login</a> Now.</small>
+        </div>
+    </div>
+</div>
 
 <script>
-
     function choosePartial(partialViewToInsert) {
-
         $.ajax({
-
             url: '@Url.Action("AddPartialToView", "Home")',
 
             data: { id: partialViewToInsert },

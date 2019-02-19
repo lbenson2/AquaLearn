@@ -1,6 +1,5 @@
 ﻿@model AquaLearn.MVCClient.Models.UserModel
 
-
 @{
     ViewData["Title"] = "Login";
 }
@@ -9,33 +8,29 @@
     @@import url('https://fonts.googleapis.com/css?family=Fredoka+One');
 </style>
 
-
- 
-    <div class="box">
-        @using (Html.BeginForm("Validation", "User"))
-        {
-            
-            <div class="form">
-                @Html.LabelFor(m => m.Username, "Username")
-                @Html.TextBoxFor(m => m.Username)
-
+<div class="row" style="background: rgba(255, 255, 255, 0.3); padding:10px;">
+    @using (Html.BeginForm("Validation", "User"))
+    {
+    <div class="col-sm-12">
+        <div class="row" style="padding:10px;">
+            @Html.LabelFor(m => m.Username, "Username")
+            @Html.TextBoxFor(m => m.Username)
+        </div>
+        <div class="row" style="padding:10px;">
+            @Html.LabelFor(m => m.Password, "Password")
+            @Html.PasswordFor(m => m.Password)
+        </div>
+        </div>
+        <div class="row" style="padding:10px;">
+            <div class="col-sm-12">
+                <button type="submit"  class="btn btn-dark waves-effect" id="login">Log in</button>
             </div>
-
-            <div class="form">
-                @Html.LabelFor(m => m.Password, "Password")
-                @Html.PasswordFor(m => m.Password)
-
+        </div>
+        <div class="row" style="padding:10px;">
+            <div class="col-sm-12">
+                <small class="">Not a User? <a class="" style="color:white;" asp-controller="Home" asp-action="Register">Sign Up</a> Now.</small>
             </div>
-
-            <div class="buttons">
-                <button type="submit" class="loginbutton" id="login">Log in</button>
-            </div>
-
-            <div class="registerlink">
-                <small class="">Not a User? <a class="" asp-controller="Home" asp-action="Register">Sign Up</a> Now.</small>
-            </div>
-        }
-    </div>
-
-
+        </div>
+        }        
+</div>
 
